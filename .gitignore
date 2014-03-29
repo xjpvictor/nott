@@ -1,0 +1,9 @@
+.*
+/usr/*
+/usr/*/*
+/tmp/*
+/html/*
+config.php
+robots.txt
+!.gitkeep
+!.gitignore

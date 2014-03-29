@@ -1,0 +1,35 @@
+<?php
+$site_url = ''; // *
+$site_name = ''; // *
+$site_description = '';
+
+$user_name = ''; // *
+$password = ''; // * will be automatically encrypted
+$user_fullname = '';
+$user_site = '';
+
+$limit = '10'; // number of notes displayed on one page
+$default_privacy = '0'; // '1' for public, '0' for private
+$otp = '1'; // enable 2-step authentication
+
+/*
+ * Accept note from email
+ * You need setup a private email address for this purpose only
+ * All emails will be permanently deleted
+ * It is recommended to setup a passphrase so that only emails containing the phrase as the start of the subject line will be added to note
+ * You need to setup your own cron job to access /parsemail.php
+ */
+
+$mail_box = ''; // email address, must set if allow note via email
+$mail_pwd = ''; // email account password, must set if allow note via email
+$mail_server = ''; // must set if allow note via email
+$mail_port = '993';
+$mail_service = 'imap';
+$mail_folder = 'INBOX';
+$mail_cert = '1'; // 0 if use self-signed certificates
+$mail_ssl = '1'; // use ssl
+$mail_tls = '0'; // 1: force tls, -1: force notls, 0: default
+$allowed_mail = array(
+  '', // must set if allow note via email
+);
+$mail_passphrase = '';
