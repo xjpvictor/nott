@@ -10,7 +10,7 @@ if (!$auth) {
   exit;
 }
 
-if (isset($_GET['id']) && $_GET['id'] && is_numeric($_GET['id'])) {
+if (isset($_GET['id']) && $_GET['id']) {
   if (!($note = getnote($_GET['id'], 1))) {
     http_response_code(404);
     $error = 'Sorry, note not found.';

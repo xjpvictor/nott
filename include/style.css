@@ -34,7 +34,7 @@ textarea,input{border:1px solid #999;font-size:18px;padding:3px 5px;box-sizing:b
 .meta{padding:20px 3px 10px;font-size:16px;font-style:italic;color:#999;border-top:1px solid #eee;margin-top:1em;}
 .meta a{color:#999;font-size:16px;}
 .meta a:hover{color:#ca2017;text-decoration:none;}
-.private-s{padding:3px 5px;margin-left:10px;border-radius:3px;color:#fff;background:#ca2017;}
+a.private-s,a.private-s:hover,a.private-s:visited{padding:3px 5px;margin-left:10px;border-radius:3px;color:#fff;background:#ca2017;text-decoration:none;cursor:pointer;}
 p.taglist{padding-bottom:10px;}
 .taglist a,.attachment-list a{margin-right:12px;padding-right:3px;}
 .attachment-list{margin-bottom:20px;background:url('/include/clip.png') top left no-repeat transparent;margin-top:-40px;padding-top:30px;margin-left:-30px;padding-left:30px;}

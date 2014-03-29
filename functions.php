@@ -253,14 +253,14 @@ function updatetag($tags, $origin, $id) {
 function displaynote($note, $search = '', $single = 0) {
   global $site_url, $auth;
 
-  echo '<div class="content">';
+  echo '<div class="content" id="post-'.$note['id'].'">';
   if (!$note['public'] && !$auth) {
     echo '<p class="private">Private note</p>';
     echo '<div class="meta">';
   } else {
     if ($note['content']) {
       if (!$single)
-        echo '<p>'.cut($note['content'], $search).'</p>';
+        echo preg_replace('/^<p>[\s　(\xc2)(\xa0)\r\n]*<\/p>$/i', '', '<p>'.cut($note['content'], $search).'</p>');
       else {
         echo '<div id="readability">'.$note['content'].'</div>';
       }
@@ -297,8 +297,31 @@ function displaynote($note, $search = '', $single = 0) {
       echo '</p>';
     }
   }
-  echo date('M. d, Y', $note['time']).($auth && !$note['public'] ? '<span class="private-s">Private note</span>' : '').($auth ? '<a class="link" title="delete" onclick="return confirm(\'Permanently delete this note?\');" href="'.$site_url.'delete.php?id='.$note['id'].'">Delete</a><a class="link" title="edit" href="'.$site_url.'edit.php?id='.$note['id'].'">Edit</a>' : '').(!$single ? '<a class="link" title="view" href="'.$site_url.'?id='.$note['id'].'">View</a>' : ($auth && class_exists('ZipArchive') ? '<a class="link" title="export" href="'.$site_url.'export.php?id='.$note['id'].'">Export</a>' : '')).'</div>';
+  echo date('M. d, Y', $note['time']).($auth && !$note['public'] ? '<a class="private-s" href="/privacy.php?id='.$note['id'].'&p=1&url='.getrefurl($note['id'], $single).'" title="Set to public">Private note</a>' : '').($auth ? '<a class="link" title="delete" onclick="return confirm(\'Permanently delete this note?\');" href="'.$site_url.'delete.php?id='.$note['id'].'">Delete</a><a class="link" title="edit" href="'.$site_url.'edit.php?id='.$note['id'].'">Edit</a>' : '').(!$single ? '<a class="link" title="view" href="'.$site_url.'?id='.$note['id'].'">View</a>' : ($auth && class_exists('ZipArchive') ? '<a class="link" title="export" href="'.$site_url.'export.php?id='.$note['id'].'">Export</a>' : '')).'</div>';
   echo '</div>';
+}
+function getrefurl($id, $single) {
+  global $site_url;
+
+  if ($single)
+    return rawurlencode($site_url.'?id='.$id);
+
+  if (isset($_GET['tag']))
+    $url = $site_url.'?tag='.$_GET['tag'];
+  elseif (isset($_GET['s']))
+    $url = $site_url.'?s='.$_GET['s'];
+
+  if (isset($_GET['p'])) {
+    if (isset($url))
+      $url .= '&p='.$_GET['p'];
+    else
+      $url = $site_url.'?p='.$_GET['p'];
+  } elseif (!isset($url))
+    $url = $site_url;
+
+  $url .= '#post-'.$id;
+
+  return rawurlencode($url);
 }
 function geturlmeta($url = '') {
   if (!$url)

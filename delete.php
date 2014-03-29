@@ -1,7 +1,7 @@
 <?php
 include(__DIR__ . '/init.php');
 
-if (!$auth || !isset($_GET['id']) || !is_numeric($_GET['id'])) {
+if (!$auth || !isset($_GET['id'])) {
   http_response_code(403);
   if (isset($_GET['id']) && $_GET['id'] && is_numeric($_GET['id']))
     $url = $site_url.'login.php?url='.rawurlencode($site_url.'delete.php?id='.$_GET['id']);

@@ -3,7 +3,7 @@ include(__DIR__ . '/init.php');
 
 $id = '0';
 $single = 0;
-if (isset($_GET['id']) && $_GET['id'] && is_numeric($_GET['id'])) {
+if (isset($_GET['id']) && $_GET['id']) {
   $id = $_GET['id'];
   $single = 1;
   if (!($note = getnote($_GET['id']))) {
