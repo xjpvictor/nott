@@ -18,7 +18,7 @@ textarea,input{border:1px solid #999;font-size:18px;padding:3px 5px;box-sizing:b
 #logo h1 a{color:#000;font-size:26px;font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Times New Roman","wenquanyi micro hei","droid sans fallback","hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,serif;}
 #logo h1 a:hover{color:#ca2017;}
 #logo p{font-size:18px;font-style:italic;padding-bottom:5px;}
-#wrap{max-width:1500px;margin:0px auto 0;padding: 20px 30px 0px 30px;overflow:hidden;}
+#wrap{max-width:1500px;margin:0px auto 0;padding: 20px 10px 0px;overflow:hidden;}
 #main{width:100%;float:left;margin-right:-360px;}
 #title{padding-bottom:1em;margin-right:360px;word-wrap:break-word;padding-left:3px;}
 #title span{border-bottom:3px solid #000;font-size:1em;font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Times New Roman","wenquanyi micro hei","droid sans fallback","hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,serif;}
