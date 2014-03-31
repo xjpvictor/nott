@@ -154,7 +154,7 @@ function postnote($id = null) {
     'tags' => (isset($note['tags']) ? $note['tags'] : array()),
   );
   if (isset($_POST['t'])) {
-    $data['tags'] = array_unique(array_filter(array_map('trim', explode(',', htmlentities($_POST['t']))), 'strlen'));
+    $data['tags'] = array_unique(array_filter(array_map('trim', explode(',', htmlspecialchars($_POST['t'], ENT_QUOTES))), 'strlen'));
     sort($data['tags'], SORT_NATURAL | SORT_FLAG_CASE);
   }
   $data['content'] = (isset($_POST['d']) ? escpost($_POST['d'], $id, $data['source']['url']) : (isset($note['content']) ? $note['content'] : ''));
