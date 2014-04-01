@@ -144,7 +144,7 @@ p#otp{padding:1em 0 2em;text-align:center;}
 
 @media screen and (max-width:960px){
 #main{float:none;margin-right:0;}
-.content,#post #url{margin-right:0;}
+.content,#title,#post #url{margin-right:0;}
 .link{display:inline-block;}
 #sidebar{float:none;width:100%;padding-left:0;}
 #pager{margin-right:0;}
