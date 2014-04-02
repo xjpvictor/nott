@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="robots" content="noindex, nofollow">
 <title><?php echo htmlentities($site_name); ?></title>
 <?php echo ($site_description ? '<meta name="description" content="'.htmlentities($site_description).'" />' : ''); ?>
 <link rel="stylesheet" href="/include/style.css" type="text/css" media="all" />

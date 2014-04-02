@@ -55,6 +55,7 @@ function escpost($str, $id, $source, $edit = 0) {
     '/<\s*\S+\s*>(\s|&nbsp;)*<\/\s*\1\s*>/',
     '/\n{2,}/',
     '/^\n+/',
+    '/\n/',
   );
   $replace = array(
     $site_url.'attachment.php?id='.$id.'&name=$1$2&action=get',
@@ -69,6 +70,7 @@ function escpost($str, $id, $source, $edit = 0) {
     '',
     "\n\n",
     '',
+    "  \n",
   );
   $str = preg_replace($search, $replace, $str);
   $str = preg_replace_callback('/<img ((?:[^>]*\s)*)src\s*=\s*("|\')(?!'.$url.')([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', function ($match) use ($site_url, $id) {
