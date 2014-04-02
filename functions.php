@@ -55,7 +55,7 @@ function escpost($str, $id, $source, $edit = 0) {
     '/<\s*\S+\s*>(\s|&nbsp;)*<\/\s*\1\s*>/',
     '/\n{2,}/',
     '/^\n+/',
-    '/\n/',
+    '/(?<!  )\n/',
   );
   $replace = array(
     $site_url.'attachment.php?id='.$id.'&name=$1$2&action=get',
