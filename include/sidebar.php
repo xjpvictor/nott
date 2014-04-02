@@ -62,7 +62,7 @@ if (isset($note) && $list = getattachment($note['id'])) {
 </div>
 <?php } else { ?>
 <?php if ($auth) { ?>
-<a class="widget compose" alt="Add note" href="<?php echo $site_url; ?>edit.php">Add Note</a>
+<a class="widget compose" title="Add note" href="<?php echo $site_url; ?>edit.php">Add Note</a>
 <?php } ?>
 <form id="search" method="get" action="/">
 <input type="text" name="s"><input type="submit" value="">

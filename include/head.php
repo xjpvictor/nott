@@ -18,7 +18,7 @@
 <div id="header">
 <div id="header-content">
 <div id="logo">
-<h1><a href="<?php echo $site_url; ?>" alt="<?php echo htmlentities($site_name); ?>"><?php echo htmlentities($site_name); ?></a></h1><?php echo ($site_description ? '<p>'.htmlentities($site_description).'</p>' : ''); ?>
+<h1><a href="<?php echo $site_url; ?>" title="<?php echo htmlentities($site_name); ?>"><?php echo htmlentities($site_name); ?></a></h1><?php echo ($site_description ? '<p>'.htmlentities($site_description).'</p>' : ''); ?>
 </div>
 <div class="clear">&nbsp;</div>
 </div>
