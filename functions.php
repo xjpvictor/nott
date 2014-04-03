@@ -35,16 +35,19 @@ function escpost($str, $id, $source, $edit = 0) {
 
   $str = strip_tags($str, $allowed_tags);
   $url = preg_quote($site_url, '/');
-  if (!$source)
+  if (!$source) {
     $source = $site_url;
-  elseif ($p = strpos($source, '/', 9))
-    $source = substr($source, 0, $p).'/';
+    $source_d = $site_url;
+  } elseif ($p = strpos($source, '/', 9)) {
+    $source_d = substr($source, 0, $p).'/';
+  }
 
   $str = escattr($str);
 
   $search = array(
     '/'.$url.'attachment\.php\?(?:[^& =]+(?<!name|tmp)=[^& =]+&)*(?:name=([^& ]+)&)?(?:[^& =]+(?<!name|tmp)=[^& =]+&)*tmp=1(?:&[^& =]+(?<!name|tmp)=[^& =]+)*(?:&name=([^& ]+))?(?:&[^& =]+(?<!name|tmp)=[^& =]+)*/i', //change image url for new post
     '/<\s*img ((?:[^>]*\s)*)src\s*=\s*("|\')cid:([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle image in email
+    '/<\s*a ((?:[^>]*\s)*)href\s*=\s*("|\')#([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url anchor point
     '/<\s*(a|img|iframe) ((?:[^>]*\s)*)(src|href)\s*=\s*("|\')\/([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url
     '/<\s*blockquote(\s+[^>]*)?>[\r\n]+/i',
     '/\r\n/',
@@ -60,7 +63,8 @@ function escpost($str, $id, $source, $edit = 0) {
   $replace = array(
     $site_url.'attachment.php?id='.$id.'&name=$1$2&action=get',
     '<img $1src=$2'.$site_url.'attachment.php?id='.$id.'&cid=$3$4$5$6>',
-    '<$1 $2$3=$4'.$source.'$5$6$7$8>',
+    '<a $1href=$2'.$source.'#$3$4$5$6>',
+    '<$1 $2$3=$4'.$source_d.'$5$6$7$8>',
     '<blockquote$1>',
     "\n",
     "\n",
