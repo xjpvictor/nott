@@ -23,16 +23,16 @@ textarea,input{border:1px solid #999;font-size:18px;padding:3px 5px;box-sizing:b
 #title{padding-bottom:1em;margin-right:360px;word-wrap:break-word;padding-left:3px;}
 #title span{border-bottom:3px solid #000;font-size:1em;font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Times New Roman","wenquanyi micro hei","droid sans fallback","hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,serif;}
 .highlight{background:#40cf53;color:#fff;padding:3px 0px;margin:0;}
-.content{background:#fff;padding:20px;border:none;box-shadow:0 0 1px #333;word-wrap:break-word;margin-right:360px;margin-bottom:15px;font-size:20px;}
+.content{background:#fff;padding:20px;border:none;box-shadow:0 0 1px #333;word-wrap:break-word;margin-right:360px;margin-bottom:15px;font-size:1em;}
 .content a:hover{text-decoration:underline;}
-.content p{font-size:20px;padding-bottom:1em;}
+.content p{font-size:1em;padding-bottom:1em;}
 .media{margin:14px -20px 34px;text-align:center;}
 .media img{max-width:95%;max-height:1000px;margin:0 auto;padding:3px;display:block;border:1px solid #cfcfcf;}
 .content audio,.content video{max-width:100%;max-height:1000px;padding:0;margin:0;display:block;}
 .single .media{margin-top:-20px;margin-bottom:-16px;}
 .single .media img,.single .content audio,.single .content video{width:100%;max-height:none;padding:0;border:none;max-width:none;}
 .meta{padding:20px 3px 10px;font-size:16px;font-style:italic;color:#999;border-top:1px solid #eee;margin-top:1em;}
-.meta a{color:#999;font-size:16px;}
+.meta a{color:#999;}
 .meta a:hover{color:#ca2017;text-decoration:none;}
 a.private-s,a.private-s:hover,a.private-s:visited{padding:3px 5px;margin-left:10px;border-radius:3px;color:#fff;background:#ca2017;text-decoration:none;cursor:pointer;}
 p.taglist{padding-bottom:10px;}
@@ -64,7 +64,7 @@ span.view:hover,a.view:hover{background-color:#ddd;color:#000;}
 #delete{background-color:#ca2017;display:inline-block;margin-left:0;border:1px solid #ca2017;}
 #footer{margin:20px 0 35px;text-align:center;}
 #footer p{color:#666;font-size:16px;}
-#footer a{color:#666;font-size:16px;}
+#footer a{color:#666;}
 #footer a:hover{color:#ca2017;}
 #post .content{border:none;box-shadow:none;padding:0;background:transparent;}
 #post-d{width:100%;height:700px;margin-bottom:0px;font-size:18px;box-shadow:0 0 1px #333;border:none;padding:10px;display:block;}
@@ -98,7 +98,7 @@ p#otp{padding:1em 0 2em;text-align:center;}
 #post .attachment{padding-right:10px;}
 .attachment span{font-size:0.8em;color:#999;}
 .attachment:hover{cursor:default;}
-#attachment-list div a{color:#000;font-size:1em;word-wrap:break-word;}
+#attachment-list div a{color:#000;word-wrap:break-word;}
 #attachment-list div:hover a{color:#fff;}
 #attachment-list a:visited{text-decoration:none;}
 .delete{width:14px;text-align:center;color:#888;font-size:14px;line-height:30px;cursor:pointer;position:absolute;right:0;top:0;bottom:0;padding-top:15px;padding-right:3px;padding-left:3px;display:block;}
@@ -145,6 +145,7 @@ p#otp{padding:1em 0 2em;text-align:center;}
 @media screen and (max-width:960px){
 #main{float:none;margin-right:0;}
 .content,#title,#post #url{margin-right:0;}
+.content{padding-left:10px;padding-right:10px;}
 .link{display:inline-block;}
 #sidebar{float:none;width:100%;padding-left:0;}
 #pager{margin-right:0;}

@@ -41,3 +41,7 @@
 #readability sub{bottom:-0.25em;}
 #readability small{font-size:0.7em;color:#888;}
 #readability hr{border-width:0 0 1px;border-style:solid;border-color:#ccc;margin:2em 0 2em;height:0px;}
+
+@media screen and (max-width:960px){
+#readability{font-size:16px;}
+}
