@@ -49,3 +49,4 @@ $otp = ($otp ? $otp : '0');
 if (($auth = auth($user_name)) === false && (!isset($login) || !$login))
   session_destroy();
 
+$nlist = getlist();

@@ -20,10 +20,18 @@ if ($id) {
   include($include_dir . 'head.php');
   echo '<div id="main" class="single">';
   displaynote($note, '', 1);
+  if (isset($note['prev']) || isset($note['next'])) {
+    echo '<div id="pager">';
+    if (isset($note['prev']))
+      echo '<a title="Previous Note" class="nav" id="prev" href="'.$site_url.'?id='.$note['prev'].'">&larr;</a>';
+    if (isset($note['next']))
+      echo '<a title="Next Note" class="nav" id="next" href="'.$site_url.'?id='.$note['next'].'">&rarr;</a>';
+    echo '<div class="clear">&nbsp;</div></div>';
+  }
 } else {
   if (isset($_GET['s']) && $_GET['s'] !== '') {
     $search = rawurldecode($_GET['s']);
-    $list_s = getlist();
+    $list_s = $nlist;
     $list = array();
     foreach ($list_s as $file) {
       $note_s = getnote($file);
@@ -35,7 +43,7 @@ if ($id) {
     $tag = rawurldecode($_GET['tag']);
     $list = gettaglist($tag);
   } else
-    $list = getlist();
+    $list = $nlist;
 
   if ($list) {
     $n = count($list);
@@ -55,9 +63,9 @@ if ($id) {
     include($include_dir . 'head.php');
     echo '<div id="main">';
     if (isset($tag) && $tag)
-      echo '<h1 id="title">Tag: <span>'.htmlentities($tag).'</span></h1>';
+      echo '<h1 id="title">Tag: <span>'.htmlspecialchars($tag).'</span></h1>';
     elseif (isset($search) && $search)
-      echo '<h1 id="title">Search: <span>'.htmlentities($search).'</span></h1>';
+      echo '<h1 id="title">Search: <span>'.htmlspecialchars($search).'</span></h1>';
     foreach ($list as $file) {
       if (isset($search))
         displaynote(getnote($file), $search);
@@ -81,9 +89,9 @@ if ($id) {
     include($include_dir . 'head.php');
     echo '<div id="main">';
     if (isset($tag) && $tag)
-      echo '<h1 id="title">Tag: <span>'.htmlentities($tag).'</span></h1>';
+      echo '<h1 id="title">Tag: <span>'.htmlspecialchars($tag).'</span></h1>';
     elseif (isset($search) && $search)
-      echo '<h1 id="title">Search: <span>'.htmlentities($search).'</span></h1>';
+      echo '<h1 id="title">Search: <span>'.htmlspecialchars($search).'</span></h1>';
     echo '<div class="content">No note yet!</div>';
   }
 }

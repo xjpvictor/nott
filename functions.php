@@ -107,12 +107,12 @@ function gettaglist($tag = null) {
     return false;
 }
 function getnote($id, $markdown = 0) {
-  global $data_dir, $content_dir, $html_dir;
+  global $data_dir, $content_dir, $html_dir, $nlist;
 
   if (strpos($id, $data_dir) !== false)
     $id = substr($id, $start = (strrpos($id, '/')+1), strrpos($id, '.') - $start);
 
-  if (file_exists($data_dir.$id.'.json')) {
+  if (file_exists($data_dir.$id.'.json') && $nlist !== false && ($index = array_search($data_dir.$id.'.json', $nlist)) !== false) {
     $data = json_decode(file_get_contents($data_dir.$id.'.json'), true);
     if (file_exists($content_dir.$id.'.txt')) {
       if ($markdown) {
@@ -128,6 +128,10 @@ function getnote($id, $markdown = 0) {
       }
     } else
       $data['content'] = '';
+    if ($index)
+      $data['next'] = substr($nlist[$index-1], $start = (strrpos($nlist[$index-1], '/')+1), strrpos($nlist[$index-1], '.') - $start);
+    if ($index < count($nlist)-1)
+      $data['prev'] = substr($nlist[$index+1], $start = (strrpos($nlist[$index+1], '/')+1), strrpos($nlist[$index+1], '.') - $start);
   } else
     $data = false;
 
@@ -285,7 +289,7 @@ function displaynote($note, $search = '', $single = 0) {
       }
     }
     if (!$single && $note['source']['url']) {
-      echo '<p>'.($via ? 'via: <a href="'.$note['source']['url'].'" target="_blank" title="'.($note['source']['title'] ? $note['source']['title'] : $note['source']['url']).'">'.($note['source']['title'] ? $note['source']['title'] : 'Link').'</a></p>' : '<a href="'.$note['source']['url'].'" target="_blank" title="'.$note['source']['url'].'">'.htmlentities($note['source']['url']).'</a></p>'.($note['source']['description'] ? '<p>'.$note['source']['description'].'</p>' : ''));
+      echo '<p>'.($via ? 'via: <a href="'.$note['source']['url'].'" target="_blank" title="'.($note['source']['title'] ? $note['source']['title'] : $note['source']['url']).'">'.($note['source']['title'] ? $note['source']['title'] : 'Link').'</a></p>' : '<a href="'.$note['source']['url'].'" target="_blank" title="'.$note['source']['url'].'">'.htmlspecialchars($note['source']['url']).'</a></p>'.($note['source']['description'] ? '<p>'.$note['source']['description'].'</p>' : ''));
     }
     echo '<div class="meta">';
     if (!$single && $list = getattachment($note['id'])) {
@@ -466,7 +470,7 @@ function parseattachmentname($attachment) {
   $type = substr($name, 0, 1);
   $display_name = substr($name, strpos($name, '-')+1);
   $t = substr($display_name, 0, ($p = strpos($display_name, '-', strpos($display_name, '-')+1)));
-  $display_name = htmlentities(substr($display_name, $p+1));
+  $display_name = htmlspecialchars(substr($display_name, $p+1));
   return array('id' => $id, 'type' => $type, 't' => $t, 'display_name' => $display_name, 'url_name' => rawurlencode($name));
 }
 function displayattachment($id, $attachment, $tmp = 0, $post = 0) {

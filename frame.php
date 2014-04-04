@@ -65,7 +65,7 @@ p#otp{padding:1em 0 2em;text-align:center;}
 <body>
 <div id="frame">
 <div id="wrap">
-  <h1><a href="<?php echo $site_url; ?>"><?php echo htmlentities($site_name); ?></a></h1>
+  <h1><a href="<?php echo $site_url; ?>"><?php echo htmlspecialchars($site_name); ?></a></h1>
 <div id="form-wrap">
 <?php if (isset($_GET['id'])) { ?>
 <div id="create">

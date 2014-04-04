@@ -9,7 +9,7 @@ function parsekindle($str) {
     $page = trim($matches[4]);
     $location = trim($matches[5]);
     $date = strtotime(trim($matches[6]));
-    $quote = htmlentities(trim($matches[7]));
+    $quote = htmlspecialchars(trim($matches[7]));
 
     return (array(
       'title' => $title,
@@ -24,7 +24,7 @@ function parsekindle($str) {
     return false;
 }
 function postkindle($book, $author) {
-  $_POST['d'] .= '<p>--<br/>Quoted from <span class="kindle-title">'.htmlentities($book).'</span>, <span class="kindle-author">'.htmlentities($author).'</span></p>';
+  $_POST['d'] .= '<p>--<br/>Quoted from <span class="kindle-title">'.htmlspecialchars($book).'</span>, <span class="kindle-author">'.htmlspecialchars($author).'</span></p>';
   $_POST['t'] = 'kindle,'.$book.','.$author;
   postnote();
   $_POST = array();

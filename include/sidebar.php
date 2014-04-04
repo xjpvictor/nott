@@ -101,7 +101,7 @@ if (isset($note)) {
 <?php if (isset($note) && $note['source']['url']) { ?>
 <div class="widget">
 <h2>Source</h2>
-<p id="source-u"><a href="<?php echo $note['source']['url']; ?>" target="_blank" title="<?php ($note['source']['title'] ? $note['source']['title'] : $note['source']['url']); ?>"><?php echo ($note['source']['title'] ? $note['source']['title'] : htmlentities($note['source']['url'])); ?></a></p>
+<p id="source-u"><a href="<?php echo $note['source']['url']; ?>" target="_blank" title="<?php ($note['source']['title'] ? $note['source']['title'] : $note['source']['url']); ?>"><?php echo ($note['source']['title'] ? $note['source']['title'] : htmlspecialchars($note['source']['url'])); ?></a></p>
 <?php echo ($note['source']['description'] ? '<p id="source-d">'.$note['source']['description'].'</p>' : ''); ?>
 </div>
 <?php } ?>
@@ -133,7 +133,7 @@ if (!isset($post) || !$post) {
 <?php
 if ($auth) {
   if (!isset($post) || !$post) {
-    echo '<p id="bookmarklet">Note with bookmarklet <a href="javascript:var url=\''.$site_url.'\';var x=document.createElement(\'SCRIPT\');x.type=\'text/javascript\';x.src=url+\'bookmarklet.js\';document.getElementsByTagName(\'head\')[0].appendChild(x);void(0)">Clip to '.htmlentities($site_name).'</a></p>';
+    echo '<p id="bookmarklet">Note with bookmarklet <a href="javascript:var url=\''.$site_url.'\';var x=document.createElement(\'SCRIPT\');x.type=\'text/javascript\';x.src=url+\'bookmarklet.js\';document.getElementsByTagName(\'head\')[0].appendChild(x);void(0)">Clip to '.htmlspecialchars($site_name).'</a></p>';
   }
   if (!isset($note)) {
 ?>

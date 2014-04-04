@@ -109,7 +109,7 @@ function parseparts($conn, $msgno, $body, $attachment, $inline, $content, $secti
           $data = $matches[2];
         $content .= $data;
       } else
-        $content .= htmlentities($data);
+        $content .= htmlspecialchars($data);
     }
   }
   return array('content' => $content, 'attachment' => $attachment, 'inline' => $inline);
