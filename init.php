@@ -1,9 +1,9 @@
 <?php
 if (!file_exists(__DIR__ . '/config.php')) {
-  echo 'Please update "config.php" file according to "config-dist.php"';
+  echo 'Please update "config.php" file according to "config.php-dist"';
   exit;
 }
-if (@filemtime(__DIR__ . '/config.php' = './data/config.php') && function_exists('opcache_invalidate'))
+if (@filemtime(__DIR__ . '/config.php') && function_exists('opcache_invalidate'))
   opcache_invalidate(__DIR__ . '/config.php',true);
 include(__DIR__ . '/config.php');
 include(__DIR__ . '/functions.php');
