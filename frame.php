@@ -81,7 +81,7 @@ p#otp{padding:1em 0 2em;text-align:center;}
 <p>Password:<br/>
 <input required name="p" type="password"></p>
 <?php if ($otp && isset($otp_key)) { ?>
-<p>Google Authenticator code:<br/>
+<p>OTP Authenticator code:<br/>
 <input name="o"></p>
 <?php } ?>
 <textarea class="hide" id="text-d" name="d" style="display:hidden;"></textarea>

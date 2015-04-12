@@ -17,7 +17,7 @@ This is a simple notebook written in PHP
 
 * Import from Evernote enex file
 
-* Optional 2-step authentication with Google Authenticator
+* Optional 2-step authentication
 
 ## Requirement ##
 

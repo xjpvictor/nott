@@ -43,7 +43,7 @@ include($include_dir.'head.php');
 <p>Password:<br/>
 <input required name="p" type="password"></p>
 <?php if ($otp && isset($otp_key)) { ?>
-<p>Google Authenticator code:<br/>
+<p>OTP Authenticator code:<br/>
 <input name="o"></p>
 <?php } ?>
 <br/><input class="compose" type="submit" value="Log in" >
@@ -55,7 +55,7 @@ include($include_dir.'head.php');
 <div id="qrcode"></div>
 <p><a class="compose" href="<?php echo $url; ?>">Continue login...</a></p>
 <script src="/include/qrcode.js"></script>
-<script>new QRCode(document.getElementById("qrcode"),{text:"otpauth://totp/<?php echo ($site_name ? rawurlencode($site_name) : ''); ?>?secret=<?php echo $otp_key_gen; ?>",width:300,height:300});</script>
+<script>new QRCode(document.getElementById("qrcode"),{text:"otpauth://totp/<?php echo ($site_name ? rawurlencode(rawurlencode($site_name).': '.$user_name) : rawurlencode($user_name)); ?>?secret=<?php echo $otp_key_gen; ?><?php echo ($site_name ? '&issuer='.rawurlencode($site_name) : ''); ?>",width:300,height:300});</script>
 <?php } ?>
 </div>
 
