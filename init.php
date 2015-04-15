@@ -1,8 +1,9 @@
 <?php
-if (!file_exists(__DIR__ . '/config.php')) {
-  echo 'Please update "config.php" file according to "config.php-dist"';
-  exit;
-}
+if (!file_exists(__DIR__ . '/config.php'))
+  exit('Please update "config.php" file according to "config.php-dist"');
+if (!function_exists('password_hash'))
+  exit('Please update your php version >= 5.5.3');
+
 if (@filemtime(__DIR__ . '/config.php') && function_exists('opcache_invalidate'))
   opcache_invalidate(__DIR__ . '/config.php',true);
 include(__DIR__ . '/config.php');
