@@ -4,12 +4,18 @@ if (!function_exists('imap_open')) {
   exit('IMAP extension not installed');
 }
 
+$img = __DIR__ . '/favicon.ico';
 ob_end_clean();
 ob_start();
 header('HTTP/1.1 200 Ok');
 $size=ob_get_length();
-header("Content-Length: $size");
+header('Content-Type: image/png');
+header("Cache-Control: no-cache, must-revalidate");
+header("Pragma: no-cache");
+header('Expires: '.gmdate('D, d M Y H:i:s', time()).' GMT');
+header("Content-Length: ".($size + filesize($img)));
 header("Connection: close");
+readfile($img);
 ob_end_flush();
 flush();
 if (function_exists('fastcgi_finish_request'))
