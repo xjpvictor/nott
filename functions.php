@@ -261,10 +261,10 @@ function updatetag($tags, $origin, $id) {
   chmod($tags_file, 0600);
 }
 function displaynote($note, $search = '', $single = 0) {
-  global $site_url, $auth;
+  global $site_url, $auth, $show_snippet;
 
   echo '<div class="content" id="post-'.$note['id'].'">';
-  if (!$note['public'] && !$auth) {
+  if (!$note['public'] && !$auth && ($single || (!$single && (!isset($show_snippet) || !$show_snippet || !$note['source']['url'])))) {
     echo '<p class="private">Private note</p>';
     echo '<div class="meta">';
   } else {
@@ -307,7 +307,7 @@ function displaynote($note, $search = '', $single = 0) {
       echo '</p>';
     }
   }
-  echo date('M. d, Y', $note['time']).($auth && !$note['public'] ? '<a class="private-s" href="/privacy.php?id='.$note['id'].'&p=1&url='.getrefurl($note['id'], $single).'" title="Set to public">Private note</a>' : '').($auth ? '<a class="link" title="delete" onclick="return confirm(\'Permanently delete this note?\');" href="'.$site_url.'delete.php?id='.$note['id'].'">Delete</a><a class="link" title="edit" href="'.$site_url.'edit.php?id='.$note['id'].'">Edit</a>' : '').(!$single ? '<a class="link" title="view" href="'.$site_url.'?id='.$note['id'].'">View</a>' : ($auth && class_exists('ZipArchive') ? '<a class="link" title="export" href="'.$site_url.'export.php?id='.$note['id'].'">Export</a>' : '')).'</div>';
+  echo date('M. d, Y', $note['time']).(!$note['public'] ? ($auth ? '<a class="private-s" href="/privacy.php?id='.$note['id'].'&p=1&url='.getrefurl($note['id'], $single).'" title="Set to public">Private note</a>' : '<span class="private-s">Private note</span>') : '').($auth ? '<a class="link" title="delete" onclick="return confirm(\'Permanently delete this note?\');" href="'.$site_url.'delete.php?id='.$note['id'].'">Delete</a><a class="link" title="edit" href="'.$site_url.'edit.php?id='.$note['id'].'">Edit</a>' : '').(!$single ? '<a class="link" title="view" href="'.$site_url.'?id='.$note['id'].'">View</a>' : ($auth && class_exists('ZipArchive') ? '<a class="link" title="export" href="'.$site_url.'export.php?id='.$note['id'].'">Export</a>' : '')).'</div>';
   echo '</div>';
 }
 function getrefurl($id, $single) {

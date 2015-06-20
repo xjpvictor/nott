@@ -10,6 +10,7 @@ $user_site = '';
 
 $limit = '10'; // number of notes displayed on one page
 $default_privacy = '0'; // '1' for public, '0' for private
+$show_snippet = '1'; // show snippet for private notes from other websites
 $otp = '1'; // enable 2-step authentication
 
 /*
