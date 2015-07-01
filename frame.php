@@ -117,7 +117,9 @@ window.onload = function() {
   window.addEventListener('message', function(e) {
     if (e.origin == '<?php echo $url; ?>') {
       var message = e.data;
-      document.getElementById('text-d').innerHTML = message;
+      if (document.getElementById('text-d')) {
+        document.getElementById('text-d').innerHTML = message;
+      }
     }
   });
 }

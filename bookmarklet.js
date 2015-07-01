@@ -46,7 +46,7 @@ if (!document.getElementById('nott_iframe')) {
   document.body.appendChild(iframe);
 
   window.addEventListener('message', function(e) {
-    if (e.data == 'nott_close' && e.origin+'/' == url) {
+    if (e.data == 'nott_close') {
       document.body.removeChild(document.getElementById('nott_iframe'));
     }
   });

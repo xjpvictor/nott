@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="include/highlight/styles/xcode.css">
 <?php } ?>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
-<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="shortcut icon" href="favicon.ico" />
 </head>
 
 <div id="header">
