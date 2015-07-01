@@ -34,7 +34,7 @@ include(__DIR__ . '/init.php');
 
 if (!$auth) {
   http_response_code(403);
-  $error = 'Access denied. Please <a title="login" href="'.$site_url.'login.php">login</a>.';
+  $error = 'Access denied. Please <a title="login" href="login.php">login</a>.';
   include($include_dir.'error.php');
   exit;
 }

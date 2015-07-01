@@ -52,13 +52,13 @@ $hash_algo = 'md5';
 if (isset($_FILES['evernote']['tmp_name']) && $_FILES['evernote']['tmp_name']) {
   if (!$auth) {
     http_response_code(403);
-    $error = 'Access denied. Please <a title="login" href="'.$site_url.'login.php">login</a>.';
+    $error = 'Access denied. Please <a title="login" href="login.php">login</a>.';
     include($include_dir.'error.php');
     exit;
   }
 
   if (move_uploaded_file($_FILES['evernote']['tmp_name'], $tmp_dir.($f = 'evernote-'.time().'.enex')))
-    file_get_contents($site_url.'evernote.php?f='.$f);
+    file_get_contents('evernote.php?f='.$f);
   header('Location: '.$site_url);
   exit;
 } elseif (!isset($_GET['f']) || !$_GET['f'])
@@ -155,7 +155,7 @@ foreach ($notes as $note) {
 }
 
 if ($n > $index)
-  file_get_contents($site_url.'evernote.php?f='.$_GET['f'].'&index='.$index.'&n='.$n.'&offset='.$offset);
+  file_get_contents('evernote.php?f='.$_GET['f'].'&index='.$index.'&n='.$n.'&offset='.$offset);
 else
   unlink($evernote_file);
 

@@ -4,8 +4,8 @@ include(__DIR__ . '/init.php');
 if (!$auth) {
   http_response_code(403);
   if (isset($_GET['id']) && $_GET['id'] && is_numeric($_GET['id']))
-    $url = $site_url.'login.php?url='.rawurlencode($site_url.'edit.php?id='.$_GET['id']);
-  $error = 'Access denied. Please <a title="login" href="'.(isset($url) ? $url : $site_url.'login.php').'">login</a>.';
+    $url = 'login.php?url='.rawurlencode($site_url.'edit.php?id='.$_GET['id']);
+  $error = 'Access denied. Please <a title="login" href="'.(isset($url) ? $url : 'login.php').'">login</a>.';
   include($include_dir.'error.php');
   exit;
 }
@@ -22,7 +22,7 @@ if (isset($_GET['id']) && $_GET['id']) {
 $post = true;
 include($include_dir . 'head.php');
 ?>
-<form id="post" method="POST" action="/post.php<?php echo (isset($note) ? '?id='.$note['id'] : ''); ?>" enctype="multipart/form-data">
+<form id="post" method="POST" action="post.php<?php echo (isset($note) ? '?id='.$note['id'] : ''); ?>" enctype="multipart/form-data">
 <div id="main">
 <div class="content">
 <div id="edit-button">

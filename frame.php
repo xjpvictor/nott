@@ -65,17 +65,17 @@ p#otp{padding:1em 0 2em;text-align:center;}
 <body>
 <div id="frame">
 <div id="wrap">
-  <h1><a href="<?php echo $site_url; ?>"><?php echo htmlspecialchars($site_name); ?></a></h1>
+  <h1><a href="index.php"><?php echo htmlspecialchars($site_name); ?></a></h1>
 <div id="form-wrap">
 <?php if (isset($_GET['id'])) { ?>
 <div id="create">
 <p>Note created!</p>
-<a class="compose" href="<?php echo $site_url; ?>?id=<?php echo $_GET['id']; ?>" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');" target="_blank">View</a>
-<a class="compose" href="<?php echo $site_url; ?>edit.php?id=<?php echo $_GET['id']; ?>" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');" target="_blank">Edit</a>
+<a class="compose" href="index.php?id=<?php echo $_GET['id']; ?>" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');" target="_blank">View</a>
+<a class="compose" href="edit.php?id=<?php echo $_GET['id']; ?>" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');" target="_blank">Edit</a>
 <p id="cancel"><a href="javascript:;" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');">Close</a></p>
 </div>
 <?php } elseif (!$auth) { ?>
-<form id="login" method="POST" action="<?php echo $site_url; ?>frame.php?url=<?php echo rawurlencode($url); ?>">
+<form id="login" method="POST" action="frame.php?url=<?php echo rawurlencode($url); ?>">
 <p>Username:<br/>
 <input required name="u" autofocus></p>
 <p>Password:<br/>
@@ -89,7 +89,7 @@ p#otp{padding:1em 0 2em;text-align:center;}
 <p id="cancel"><a href="javascript:;" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');">Close</a></p>
 </form>
 <?php } else { ?>
-<form method="POST" action="<?php echo $site_url; ?>post.php?r=bookmarklet&url=<?php echo rawurlencode($url); ?>">
+<form method="POST" action="post.php?r=bookmarklet&url=<?php echo rawurlencode($url); ?>">
 <textarea id="text-d" name="d" required>
 <?php
 if (isset($_POST['d']) && $_POST['d']) {

@@ -37,7 +37,7 @@ include($include_dir.'head.php');
 <div id="login">
 <?php if (!isset($otp_key_gen)) { ?>
 <p>Please log in</p>
-<form method="post" action="/login.php?url=<?php echo rawurlencode($url); ?>">
+<form method="post" action="login.php?url=<?php echo rawurlencode($url); ?>">
 <p>Username:<br/>
 <input required name="u" autofocus></p>
 <p>Password:<br/>
@@ -54,7 +54,7 @@ include($include_dir.'head.php');
 <p>Or scan the qrcode</p>
 <div id="qrcode"></div>
 <p><a class="compose" href="<?php echo $url; ?>">Continue login...</a></p>
-<script src="/include/qrcode.js"></script>
+<script src="include/qrcode.js"></script>
 <script>new QRCode(document.getElementById("qrcode"),{text:"otpauth://totp/<?php echo ($site_name ? rawurlencode(rawurlencode($site_name).': '.$user_name) : rawurlencode($user_name)); ?>?secret=<?php echo $otp_key_gen; ?><?php echo ($site_name ? '&issuer='.rawurlencode($site_name) : ''); ?>",width:300,height:300});</script>
 <?php } ?>
 </div>

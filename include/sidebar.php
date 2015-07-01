@@ -3,7 +3,7 @@
 <input class="widget compose" type="submit" value="<?php echo (isset($note) ? 'Update' : 'Add Note'); ?>" />
 
 <span class="widget compose view" onclick="if(!document.getElementById('edit-button').className){document.getElementById('readability').innerHTML=converter.makeHtml(document.getElementById('post-d').value);noteSH();this.innerHTML='Edit';uploadAddClass('post-d','hide');uploadAddClass('edit-button','hide');uploadAddClass('edit-title','hide');uploadAddClass('preview','show');}else{this.innerHTML='Preview';uploadRemoveClass('post-d','hide');uploadRemoveClass('edit-button','hide');uploadRemoveClass('edit-title','hide');uploadRemoveClass('preview','show');}">Preview</span>
-<?php echo (isset($note) ? '<a class="widget compose view" id="view" href="'.$site_url.'?id='.$note['id'].'">View</a><a class="widget compose" onclick="return confirm(\'Permanently delete this note?\');" id="delete" href="'.$site_url.'delete.php?id='.$note['id'].'">Delete Note</a>' : ''); ?>
+<?php echo (isset($note) ? '<a class="widget compose view" id="view" href="index.php?id='.$note['id'].'">View</a><a class="widget compose" onclick="return confirm(\'Permanently delete this note?\');" id="delete" href="delete.php?id='.$note['id'].'">Delete Note</a>' : ''); ?>
 <div class="widget">
 <h2>Tags</h2>
 <input name="t" type="text" id="post-t" value="<?php if (isset($note) && $note['tags']) {foreach ($note['tags'] as $tag) {echo $tag.',';}} ?>">
@@ -62,9 +62,9 @@ if (isset($note) && $list = getattachment($note['id'])) {
 </div>
 <?php } else { ?>
 <?php if ($auth) { ?>
-<a class="widget compose" title="Add note" href="<?php echo $site_url; ?>edit.php">Add Note</a>
+<a class="widget compose" title="Add note" href="edit.php">Add Note</a>
 <?php } ?>
-<form id="search" method="get" action="/">
+<form id="search" method="get" action="index.php">
 <input type="text" name="s"><input type="submit" value="">
 </form>
 <?php
@@ -76,7 +76,7 @@ if (isset($note)) {
 <?php
     echo '<p>';
     foreach ($note['tags'] as $tag) {
-      echo '<a class="tag" href="'.$site_url.'?tag='.rawurlencode($tag).'" title="'.$tag.'">'.$tag.'</a>';
+      echo '<a class="tag" href="index.php?tag='.rawurlencode($tag).'" title="'.$tag.'">'.$tag.'</a>';
     }
     echo '</p>';
 ?>
@@ -90,7 +90,7 @@ if (isset($note)) {
 <?php
   echo '<p>';
   foreach ($tags as $tag => $ids) {
-    echo '<a class="tag" href="'.$site_url.'?tag='.rawurlencode($tag).'" title="'.$tag.'">'.$tag.'</a>';
+    echo '<a class="tag" href="index.php?tag='.rawurlencode($tag).'" title="'.$tag.'">'.$tag.'</a>';
   }
   echo '</p>';
 ?>
@@ -163,9 +163,9 @@ if ($auth) {
 </form>
 <?php
   }
-  echo '<a title="Logout" href="'.$site_url.'logout.php?url='.rawurlencode($site_url.(isset($note) ? '?id='.$note['id'] : (isset($_GET['p']) && $_GET['p'] && is_numeric($_GET['p']) && $_GET['p'] > 1 ? '?p='.$_GET['p'] : ''))).'">Logout</a>';
+  echo '<a title="Logout" href="logout.php?url='.rawurlencode($site_url.(isset($note) ? '?id='.$note['id'] : (isset($_GET['p']) && $_GET['p'] && is_numeric($_GET['p']) && $_GET['p'] > 1 ? '?p='.$_GET['p'] : ''))).'">Logout</a>';
 } else
-  echo '<a title="Login" href="'.$site_url.'login.php?url='.rawurlencode($site_url.(isset($note) ? '?id='.$note['id'] : (isset($_GET['p']) && $_GET['p'] && is_numeric($_GET['p']) && $_GET['p'] > 1 ? '?p='.$_GET['p'] : ''))).'">Login</a>';
+  echo '<a title="Login" href="login.php?url='.rawurlencode($site_url.(isset($note) ? '?id='.$note['id'] : (isset($_GET['p']) && $_GET['p'] && is_numeric($_GET['p']) && $_GET['p'] > 1 ? '?p='.$_GET['p'] : ''))).'">Login</a>';
 ?>
 </div>
 </div>

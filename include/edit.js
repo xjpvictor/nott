@@ -240,7 +240,7 @@ function deleteAttachment(id, name, elem) {
   if (confirm('Permanently delete this file?')) {
     var x=document.createElement('SCRIPT');
     x.type='text/javascript';
-    x.src='/attachment.php?id='+id+'&name='+name+'&elem='+elem+'&action=delete';
+    x.src='attachment.php?id='+id+'&name='+name+'&elem='+elem+'&action=delete';
     document.getElementsByTagName('head')[0].appendChild(x);
   }
 }

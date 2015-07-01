@@ -23,9 +23,9 @@ if ($id) {
   if (isset($note['prev']) || isset($note['next'])) {
     echo '<div id="pager">';
     if (isset($note['prev']))
-      echo '<a title="Previous Note" class="nav" id="prev" href="'.$site_url.'?id='.$note['prev'].'">&larr;</a>';
+      echo '<a title="Previous Note" class="nav" id="prev" href="index.php?id='.$note['prev'].'">&larr;</a>';
     if (isset($note['next']))
-      echo '<a title="Next Note" class="nav" id="next" href="'.$site_url.'?id='.$note['next'].'">&rarr;</a>';
+      echo '<a title="Next Note" class="nav" id="next" href="index.php?id='.$note['next'].'">&rarr;</a>';
     echo '<div class="clear">&nbsp;</div></div>';
   }
 } else {
@@ -75,13 +75,13 @@ if ($id) {
     if ($n > $limit) {
       echo '<div id="pager">';
       if ($n > ++$p * $limit)
-        echo '<a title="Previous Page" class="nav" id="prev" href="'.$site_url.'?'.(isset($tag) && $tag ? 'tag='.rawurlencode($tag).'&' : (isset($search) && $search ? 's='.rawurlencode($search).'&' : '')).'p='.++$p.'">&larr;</a>';
+        echo '<a title="Previous Page" class="nav" id="prev" href="index.php?'.(isset($tag) && $tag ? 'tag='.rawurlencode($tag).'&' : (isset($search) && $search ? 's='.rawurlencode($search).'&' : '')).'p='.++$p.'">&larr;</a>';
       else
         $p++;
       if ($p == 3) {
-        echo '<a title="Next Page" class="nav" id="next" href="'.$site_url.(isset($tag) && $tag ? '?tag='.rawurlencode($tag) : (isset($search) && $search ? '?s='.rawurlencode($search) : '')).'">&rarr;</a>';
+        echo '<a title="Next Page" class="nav" id="next" href="index.php'.(isset($tag) && $tag ? '?tag='.rawurlencode($tag) : (isset($search) && $search ? '?s='.rawurlencode($search) : '')).'">&rarr;</a>';
       } elseif ($p > 3) {
-        echo '<a title="Next Page" class="nav" id="next" href="'.$site_url.'?'.(isset($tag) && $tag ? 'tag='.rawurlencode($tag).'&' : (isset($search) && $search ? 's='.rawurlencode($search).'&' : '')).'p='.($p - 2).'">&rarr;</a>';
+        echo '<a title="Next Page" class="nav" id="next" href="index.php?'.(isset($tag) && $tag ? 'tag='.rawurlencode($tag).'&' : (isset($search) && $search ? 's='.rawurlencode($search).'&' : '')).'p='.($p - 2).'">&rarr;</a>';
       }
       echo '<div class="clear">&nbsp;</div></div>';
     }

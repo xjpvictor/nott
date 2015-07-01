@@ -6,10 +6,10 @@
 <meta name="robots" content="noindex, nofollow">
 <title><?php echo htmlspecialchars($site_name); ?></title>
 <?php echo ($site_description ? '<meta name="description" content="'.htmlspecialchars($site_description).'" />' : ''); ?>
-<link rel="stylesheet" href="/include/style.css" type="text/css" media="all" />
+<link rel="stylesheet" href="include/style.css" type="text/css" media="all" />
 <?php if ((isset($post) && $post) || (isset($single) && $single)) { ?>
-<link rel="stylesheet" href="/include/readability.css" type="text/css" media="all" />
-<link rel="stylesheet" href="/include/highlight/styles/xcode.css">
+<link rel="stylesheet" href="include/readability.css" type="text/css" media="all" />
+<link rel="stylesheet" href="include/highlight/styles/xcode.css">
 <?php } ?>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="shortcut icon" href="/favicon.ico" />
@@ -18,7 +18,7 @@
 <div id="header">
 <div id="header-content">
 <div id="logo">
-<h1><a href="<?php echo $site_url; ?>" title="<?php echo htmlspecialchars($site_name); ?>"><?php echo htmlspecialchars($site_name); ?></a></h1><?php echo ($site_description ? '<p>'.htmlspecialchars($site_description).'</p>' : ''); ?>
+<h1><a href="index.php" title="<?php echo htmlspecialchars($site_name); ?>"><?php echo htmlspecialchars($site_name); ?></a></h1><?php echo ($site_description ? '<p>'.htmlspecialchars($site_description).'</p>' : ''); ?>
 </div>
 <div class="clear">&nbsp;</div>
 </div>

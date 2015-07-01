@@ -36,8 +36,8 @@ function escpost($str, $id, $source, $edit = 0) {
   $str = strip_tags($str, $allowed_tags);
   $url = preg_quote($site_url, '/');
   if (!$source) {
-    $source = $site_url;
-    $source_d = $site_url;
+    $source = '';
+    $source_d = '';
   } elseif ($p = strpos($source, '/', 9)) {
     $source_d = substr($source, 0, $p).'/';
   }
@@ -61,8 +61,8 @@ function escpost($str, $id, $source, $edit = 0) {
     '/(?<!  )\n/',
   );
   $replace = array(
-    $site_url.'attachment.php?id='.$id.'&name=$1$2&action=get',
-    '<img $1src=$2'.$site_url.'attachment.php?id='.$id.'&cid=$3$4$5$6>',
+    'attachment.php?id='.$id.'&name=$1$2&action=get',
+    '<img $1src=$2attachment.php?id='.$id.'&cid=$3$4$5$6>',
     '<a $1href=$2'.$source.'#$3$4$5$6>',
     '<$1 $2$3=$4'.$source_d.'$5$6$7$8>',
     '<blockquote$1>',
@@ -77,8 +77,8 @@ function escpost($str, $id, $source, $edit = 0) {
     "  \n",
   );
   $str = preg_replace($search, $replace, $str);
-  $str = preg_replace_callback('/<img ((?:[^>]*\s)*)src\s*=\s*("|\')(?!'.$url.')([^"\']*)("|\')(\s+[^>]*)?(\/\s*)?>/i', function ($match) use ($site_url, $id) {
-    return '<img '.$match[1].'src='.$match[2].$site_url.'attachment.php?id='.$id.'&cache='.rawurlencode($match[3]).$match[4].(isset($match[5]) ? $match[5] : '').(isset($match[6]) ? $match[6] : '/').'>';
+  $str = preg_replace_callback('/<img ((?:[^>]*\s)*)src\s*=\s*("|\')(?!'.$url.')([^"\']*)("|\')(\s+[^>]*)?(\/\s*)?>/i', function ($match) use ($id) {
+    return '<img '.$match[1].'src='.$match[2].'attachment.php?id='.$id.'&cache='.rawurlencode($match[3]).$match[4].(isset($match[5]) ? $match[5] : '').(isset($match[6]) ? $match[6] : '/').'>';
   }, $str);
 
   return trim($str);
@@ -261,7 +261,7 @@ function updatetag($tags, $origin, $id) {
   chmod($tags_file, 0600);
 }
 function displaynote($note, $search = '', $single = 0) {
-  global $site_url, $auth, $show_snippet;
+  global $auth, $show_snippet;
 
   echo '<div class="content" id="post-'.$note['id'].'">';
   if (!$note['public'] && !$auth && ($single || (!$single && (!isset($show_snippet) || !$show_snippet || !$note['source']['url'])))) {
@@ -303,11 +303,11 @@ function displaynote($note, $search = '', $single = 0) {
     if (!$single && $note['tags']) {
       echo '<p class="taglist">';
       foreach ($note['tags'] as $tag)
-        echo '<a href="'.$site_url.'?tag='.rawurlencode($tag).'" title="'.$tag.'">#'.$tag.'</a>';
+        echo '<a href="index.php?tag='.rawurlencode($tag).'" title="'.$tag.'">#'.$tag.'</a>';
       echo '</p>';
     }
   }
-  echo date('M. d, Y', $note['time']).(!$note['public'] ? ($auth ? '<a class="private-s" href="/privacy.php?id='.$note['id'].'&p=1&url='.getrefurl($note['id'], $single).'" title="Set to public">Private note</a>' : '<span class="private-s">Private note</span>') : '').($auth ? '<a class="link" title="delete" onclick="return confirm(\'Permanently delete this note?\');" href="'.$site_url.'delete.php?id='.$note['id'].'">Delete</a><a class="link" title="edit" href="'.$site_url.'edit.php?id='.$note['id'].'">Edit</a>' : '').(!$single ? '<a class="link" title="view" href="'.$site_url.'?id='.$note['id'].'">View</a>' : ($auth && class_exists('ZipArchive') ? '<a class="link" title="export" href="'.$site_url.'export.php?id='.$note['id'].'">Export</a>' : '')).'</div>';
+  echo date('M. d, Y', $note['time']).(!$note['public'] ? ($auth ? '<a class="private-s" href="privacy.php?id='.$note['id'].'&p=1&url='.getrefurl($note['id'], $single).'" title="Set to public">Private note</a>' : '<span class="private-s">Private note</span>') : '').($auth ? '<a class="link" title="delete" onclick="return confirm(\'Permanently delete this note?\');" href="delete.php?id='.$note['id'].'">Delete</a><a class="link" title="edit" href="edit.php?id='.$note['id'].'">Edit</a>' : '').(!$single ? '<a class="link" title="view" href="index.php?id='.$note['id'].'">View</a>' : ($auth && class_exists('ZipArchive') ? '<a class="link" title="export" href="export.php?id='.$note['id'].'">Export</a>' : '')).'</div>';
   echo '</div>';
 }
 function getrefurl($id, $single) {
@@ -474,15 +474,13 @@ function parseattachmentname($attachment) {
   return array('id' => $id, 'type' => $type, 't' => $t, 'display_name' => $display_name, 'url_name' => rawurlencode($name));
 }
 function displayattachment($id, $attachment, $tmp = 0, $post = 0) {
-  global $site_url;
-
   if (!isset($id) || !isset($attachment) || !is_array($attachment))
     return false;
 
   return '<div id="attachment-'.$id.'-'.$attachment['t'].'">
     <span class="attachment">
-      <a href="/attachment.php?id='.$id.'&name='.$attachment['url_name'].'&action=get'.($tmp ? '&tmp=1' : '').'" target="_blank">'.$attachment['display_name'].'</a>'.($attachment['type'] == '1' && $post ? '&nbsp;&nbsp;
-      <span class="insert" onclick="mdAddHR(\'!['.$attachment['display_name'].']('.$site_url.'attachment.php?id='.$id.'&name='.$attachment['url_name'].'&action=get'.($tmp ? '&tmp=1' : '').' &quot;'.$attachment['display_name'].'&quot;)\')">Insert</span>' : '').'
+      <a href="attachment.php?id='.$id.'&name='.$attachment['url_name'].'&action=get'.($tmp ? '&tmp=1' : '').'" target="_blank">'.$attachment['display_name'].'</a>'.($attachment['type'] == '1' && $post ? '&nbsp;&nbsp;
+      <span class="insert" onclick="mdAddHR(\'!['.$attachment['display_name'].'](attachment.php?id='.$id.'&name='.$attachment['url_name'].'&action=get'.($tmp ? '&tmp=1' : '').' &quot;'.$attachment['display_name'].'&quot;)\')">Insert</span>' : '').'
     </span>'.($post ? '<span class="delete" onclick="deleteAttachment(\''.$id.'\', \''.$attachment['url_name'].'\', \'attachment-'.$id.'-'.$attachment['t'].'\')">&#10007;</span>' : '').'</div>';
 }
 function saveattachment($id = null, $dir = null) {
