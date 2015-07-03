@@ -307,7 +307,7 @@ function displaynote($note, $search = '', $single = 0) {
       echo '</p>';
     }
   }
-  echo date('M. d, Y', $note['time']).(!$note['public'] ? ($auth ? '<a class="private-s" href="privacy.php?id='.$note['id'].'&p=1&url='.getrefurl($note['id'], $single).'" title="Set to public">Private note</a>' : '<span class="private-s">Private note</span>') : '').($auth ? '<a class="link" title="delete" onclick="return confirm(\'Permanently delete this note?\');" href="delete.php?id='.$note['id'].'">Delete</a><a class="link" title="edit" href="edit.php?id='.$note['id'].'">Edit</a>' : '').(!$single ? '<a class="link" title="view" href="index.php?id='.$note['id'].'">View</a>' : ($auth && class_exists('ZipArchive') ? '<a class="link" title="export" href="export.php?id='.$note['id'].'">Export</a>' : '')).'</div>';
+  echo date('M. d, Y', $note['time']).(!$note['public'] ? ($auth ? '<a class="private-s" href="privacy.php?id='.$note['id'].'&p=1&url='.getrefurl($note['id'], $single).'" title="Set to public">Private note</a>' : '<span class="private-s">Private note</span>') : '').($auth ? '<a class="link" title="delete" onclick="return confirm(\'Permanently delete this note?\');" href="delete.php?id='.$note['id'].'">Delete</a><a class="link" title="edit" href="edit.php?id='.$note['id'].'">Edit</a>' : '').(!$single && ($note['public'] || $auth) ? '<a class="link" title="view" href="index.php?id='.$note['id'].'">View</a>' : ($auth && class_exists('ZipArchive') ? '<a class="link" title="export" href="export.php?id='.$note['id'].'">Export</a>' : '')).'</div>';
   echo '</div>';
 }
 function getrefurl($id, $single) {
