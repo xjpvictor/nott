@@ -8,7 +8,7 @@ if (!isset($post) || !$post) {
 ?>
 
 <div id="footer">
-<p id="copy">&copy; <?php echo date("Y"); ?> <a href="<?php echo ($user_site ? $user_site : 'index.php'); ?>"><?php echo htmlspecialchars($user_fullname ? $user_fullname : $user_name); ?></a>. All Rights Reserved.</p>
+<p id="copy">&copy; <?php echo date("Y"); ?> <a href=""><?php echo htmlspecialchars($site_name); ?></a>. All Rights Reserved.</p>
 <p>Powered by <a href="https://github.com/xjpvictor/nott/" target="_blank">nott</a></p>
 <img src="parsemail.php" width="20px" height="20px" alt="get mail" style="padding:5px;" />
 </div>

@@ -5,8 +5,6 @@ $site_description = '';
 
 $user_name = ''; // *
 $password = ''; // * will be automatically encrypted
-$user_fullname = '';
-$user_site = '';
 
 $limit = '10'; // number of notes displayed on one page
 $default_privacy = '0'; // '1' for public, '0' for private
