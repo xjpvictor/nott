@@ -36,11 +36,12 @@ textarea,input{border:1px solid #999;font-size:18px;padding:3px 5px;box-sizing:b
 .meta a:hover{color:#ca2017;text-decoration:none;}
 a.private-s,a.private-s:hover,a.private-s:visited,.private-s{padding:3px 5px;margin-left:10px;border-radius:3px;color:#fff;background:#ca2017;text-decoration:none;}
 a.private-s,a.private-s:hover,a.private-s:visited{cursor:pointer;}
-p.taglist{padding-bottom:10px;}
+p.taglist{padding-bottom:25px;line-height:2em;}
 .taglist a,.attachment-list a{margin-right:12px;padding-right:3px;}
 .attachment-list{margin-bottom:20px;background:url('clip.png') top left no-repeat transparent;margin-top:-40px;padding-top:30px;margin-left:-30px;padding-left:30px;}
 .attachment-list p{padding-bottom:20px;border-bottom:1px solid #eee;}
-.link{float:right;display:none;margin-left:15px;}
+.link{float:right;display:none;}
+.link a{margin-left:15px;}
 .content:hover>.meta .link{display:inline-block;}
 .private{color:#666;font-style:italic;background:url('lock.png') top left no-repeat transparent;padding-left:40px;}
 #pager{margin:35px 360px 35px 0;}
@@ -135,6 +136,7 @@ p#otp{padding:1em 0 2em;text-align:center;}
 .button span{color:inherit;}
 #meta p{line-height:2em;}
 #bookmarklet a,#bookmarklet a:visited,#bookmarklet a:hover{padding:3px 7px;margin:0;color:#444;text-decoration:none;background-color:#eee;border-radius:5px;border:none;display:inline-block;font-size:0.9em;}
+#bookmarklet a:hover{cursor:move;}
 #bookmarklet,#kindle-button-wrap,#evernote-button-wrap{padding-bottom:1em;margin-bottom:1em;border-bottom:1px solid #ccc;}
 #kindle-button,#evernote-button{width:150px;margin-top:0.5em;}
 .kindle-page,.kindle-date,.kindle-author{font-style:italic;}
@@ -147,7 +149,8 @@ p#otp{padding:1em 0 2em;text-align:center;}
 #main{float:none;margin-right:0;}
 .content,#title,#post #url{margin-right:0;}
 .content{padding-left:10px;padding-right:10px;}
-.link{display:inline-block;}
+.link{float:none;display:block;padding-top:30px;}
+.link a{margin-left:0;margin-right:15px;}
 #sidebar{float:none;width:100%;padding-left:0;}
 #pager{margin-right:0;}
 }

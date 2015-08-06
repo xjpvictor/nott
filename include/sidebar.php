@@ -133,7 +133,7 @@ if (!isset($post) || !$post) {
 <?php
 if ($auth) {
   if (!isset($post) || !$post) {
-    echo '<p id="bookmarklet">Note with bookmarklet <a href="javascript:var url=\''.$site_url.'\';var x=document.createElement(\'SCRIPT\');x.type=\'text/javascript\';x.src=url+\'bookmarklet.js\';document.getElementsByTagName(\'head\')[0].appendChild(x);void(0)">Clip to '.htmlspecialchars($site_name).'</a></p>';
+    echo '<p id="bookmarklet">Note with bookmarklet <a href="javascript:var url=\''.$site_url.'\';var x=document.createElement(\'SCRIPT\');x.type=\'text/javascript\';x.src=url+\'bookmarklet.js\';document.getElementsByTagName(\'head\')[0].appendChild(x);void(0)" title="Drag to bookmarks bar">Clip to '.htmlspecialchars($site_name).'</a></p>';
   }
   if (!isset($note)) {
 ?>
