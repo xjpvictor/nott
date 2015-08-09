@@ -21,6 +21,7 @@ $html_dir = __DIR__ . '/html/';
 $id_file = $data_dir.'id.json';
 $tags_file = $data_dir.'tags.json';
 $kindle_file = $data_dir.'kindle.json';
+$clipboard_file = $data_dir.'clipboard.txt';
 
 $allowed_tags = '<p><span><h1><h2><h3><h4><h5><h6><br><br/><small><a><img><figure><figcaption><iframe><table><caption><tbody><thead><tfoot><tr><td><th><blockquote><pre><code><ol><ul><li><abbr><del><strong><b><i><ins><u><em><sub><sup><hr>';
 

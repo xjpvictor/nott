@@ -17,6 +17,7 @@ if (!isset($post) || !$post) {
 </div>
 <!--end of wrap-->
 
+<?php if (!isset($clipboard)) { ?>
 <?php if ((isset($single) && $single) || (isset($post) && $post)) { ?>
 <script src="include/highlight/highlight.pack.js"></script>
 <script>
@@ -41,6 +42,7 @@ var converter = new Markdown.Converter();
 var base_url = 'attachment.php?id=<?php echo (isset($note) ? $note['id'] : $new_id); ?>&action=add<?php echo (!isset($note) ? '&tmp=1' : ''); ?>';
 </script>
 <script src="include/edit.js"></script>
+<?php } ?>
 <?php } ?>
 
 </body>

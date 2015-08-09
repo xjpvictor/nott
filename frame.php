@@ -65,16 +65,9 @@ p#otp{padding:1em 0 2em;text-align:center;}
 <body>
 <div id="frame">
 <div id="wrap">
-  <h1><a href="index.php"><?php echo htmlspecialchars($site_name); ?></a></h1>
+  <h1><a href="<?php echo (isset($_GET['clip']) ? 'clipboard.php' : 'index.php'); ?>" title="<?php echo (isset($_GET['clip']) ? 'Clipboard' : htmlspecialchars($site_name)); ?>"><?php echo (isset($_GET['clip']) ? 'Clipboard by ' : '').htmlspecialchars($site_name); ?></a></h1>
 <div id="form-wrap">
-<?php if (isset($_GET['id'])) { ?>
-<div id="create">
-<p>Note created!</p>
-<a class="compose" href="index.php?id=<?php echo $_GET['id']; ?>" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');" target="_blank">View</a>
-<a class="compose" href="edit.php?id=<?php echo $_GET['id']; ?>" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');" target="_blank">Edit</a>
-<p id="cancel"><a href="javascript:;" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');">Close</a></p>
-</div>
-<?php } elseif (!$auth) { ?>
+<?php if (!$auth) { ?>
 <form id="login" method="POST" action="frame.php?url=<?php echo rawurlencode($url); ?>">
 <p>Username:<br/>
 <input required name="u" autofocus></p>
@@ -88,6 +81,39 @@ p#otp{padding:1em 0 2em;text-align:center;}
 <input class="compose" type="submit" value="Log in" >
 <p id="cancel"><a href="javascript:;" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');">Close</a></p>
 </form>
+<?php } elseif (isset($_GET['clip']) && $_GET['clip']) {
+  if (isset($_GET['close']) && $_GET['close']) {
+    echo '<div id="create">
+<p>Clipboard Updated!</p>
+<p id="cancel"><a href="javascript:;" onclick="window.top.postMessage(\'nott_close\', \''.$url.'\');">Close</a></p>
+</div>
+<script>
+var stoptime=3;
+setTimeout("spbclose()",stoptime*1000);
+function spbclose(){window.top.postMessage(\'nott_close\', \''.$url.'\');}
+</script>';
+  } else {
+  $clipboard = (file_exists($clipboard_file) ? file_get_contents($clipboard_file) : '');
+?>
+<form method="POST" action="clipboard.php?r=bookmarklet&url=<?php echo rawurlencode($url); ?>">
+<textarea id="text-d" name="d"><?php echo htmlentities($clipboard); ?></textarea>
+<?php
+if (isset($_POST['d']) && $_POST['d']) {
+  echo htmlentities($_POST['d']);
+  unset($_POST['d']);
+}
+?>
+<input type="submit" class="button" value="Update" id="submit-button" />
+&nbsp;&nbsp;<a href="javascript:;" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');">Close</a>
+</form>
+<?php }
+} elseif (isset($_GET['id'])) { ?>
+<div id="create">
+<p>Note created!</p>
+<a class="compose" href="index.php?id=<?php echo $_GET['id']; ?>" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');" target="_blank">View</a>
+<a class="compose" href="edit.php?id=<?php echo $_GET['id']; ?>" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');" target="_blank">Edit</a>
+<p id="cancel"><a href="javascript:;" onclick="window.top.postMessage('nott_close', '<?php echo $url; ?>');">Close</a></p>
+</div>
 <?php } else { ?>
 <form method="POST" action="post.php?r=bookmarklet&url=<?php echo rawurlencode($url); ?>">
 <textarea id="text-d" name="d" required>
@@ -112,6 +138,7 @@ if (isset($_POST['d']) && $_POST['d']) {
 </div>
 </div>
 </div>
+<?php if (!isset($_GET['clip']) || !$_GET['clip']) { ?>
 <script>
 window.onload = function() {
   window.addEventListener('message', function(e) {
@@ -133,5 +160,6 @@ function toggleClass(id, cls) {
   }
 }
 </script>
+<?php } ?>
 </body>
 </html>

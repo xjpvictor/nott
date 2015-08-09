@@ -35,6 +35,9 @@ if (!document.getElementById('nott_iframe')) {
   iframe.height = '490px';
   iframe.id = 'nott_iframe';
   iframe.src = url + 'frame.php?url=' + encodeURIComponent(window.location.origin) + '&href=' + encodeURIComponent(document.location.href);
+  if (clip) {
+    iframe.src += '&clip=true';
+  }
   iframe.style.position = 'fixed';
   iframe.style.right = '10px';
   iframe.style.top = '10px';

@@ -18,7 +18,7 @@
 <div id="header">
 <div id="header-content">
 <div id="logo">
-<h1><a href="index.php" title="<?php echo htmlspecialchars($site_name); ?>"><?php echo htmlspecialchars($site_name); ?></a></h1><?php echo ($site_description ? '<p>'.htmlspecialchars($site_description).'</p>' : ''); ?>
+<h1><a href="<?php echo (isset($clipboard) ? 'clipboard.php' : 'index.php'); ?>" title="<?php echo (isset($clipboard) ? 'Clipboard' : htmlspecialchars($site_name)); ?>"><?php echo (isset($clipboard) ? 'Clipboard' : htmlspecialchars($site_name)); ?></a></h1><?php echo (isset($clipboard) ? '<p>By '.htmlspecialchars($site_name).'</p>' : ($site_description ? '<p>'.htmlspecialchars($site_description).'</p>' : '')); ?>
 </div>
 <div class="clear">&nbsp;</div>
 </div>

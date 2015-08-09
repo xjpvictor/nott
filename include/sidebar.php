@@ -1,9 +1,12 @@
 <div id="sidebar">
 <?php if (isset($post) && $post) { ?>
-<input class="widget compose" type="submit" value="<?php echo (isset($note) ? 'Update' : 'Add Note'); ?>" />
+<input class="widget compose" type="submit" value="<?php echo (isset($note) || isset($clipboard) ? 'Update' : 'Add Note'); ?>" />
 
+<?php if (!isset($clipboard)) { ?>
 <span class="widget compose view" onclick="if(!document.getElementById('edit-button').className){document.getElementById('readability').innerHTML=converter.makeHtml(document.getElementById('post-d').value);noteSH();this.innerHTML='Edit';uploadAddClass('post-d','hide');uploadAddClass('edit-button','hide');uploadAddClass('edit-title','hide');uploadAddClass('preview','show');}else{this.innerHTML='Preview';uploadRemoveClass('post-d','hide');uploadRemoveClass('edit-button','hide');uploadRemoveClass('edit-title','hide');uploadRemoveClass('preview','show');}">Preview</span>
+<?php } ?>
 <?php echo (isset($note) ? '<a class="widget compose view" id="view" href="index.php?id='.$note['id'].'">View</a><a class="widget compose" onclick="return confirm(\'Permanently delete this note?\');" id="delete" href="delete.php?id='.$note['id'].'">Delete Note</a>' : ''); ?>
+<?php if (!isset($clipboard)) { ?>
 <div class="widget">
 <h2>Tags</h2>
 <input name="t" type="text" id="post-t" value="<?php if (isset($note) && $note['tags']) {foreach ($note['tags'] as $tag) {echo $tag.',';}} ?>">
@@ -60,6 +63,7 @@ if (isset($note) && $list = getattachment($note['id'])) {
 </div>
 <div class="clear">&nbsp;</div>
 </div>
+<?php } ?>
 <?php } else { ?>
 <?php if ($auth) { ?>
 <a class="widget compose" title="Add note" href="edit.php">Add Note</a>
@@ -132,10 +136,13 @@ if (!isset($post) || !$post) {
 <h2>Meta</h2>
 <?php
 if ($auth) {
-  if (!isset($post) || !$post) {
-    echo '<p id="bookmarklet">Note with bookmarklet <a href="javascript:var url=\''.$site_url.'\';var x=document.createElement(\'SCRIPT\');x.type=\'text/javascript\';x.src=url+\'bookmarklet.js\';document.getElementsByTagName(\'head\')[0].appendChild(x);void(0)" title="Drag to bookmarks bar">Clip to '.htmlspecialchars($site_name).'</a></p>';
+  if (isset($clipboard)) {
+    echo '<p id="clipboard">Switch to <a href="index.php">Notes</a></p>';
+    echo '<p id="bookmarklet">Drag to add bookmarklet <a href="javascript:var url=\''.$site_url.'\';var clip=true;var x=document.createElement(\'SCRIPT\');x.type=\'text/javascript\';x.src=url+\'bookmarklet.js\';document.getElementsByTagName(\'head\')[0].appendChild(x);void(0)" title="Drag to bookmarks bar">Clipboard by '.htmlspecialchars($site_name).'</a></p>';
   }
-  if (!isset($note)) {
+  if ((!isset($post) || !$post) && (!isset($id) || !$id)) {
+    echo '<p id="clipboard">Switch to <a href="clipboard.php">Clipboard</a></p>';
+    echo '<p id="bookmarklet">Note with bookmarklet <a href="javascript:var url=\''.$site_url.'\';var x=document.createElement(\'SCRIPT\');x.type=\'text/javascript\';x.src=url+\'bookmarklet.js\';document.getElementsByTagName(\'head\')[0].appendChild(x);void(0)" title="Drag to bookmarks bar">Clip to '.htmlspecialchars($site_name).'</a></p>';
 ?>
 <form id="kindle-upload" method="POST" action="/kindle.php" enctype="multipart/form-data">
 <p>Import kindle highlights</p>

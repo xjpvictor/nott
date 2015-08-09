@@ -102,7 +102,7 @@ function mdAddHR(str) {
   }
   mdFocus(a,d);
 }
-if (window.File && window.FileList && window.FileReader && window.XMLHttpRequest) {
+if (window.File && window.FileList && window.FileReader && window.XMLHttpRequest && document.getElementById('upload-list')) {
   var out = true;
   var timeout = -1;
   var upload = new Array();
@@ -112,13 +112,15 @@ if (window.File && window.FileList && window.FileReader && window.XMLHttpRequest
   uploadDnd();
 }
 function uploadDnd() {
-  document.getElementById("upload-file-button-wrap").innerHTML=document.getElementById("upload-file-button-wrap").innerHTML;
-  document.getElementById("upload-file-button").addEventListener("change", uploadFileSelectHandler, false);
-  document.getElementById("upload-drop").addEventListener("drop", uploadFileSelectHandler, false);
-  var filedrop = document.getElementsByTagName("body")[0];
-  filedrop.addEventListener("dragover", uploadFileDragHover, false);
-  filedrop.addEventListener("dragleave", uploadFileDragHover, false);
-  filedrop.addEventListener("drop", uploadCancelDrag, false);
+  if (document.getElementById("upload-file-button-wrap")) {
+    document.getElementById("upload-file-button-wrap").innerHTML=document.getElementById("upload-file-button-wrap").innerHTML;
+    document.getElementById("upload-file-button").addEventListener("change", uploadFileSelectHandler, false);
+    document.getElementById("upload-drop").addEventListener("drop", uploadFileSelectHandler, false);
+    var filedrop = document.getElementsByTagName("body")[0];
+    filedrop.addEventListener("dragover", uploadFileDragHover, false);
+    filedrop.addEventListener("dragleave", uploadFileDragHover, false);
+    filedrop.addEventListener("drop", uploadCancelDrag, false);
+  }
 }
 function uploadFileDragHover(e) {
   e.stopPropagation();
