@@ -29,8 +29,8 @@ if (document.getElementById('edit-title')) {
     }
   }
   function mdFocus(a,d) {
-    textarea.focus();
     textarea.setSelectionRange(a,d);
+    textarea.focus();
   }
   function mdAddHead(str) {
     var a = textarea.selectionStart;
