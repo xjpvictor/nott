@@ -16,7 +16,6 @@ if (isset($_POST['p']) && isset($_POST['u'])) {
   if ($_POST['u'] == $user_name && verifypw($_POST['p'])) {
     if (!$otp || !isset($otp_key) || (isset($_POST['o']) && verifyotp($_POST['o']))) {
       session_regenerate_id(true);
-      $_SESSION['time'] = time();
       $_SESSION['ip'] = $ip;
       if ($otp && !isset($otp_key)) {
         $otp_key_gen = generaterandomstring();
@@ -46,6 +45,7 @@ include($include_dir.'head.php');
 <p>OTP Authenticator code:<br/>
 <input name="o"></p>
 <?php } ?>
+<label><input type="checkbox" name="r" value="1"> Remember me</label><br/>
 <br/><input class="compose" type="submit" value="Log in" >
 </form>
 <?php } else { ?>

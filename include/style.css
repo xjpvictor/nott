@@ -81,6 +81,7 @@ input[type='file']:hover{cursor:pointer;}
 #login{width:300px;margin:30px auto;padding:30px 30px;box-shadow:0 0 1px #333;background:#fff;}
 #login p{padding-bottom:1em;}
 #login input{width:100%;}
+#login input[type="checkbox"]{width:auto;}
 #login input.compose{margin-bottom:30px;height:auto;}
 #qrcode{margin-bottom:50px;width:300px;height:300px;}
 #login a.compose{display:block;}

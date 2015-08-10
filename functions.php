@@ -430,20 +430,21 @@ function oathtruncate($hash,$otpLength) {
   ) % pow(10, $otpLength);
 }
 function auth() {
-  global $site_url, $ip;
+  global $site_url, $ip, $login;
 
-  session_set_cookie_params(31536000, '/', '', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 1 : 0), 1);
+  if (isset($login)) {
+    if (isset($_POST['r']) && $_POST['r'])
+      $expire = 31536000;
+    else
+      $expire = 0;
+    session_set_cookie_params($expire, '/', '', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 1 : 0), 1);
+  }
   session_name('_nott_'.str_replace(array('.', '/'), '_', substr($site_url, stripos($site_url, '//')+2)));
   if(session_status() !== PHP_SESSION_ACTIVE)
     session_start();
-  if (!isset($_SESSION['time']) || !isset($_SESSION['ip']))
-    return false;
-  elseif (time() - $_SESSION['time'] >= 31536000)
-    return false;
-  elseif ($_SESSION['ip'] !== $ip)
+  if (!isset($_SESSION['ip']) || $_SESSION['ip'] !== $ip)
     return false;
 
-  $_SESSION['time'] = time();
   $_SESSION['ip'] = $ip;
   return true;
 }
