@@ -494,10 +494,7 @@ function saveattachment($id = null, $dir = null) {
     $dir = $upload_dir;
 
   if (isset($_POST['file']) && $_POST['file']) {
-    $s = false;
-    $e = false;
     if (!is_array($_POST['file'])) {
-      $s = true;
       $_POST['file'] = array($_POST['file']);
       $_GET['name'] = array($_GET['name']);
     }
@@ -519,22 +516,19 @@ function saveattachment($id = null, $dir = null) {
         unset($data);
         if (!filesize($tmp_file)) {
           unlink($tmp_file);
-          $e = true;
         } else {
           $file = $dir.$id.'-'.($email ? '0' : ($type = getfiletype($tmp_file))).'-'.$name;
           rename($tmp_file, $file);
           chmod($file, 0600);
-          $e = true;
         }
       } else {
         unset($data);
-        $e = true;
       }
     }
     unset($_POST['file']);
     unset($_GET['name']);
-    if ($s && $e)
-      return false;
+    if (isset($file))
+      return $file;
   } elseif (isset($_FILES['files']['tmp_name'][0]) && $_FILES['files']['tmp_name'][0]) {
     $files = $_FILES['files'];
     $i = 0;
@@ -550,6 +544,8 @@ function saveattachment($id = null, $dir = null) {
       $i++;
     }
     $_FILES = array();
+    if (isset($file_name))
+      return $file_name;
   }
   return true;
 }
