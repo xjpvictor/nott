@@ -96,15 +96,13 @@ p#otp{padding:1em 0 2em;text-align:center;}
 #attachment-list-wrap{max-height:500px;overflow-y:auto;}
 #attachment-list{margin-right:20px;}
 #attachment-list div{padding:15px 20px;color:#000;display:block;border-top:1px solid #eee;word-wrap:break-word;background:#fff;margin:0 -20px 0 0;font-size:18px;position:relative;}
-#attachment-list div:hover{color:#fff;background-color:#3953d4;}
-#attachment-list div.image{min-height:100px;background-position:left bottom;background-size:contain;background-repeat:no-repeat;}
+#attachment-list div.image{min-height:100px;background-position:left top;background-size:100px auto;background-repeat:no-repeat;}
 .attachment{display:block;padding:0;}
 #post .attachment{padding-right:10px;}
 #attachment-list div.image .attachment{padding-left:120px;}
 .attachment span{font-size:0.8em;color:#999;}
 .attachment:hover{cursor:default;}
 #attachment-list div a{color:#000;word-wrap:break-word;}
-#attachment-list div:hover a{color:#fff;}
 #attachment-list a:visited{text-decoration:none;}
 .delete{width:14px;text-align:center;color:#888;font-size:14px;line-height:30px;cursor:pointer;position:absolute;right:0;top:0;bottom:0;padding-top:15px;padding-right:3px;padding-left:3px;display:block;}
 .insert{padding:0px 5px;display:inline-block;}
