@@ -280,11 +280,11 @@ function displaynote($note, $search = '', $single = 0) {
       if (!$note['source']['url'] && ($list = getattachment($note['id'])) && count($list) === 1) {
         $attachment = parseattachmentname($list[0]);
         if ($attachment['type'] == 1) {
-          echo '<div class="media"><img src="/attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get" alt="'.$attachment['display_name'].'" title="'.$attachment['display_name'].'"/></div>';
+          echo '<div class="media"><img src="attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get" alt="'.$attachment['display_name'].'" title="'.$attachment['display_name'].'"/></div>';
         } elseif ($attachment['type'] == 2) {
-          echo '<audio controls><source src="/attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get"><embed height="50" width="200" src="/attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get"></audio>';
+          echo '<audio controls><source src="attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get"><embed height="50" width="200" src="attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get"></audio>';
         } elseif ($attachment['type'] == 3) {
-          echo '<video controls><source src="/attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get"><object height="190" width="260" data="/attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get"><embed height="190" width="260" src="/attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get"></object></video>';
+          echo '<video controls><source src="attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get"><object height="190" width="260" data="attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get"><embed height="190" width="260" src="attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get"></object></video>';
         }
       }
     }
@@ -296,7 +296,7 @@ function displaynote($note, $search = '', $single = 0) {
       echo '<div class="attachment-list"><p>';
       foreach ($list as $attachment) {
         $attachment = parseattachmentname($attachment);
-        echo '<a href="/attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get" target="_blank" title="'.$attachment['display_name'].'">'.$attachment['display_name'].'</a>';
+        echo '<a href="attachment.php?id='.$note['id'].'&name='.$attachment['url_name'].'&action=get" target="_blank" title="'.$attachment['display_name'].'">'.$attachment['display_name'].'</a>';
       }
       echo '</p></div>';
     }
