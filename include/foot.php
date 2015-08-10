@@ -43,6 +43,11 @@ var base_url = 'attachment.php?id=<?php echo (isset($note) ? $note['id'] : $new_
 </script>
 <script src="include/edit.js"></script>
 <?php } ?>
+<?php } else { ?>
+<script>
+var base_url = 'attachment.php?id=0&action=add';
+</script>
+<script src="include/edit.js"></script>
 <?php } ?>
 
 </body>

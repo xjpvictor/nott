@@ -24,6 +24,7 @@ if ($tags = gettaglist()) {
 <h2>Privacy</h2>
 <label><input type="radio" name="p" value="1" <?php echo ((isset($note) && $note['public']) ? 'checked' : (!isset($note) && $default_privacy ? 'checked' : '')); ?>> Public</label><br/><label><input type="radio" name="p" value="0" <?php echo (isset($note) && !$note['public'] ? 'checked' : (!isset($note) && !$default_privacy ? 'checked' : '')); ?>> Private</label>
 </div>
+<?php } ?>
 <div class="widget" id="attachment">
 <h2>Attachment</h2>
 <div id="upload-input" class="file-button-wrap">
@@ -53,9 +54,9 @@ if ($tags = gettaglist()) {
 <div id="attachment-list-wrap">
 <div id="attachment-list">
 <?php
-if (isset($note) && $list = getattachment($note['id'])) {
+if ((isset($note) && $list = getattachment($note['id'])) || (isset($clipboard) && $list = getattachment(0))) {
   foreach ($list as $attachment) {
-    echo displayattachment($note['id'], parseattachmentname($attachment), 0, 1);
+    echo displayattachment((!isset($clipboard) ? $note['id'] : 0), parseattachmentname($attachment), 0, 1);
   }
 }
 ?>
@@ -63,7 +64,6 @@ if (isset($note) && $list = getattachment($note['id'])) {
 </div>
 <div class="clear">&nbsp;</div>
 </div>
-<?php } ?>
 <?php } else { ?>
 <?php if ($auth) { ?>
 <a class="widget compose" title="Add note" href="edit.php">Add Note</a>

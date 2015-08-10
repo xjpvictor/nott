@@ -1,7 +1,7 @@
 <?php
 include(__DIR__ . '/init.php');
 
-if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['name'] && isset($_GET['id']) && $_GET['id']) {
+if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['name'] && isset($_GET['id'])) {
   if ($auth && $_GET['action'] == 'add' && is_string($_POST['file']) && $_POST['file']) {
     if (isset($_GET['tmp']) && $_GET['tmp']) {
       if (($attachment = saveattachment($_GET['id'], $tmp_dir)) === false) {
@@ -11,7 +11,7 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
       } else {
         echo displayattachment($_GET['id'], parseattachmentname($attachment), 1, 1);
       }
-    } elseif (!getnote($_GET['id']) || ($attachment = saveattachment($_GET['id'])) === false) {
+    } elseif (($_GET['id'] && !getnote($_GET['id'])) || ($attachment = saveattachment($_GET['id'])) === false) {
       http_response_code(400);
       $error = 'Error uploading.';
       include($include_dir.'error.php');
@@ -34,8 +34,9 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
           include($include_dir.'error.php');
         }
       }
-    } elseif ($note = getnote($_GET['id'])) {
-      if ($note['public'] || $auth) {
+    } else {
+      ;
+      if ((!$_GET['id'] && $auth) || ($note = getnote($_GET['id']) && ($note['public'] || $auth))) {
         if (file_exists($file = $upload_dir.$file_name)) {
           $finfo = finfo_open(FILEINFO_MIME_TYPE);
           $file_type = finfo_file($finfo, $file);
@@ -49,7 +50,7 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
         exit;
       }
     }
-  } elseif ($_GET['action'] == 'delete') {
+  } elseif ($_GET['action'] == 'delete' && $auth) {
     $file_name = $_GET['id'].'-'.rawurldecode($_GET['name']);
     if (file_exists($upload_dir.$file_name)) {
       unlink($upload_dir.$file_name);

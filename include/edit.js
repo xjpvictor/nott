@@ -1,106 +1,108 @@
-var textarea = document.getElementById('post-d');
-var edittitle = document.getElementById('edit-title').innerHTML;
-textarea.onkeydown = function(e) {
-  var s = this.selectionStart;
-  if (e.keyCode == 9 || event.which == 9) {
-    e.preventDefault();
-    this.value = this.value.substring(0, s) + '    ' + this.value.substring(this.selectionEnd);
-    this.selectionEnd = s+4;
-  } else if (e.keyCode == 13 || event.which == 13) {
-    var regexp = new RegExp('^((    )|(> )|(- )|(([0-9]+). ))');
-    if ((str = this.value.substring(this.value.substring(0, s).lastIndexOf("\n")+1).match(regexp)) !== null) {
+if (document.getElementById('edit-title')) {
+  var textarea = document.getElementById('post-d');
+  var edittitle = document.getElementById('edit-title').innerHTML;
+  textarea.onkeydown = function(e) {
+    var s = this.selectionStart;
+    if (e.keyCode == 9 || event.which == 9) {
       e.preventDefault();
-      if (typeof str[6] !== 'undefined') {
-        str = parseInt(str[6])+1+'. ';
-      } else {
-        str = str[1];
+      this.value = this.value.substring(0, s) + '    ' + this.value.substring(this.selectionEnd);
+      this.selectionEnd = s+4;
+    } else if (e.keyCode == 13 || event.which == 13) {
+      var regexp = new RegExp('^((    )|(> )|(- )|(([0-9]+). ))');
+      if ((str = this.value.substring(this.value.substring(0, s).lastIndexOf("\n")+1).match(regexp)) !== null) {
+        e.preventDefault();
+        if (typeof str[6] !== 'undefined') {
+          str = parseInt(str[6])+1+'. ';
+        } else {
+          str = str[1];
+        }
+        this.value = this.value.substring(0, s) + "\n" + str + this.value.substring(this.selectionEnd);
+        this.selectionEnd = s+str.length+1;
       }
-      this.value = this.value.substring(0, s) + "\n" + str + this.value.substring(this.selectionEnd);
-      this.selectionEnd = s+str.length+1;
     }
   }
-}
-function mdTitle(str) {
-  if (str.length) {
-    document.getElementById('edit-title').innerHTML = str;
-  } else {
-    document.getElementById('edit-title').innerHTML = edittitle;
-  }
-}
-function mdFocus(a,d) {
-  textarea.focus();
-  textarea.setSelectionRange(a,d);
-}
-function mdAddHead(str) {
-  var a = textarea.selectionStart;
-  var d = textarea.selectionEnd;
-  var p = textarea.value.substring(0,a).lastIndexOf('\n')+1;
-  if (textarea.value.substr(p, str.length) == str) {
-    textarea.value = textarea.value.substring(0,p) + textarea.value.substring(p+str.length);
-    a = a-str.length;
-    d = d-str.length;
-  } else {
-    textarea.value = textarea.value.substring(0,p) + str + textarea.value.substring(p);
-    a = a+str.length;
-    d = d+str.length;
-  }
-  mdFocus(a,d);
-}
-function mdAddStyle(str) {
-  var a = textarea.selectionStart;
-  var d = textarea.selectionEnd;
-  if (textarea.value.substr(a-str.length, str.length) == str) {
-    textarea.value = textarea.value.substring(0,a-str.length) + textarea.value.substring(a,d) + textarea.value.substring(d+str.length);
-    a = a-str.length;
-    d = d-str.length;
-  } else {
-    textarea.value = textarea.value.substring(0,a) + str + textarea.value.substring(a,d) + str + textarea.value.substring(d);
-    a = a+str.length;
-    d = d+str.length;
-  }
-  mdFocus(a,d);
-}
-function mdAddURL() {
-  var a = textarea.selectionStart;
-  var d = textarea.selectionEnd;
-  var regexp = new RegExp('\\[([^\\]]*)\\]\\([^\\)]*\\)');
-  if ((str = textarea.value.substr(a,d+1).match(regexp)) !== null) {
-    str = str[1];
-    if (str == 'text') {
-      str = '';
-    }
-    textarea.value = textarea.value.substring(0,a) + str + textarea.value.substring(d);
-    a = a+str.length;
-    d = a;
-  } else {
-    if (d > a) {
-      textarea.value = textarea.value.substring(0,a) + '[' + textarea.value.substring(a,d) + '](url "' + textarea.value.substring(a,d) + '")' + textarea.value.substring(d);
-      a = d+3;
-      d = a+3;
+  function mdTitle(str) {
+    if (str.length) {
+      document.getElementById('edit-title').innerHTML = str;
     } else {
-      textarea.value = textarea.value.substring(0,a) + '[text](url "title")' + textarea.value.substring(d);
-      a = a+1;
-      d = a+4;
+      document.getElementById('edit-title').innerHTML = edittitle;
     }
   }
-  mdFocus(a,d);
-}
-function mdAddHR(str) {
-  var a = textarea.selectionStart;
-  var d = textarea.selectionEnd;
-  var p = textarea.value.substring(d).indexOf("\n")+d+1;
-  if (str == '***') {
-    textarea.value = textarea.value.substring(0,p) + "\n" + str + "\n\n" + textarea.value.substring(p);
-    a = p+6;
-    d = a;
-  } else if (str.indexOf('!') == '0') {
-    textarea.value = textarea.value.substring(0,p) + "\n" + str + "\n\n" + textarea.value.substring(p);
-    a = p+str.length+3;
-    d = a;
-  } else {
-    textarea.value = textarea.value.substring(0,p) + str + "\n\n" + textarea.value.substring(p);
+  function mdFocus(a,d) {
+    textarea.focus();
+    textarea.setSelectionRange(a,d);
   }
-  mdFocus(a,d);
+  function mdAddHead(str) {
+    var a = textarea.selectionStart;
+    var d = textarea.selectionEnd;
+    var p = textarea.value.substring(0,a).lastIndexOf('\n')+1;
+    if (textarea.value.substr(p, str.length) == str) {
+      textarea.value = textarea.value.substring(0,p) + textarea.value.substring(p+str.length);
+      a = a-str.length;
+      d = d-str.length;
+    } else {
+      textarea.value = textarea.value.substring(0,p) + str + textarea.value.substring(p);
+      a = a+str.length;
+      d = d+str.length;
+    }
+    mdFocus(a,d);
+  }
+  function mdAddStyle(str) {
+    var a = textarea.selectionStart;
+    var d = textarea.selectionEnd;
+    if (textarea.value.substr(a-str.length, str.length) == str) {
+      textarea.value = textarea.value.substring(0,a-str.length) + textarea.value.substring(a,d) + textarea.value.substring(d+str.length);
+      a = a-str.length;
+      d = d-str.length;
+    } else {
+      textarea.value = textarea.value.substring(0,a) + str + textarea.value.substring(a,d) + str + textarea.value.substring(d);
+      a = a+str.length;
+      d = d+str.length;
+    }
+    mdFocus(a,d);
+  }
+  function mdAddURL() {
+    var a = textarea.selectionStart;
+    var d = textarea.selectionEnd;
+    var regexp = new RegExp('\\[([^\\]]*)\\]\\([^\\)]*\\)');
+    if ((str = textarea.value.substr(a,d+1).match(regexp)) !== null) {
+      str = str[1];
+      if (str == 'text') {
+        str = '';
+      }
+      textarea.value = textarea.value.substring(0,a) + str + textarea.value.substring(d);
+      a = a+str.length;
+      d = a;
+    } else {
+      if (d > a) {
+        textarea.value = textarea.value.substring(0,a) + '[' + textarea.value.substring(a,d) + '](url "' + textarea.value.substring(a,d) + '")' + textarea.value.substring(d);
+        a = d+3;
+        d = a+3;
+      } else {
+        textarea.value = textarea.value.substring(0,a) + '[text](url "title")' + textarea.value.substring(d);
+        a = a+1;
+        d = a+4;
+      }
+    }
+    mdFocus(a,d);
+  }
+  function mdAddHR(str) {
+    var a = textarea.selectionStart;
+    var d = textarea.selectionEnd;
+    var p = textarea.value.substring(d).indexOf("\n")+d+1;
+    if (str == '***') {
+      textarea.value = textarea.value.substring(0,p) + "\n" + str + "\n\n" + textarea.value.substring(p);
+      a = p+6;
+      d = a;
+    } else if (str.indexOf('!') == '0') {
+      textarea.value = textarea.value.substring(0,p) + "\n" + str + "\n\n" + textarea.value.substring(p);
+      a = p+str.length+3;
+      d = a;
+    } else {
+      textarea.value = textarea.value.substring(0,p) + str + "\n\n" + textarea.value.substring(p);
+    }
+    mdFocus(a,d);
+  }
 }
 if (window.File && window.FileList && window.FileReader && window.XMLHttpRequest && document.getElementById('upload-list')) {
   var out = true;
