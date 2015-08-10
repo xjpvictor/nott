@@ -96,10 +96,10 @@ p#otp{padding:1em 0 2em;text-align:center;}
 #attachment-list-wrap{max-height:500px;overflow-y:auto;}
 #attachment-list{margin-right:20px;}
 #attachment-list div{padding:15px 20px;color:#000;display:block;border-top:1px solid #eee;word-wrap:break-word;background:#fff;margin:0 -20px 0 0;font-size:18px;position:relative;}
-#attachment-list div.image{min-height:100px;background-position:left top;background-size:120px auto;background-repeat:no-repeat;}
+#attachment-list div.image{min-height:100px;background-position:left top;background-size:100px auto;background-repeat:no-repeat;}
 .attachment{display:block;padding:0;}
 #post .attachment{padding-right:10px;}
-#attachment-list div.image .attachment{padding-left:120px;}
+#attachment-list div.image .attachment{padding-left:100px;}
 .attachment span{font-size:0.8em;color:#999;}
 .attachment:hover{cursor:default;}
 #attachment-list div a{color:#000;word-wrap:break-word;}
