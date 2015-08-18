@@ -60,6 +60,7 @@ a.nav:hover{color:#fff !important;background:#e63f2a;border-color:#e63f2a;text-d
 .compose{width:100%;box-sizing:border-box;}
 .compose,a.compose{color:#fff;background-color:#3953d4;text-align:center;text-decoration:none;height:60px;line-height:20px;font-size:18px;border:none;padding:20px 0;vertical-align:middle;}
 .compose:hover,a.compose:hover{background-color:#ca2017;text-decoration:none;cursor:pointer;color:#fff;}
+#submit:disabled{background-color:#ddd !important;}
 #view,#delete{width:50%;box-sizing:border-box;}
 span.view,a.view{background-color:#eee;color:#000;display:inline-block;}
 span.view:hover,a.view:hover{background-color:#ddd;color:#000;}
