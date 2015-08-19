@@ -26,7 +26,7 @@ include($include_dir . 'head.php');
 <form id="post" method="POST" action="clipboard.php" enctype="multipart/form-data">
 <div id="main">
 <div class="content">
-<textarea id="post-d" name="d" onblur="autoSave(this.innerHTML);"><?php echo htmlentities($clipboard); ?></textarea>
+<textarea id="post-d" name="d" onblur="autoSave(this.value);"><?php echo htmlentities($clipboard); ?></textarea>
 </div>
 </div>
 <!--end of main-->

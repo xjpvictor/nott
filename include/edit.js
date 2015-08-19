@@ -249,17 +249,17 @@ function deleteAttachment(id, name, elem) {
   }
 }
 function autoSave(s) {
-  var url = 'clipboard.php';
-  xhr.open("POST", url, true);
-  xhr.withCredentials = true;
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && xhr.status == 200) {
+  var http = new XMLHttpRequest();
+  http.open("POST", 'clipboard.php', true);
+  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  http.withCredentials = true;
+  http.onreadystatechange = function() {
+    if (http.readyState == 4 && http.status == 200) {
       str = document.getElementById('submit').value;
       document.getElementById('submit').value = 'Saved';
       document.getElementById('submit').disabled = true;
       setTimeout("document.getElementById('submit').value=str;document.getElementById('submit').disabled=false;", 2000);
     }
   }
-  xhr.send("d="+s);
+  http.send("d="+s);
 }
-
