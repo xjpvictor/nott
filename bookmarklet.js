@@ -37,20 +37,24 @@ if (!document.getElementById('nott_iframe')) {
   iframe.src = url + 'frame.php?url=' + encodeURIComponent(window.location.origin) + '&href=' + encodeURIComponent(document.location.href);
   if (clip) {
     iframe.src += '&clip=true';
+  } else {
+    iframe.onload = function() {
+      iframe.contentWindow.postMessage(text, url);
+    }
   }
   iframe.style.position = 'fixed';
   iframe.style.right = '10px';
   iframe.style.top = '10px';
   iframe.style.zIndex = 100000;
   iframe.style.border = 'none';
-  iframe.onload = function() {
-    iframe.contentWindow.postMessage(text, url);
-  }
   document.body.appendChild(iframe);
 
-  window.addEventListener('message', function(e) {
+  function closeFrame(e) {
     if (e.data == 'nott_close') {
       document.body.removeChild(document.getElementById('nott_iframe'));
+      window.removeEventListener('message', closeFrame);
     }
-  });
+  }
+
+  window.addEventListener('message', closeFrame);
 }
