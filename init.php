@@ -54,7 +54,6 @@ $limit = ($limit ? $limit : '10');
 $default_privacy = ($default_privacy ? $default_privacy : '0');
 $otp = ($otp ? $otp : '0');
 
-if (($auth = auth()) === false && (!isset($login) || !$login))
-  session_destroy();
+$auth = auth();
 
 $nlist = getlist();
