@@ -3,6 +3,7 @@
 /usr/*/*
 /tmp/*
 /html/*
+/session/*
 config.php
 robots.txt
 !.gitkeep
