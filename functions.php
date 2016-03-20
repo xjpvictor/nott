@@ -440,6 +440,7 @@ function auth() {
     session_set_cookie_params($expire, '/', '', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 1 : 0), 1);
   }
   session_name('_nott_'.str_replace(array('.', '/'), '_', substr($site_url, stripos($site_url, '//')+2)));
+  session_save_path(__DIR__ . '/session');
   if(session_status() !== PHP_SESSION_ACTIVE)
     session_start();
   if (!isset($_SESSION['ip']) || $_SESSION['ip'] !== $ip)
