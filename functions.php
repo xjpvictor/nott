@@ -443,6 +443,16 @@ function auth() {
   session_save_path(__DIR__ . '/session');
   if(session_status() !== PHP_SESSION_ACTIVE)
     session_start();
+
+  if (session_status() === PHP_SESSION_ACTIVE && (!isset($_SESSION['robot']) || $_SESSION['robot'] !== 0)) {
+    if (isset($_COOKIE['_nott_notRobot']) && $_COOKIE['_nott_notRobot'] == 1)
+      $_SESSION['robot'] = 0;
+    else {
+      session_destroy();
+      return false;
+    }
+  }
+
   if (!isset($_SESSION['ip']) || $_SESSION['ip'] !== $ip)
     return false;
 

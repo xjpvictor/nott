@@ -17,6 +17,18 @@ if (!isset($post) || !$post) {
 </div>
 <!--end of wrap-->
 
+<script>
+function notRobot() {
+  document.cookie = "_nott_notRobot=1;path=/";
+  window.removeEventListener("scroll", notRobot);
+  window.removeEventListener("mousemove", notRobot);
+  window.removeEventListener("keypress", notRobot);
+}
+window.addEventListener("scroll", notRobot);
+window.addEventListener("mousemove", notRobot);
+window.addEventListener("keypress", notRobot);
+</script>
+
 <?php if (!isset($clipboard)) { ?>
 <?php if ((isset($single) && $single) || (isset($post) && $post)) { ?>
 <script src="include/highlight/highlight.pack.js"></script>
