@@ -65,7 +65,7 @@ p#otp{padding:1em 0 2em;text-align:center;}
 <body>
 <div id="frame">
 <div id="wrap">
-  <h1><a href="<?php echo (isset($_GET['clip']) ? 'clipboard.php' : 'index.php'); ?>" title="<?php echo (isset($_GET['clip']) ? 'Clipboard' : htmlspecialchars($site_name)); ?>"><?php echo (isset($_GET['clip']) ? 'Clipboard by ' : '').htmlspecialchars($site_name); ?></a></h1>
+  <h1><a target="_blank" href="<?php echo (isset($_GET['clip']) ? 'clipboard.php' : 'index.php'); ?>" title="<?php echo (isset($_GET['clip']) ? 'Clipboard' : htmlspecialchars($site_name)); ?>"><?php echo (isset($_GET['clip']) ? 'Clipboard by ' : '').htmlspecialchars($site_name); ?></a></h1>
 <div id="form-wrap">
 <?php if (!$auth) { ?>
 <form id="login" method="POST" action="frame.php?url=<?php echo rawurlencode($url); ?><?php echo (isset($_GET['href']) && $_GET['href'] ? '&url='.urlencode($_GET['href']) : ''); ?><?php echo (isset($_GET['clip']) && $_GET['clip'] ? '&clip=true' : ''); ?>">

@@ -11,7 +11,7 @@ if (!$auth) {
 $post = true;
 $clipboard = (file_exists($clipboard_file) ? file_get_contents($clipboard_file) : '');
 
-if (isset($_POST['d']) && $_POST['d'] !== $clipboard) {
+if (isset($_POST['d'])) {
   $clipboard = $_POST['d'];
   file_put_contents($clipboard_file, $clipboard);
   chmod($clipboard_file, 0600);
