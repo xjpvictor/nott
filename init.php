@@ -36,7 +36,6 @@ if ($password && !preg_match('/\$2y\$'.$cost.'\$[\.\/0-9a-zA-Z]{'.(60-5-strlen($
 }
 
 $salt = substr($password, -10);
-$ip = hash('sha512', $salt.$_SERVER['REMOTE_ADDR']);
 
 if (!$site_url || !$user_name || !$password) {
   if (!$site_url)

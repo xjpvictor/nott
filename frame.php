@@ -11,8 +11,7 @@ if (!$auth && isset($_POST['p']) && isset($_POST['u'])) {
   if ($_POST['u'] == $user_name && verifypw($_POST['p'])) {
     if (!$otp || !isset($otp_key) || (isset($_POST['o']) && verifyotp($_POST['o']))) {
       session_regenerate_id(true);
-      $_SESSION['time'] = time();
-      $_SESSION['ip'] = $ip;
+      $_SESSION['auth'] = 1;
       $auth = true;
     }
   }

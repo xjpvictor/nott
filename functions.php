@@ -430,7 +430,7 @@ function oathtruncate($hash,$otpLength) {
   ) % pow(10, $otpLength);
 }
 function auth() {
-  global $site_url, $ip, $login;
+  global $site_url, $login;
 
   if (isset($login)) {
     if (isset($_POST['r']) && $_POST['r'])
@@ -453,11 +453,10 @@ function auth() {
     }
   }
 
-  if (!isset($_SESSION['ip']) || $_SESSION['ip'] !== $ip)
+  if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== 1)
     return false;
-
-  $_SESSION['ip'] = $ip;
-  return true;
+  else
+    return true;
 }
 function getattachment($id = null, $cache = 0) {
   global $upload_dir;
