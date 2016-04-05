@@ -336,7 +336,14 @@ function getrefurl($id, $single) {
 function geturlmeta($url = '') {
   if (!$url)
     return '';
-  $str = @file_get_contents($url);
+  //$str = @file_get_contents($url);
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+  $str = curl_exec($ch);
+  curl_close($ch);
   if (strlen($str)) {
     preg_match('/\<title\>(.*)\<\/title\>/i', $str, $title);
     preg_match('/<meta +([^>]*content *= *["\']([^>]*)["\'][^>]* *)? *name *= *["\']description["\'] *([^>]*content *= *["\']([^>]*)["\'][^>]* *)? *\/? *>/i', $str, $description);
