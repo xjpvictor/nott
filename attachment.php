@@ -35,7 +35,6 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
         }
       }
     } else {
-      ;
       if ((!$_GET['id'] && $auth) || ($note = getnote($_GET['id']) && ($note['public'] || $auth))) {
         if (file_exists($file = $upload_dir.$file_name)) {
           $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -72,16 +71,27 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
       $file_type = finfo_file($finfo, $file);
       header('Content-type: '.$file_type);
       readfile($file);
-    } elseif ($content = @file_get_contents($url)) {
-      file_put_contents($file, $content);
-      $finfo = finfo_open(FILEINFO_MIME_TYPE);
-      $file_type = finfo_file($finfo, $file);
-      header('Content-type: '.$file_type);
-      readfile($file);
     } else {
-      http_response_code(404);
-      $error = 'File not found.';
-      include($include_dir.'error.php');
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_HEADER, 0);
+      curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+      curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+      curl_setopt($ch, CURLOPT_REFERER, $url);
+      $content = curl_exec($ch);
+      curl_close($ch);
+      if ($content) {
+        file_put_contents($file, $content);
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $file_type = finfo_file($finfo, $file);
+        header('Content-type: '.$file_type);
+        readfile($file);
+      } else {
+        http_response_code(404);
+        $error = 'File not found.';
+        include($include_dir.'error.php');
+      }
     }
     exit;
   }

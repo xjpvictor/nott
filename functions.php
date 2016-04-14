@@ -48,7 +48,8 @@ function escpost($str, $id, $source, $edit = 0) {
     '/'.$url.'attachment\.php\?(?:[^& =]+(?<!name|tmp)=[^& =]+&)*(?:name=([^& ]+)&)?(?:[^& =]+(?<!name|tmp)=[^& =]+&)*tmp=1(?:&[^& =]+(?<!name|tmp)=[^& =]+)*(?:&name=([^& ]+))?(?:&[^& =]+(?<!name|tmp)=[^& =]+)*/i', //change image url for new post
     '/<\s*img ((?:[^>]*\s)*)src\s*=\s*("|\')cid:([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle image in email
     '/<\s*a ((?:[^>]*\s)*)href\s*=\s*("|\')#([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url anchor point
-    '/<\s*(a|img|iframe) ((?:[^>]*\s)*)(src|href)\s*=\s*("|\')\/([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url
+    '/<\s*(a|img|iframe) ((?:[^>]*\s)*)(src|href)\s*=\s*("|\')\/\/([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle url starting with double slash
+    '/<\s*(a|img|iframe) ((?:[^>]*\s)*)(src|href)\s*=\s*("|\')\/([^"\'\/]*)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url
     '/<\s*blockquote(\s+[^>]*)?>[\r\n]+/i',
     '/\r\n/',
     '/\r/',
@@ -64,6 +65,7 @@ function escpost($str, $id, $source, $edit = 0) {
     'attachment.php?id='.$id.'&name=$1$2&action=get',
     '<img $1src=$2attachment.php?id='.$id.'&cid=$3$4$5$6>',
     '<a $1href=$2'.$source.'#$3$4$5$6>',
+    '<$1 $2$3=$4'.(strpos($source_d, 'https://') === 0 ? 'https://' : 'http://').'$5$6$7$8>',
     '<$1 $2$3=$4'.$source_d.'$5$6$7$8>',
     '<blockquote$1>',
     "\n",
@@ -384,7 +386,7 @@ function geturlcontent($url = '') {
     $ReadabilityData = $Readability->getContent();
     $content = '<h1>'.$ReadabilityData['title'].'</h1>'.$ReadabilityData['content'];
 
-    $content = preg_replace('/<([^>]* +)(src) *= *("|\')\//si','<$1$2=$3'.substr($url, 0, strpos($url, '/', 8) + 1).'/', $content); //modify img src
+    //$content = preg_replace('/<([^>]* +)(src) *= *("|\')\//si','<$1$2=$3'.substr($url, 0, strpos($url, '/', 8) + 1).'/', $content); //modify img src
 
     return $content;
   }
