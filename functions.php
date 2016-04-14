@@ -140,6 +140,13 @@ function getnote($id, $markdown = 0) {
 function postnote($id = null) {
   global $data_dir, $content_dir, $html_dir, $default_privacy, $id_file;
 
+  if (extension_loaded('tidy') && !isset($id) && isset($_POST['d']) && isurl($_POST['d'])) {
+    if (!isset($_POST['u']) || !$_POST['u'])
+      $_POST['u'] = $_POST['d'];
+    if (($p = geturlcontent($_POST['d'])))
+      $_POST['d'] = 'Original url: <a href="'.$_POST['d'].'">'.$_POST['d'].'</a>'."\n\n".$p;
+  }
+
   $note = array();
   if (!isset($id) || !($note = getnote($id, 1))) {
     if (file_exists($id_file))
@@ -349,6 +356,39 @@ function geturlmeta($url = '') {
     preg_match('/<meta +([^>]*content *= *["\']([^>]*)["\'][^>]* *)? *name *= *["\']description["\'] *([^>]*content *= *["\']([^>]*)["\'][^>]* *)? *\/? *>/i', $str, $description);
     return array('t' => (isset($title[1]) ? toutf8($title[1]) : ''), 'd' => toutf8((isset($description[2]) ? $description[2] : '').(isset($description[4]) ? $description[4] : '')));
   }
+  return '';
+}
+function geturlcontent($url = '') {
+  global $include_dir;
+
+  if (!$url)
+    return '';
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+  $content = curl_exec($ch);
+  curl_close($ch);
+  if ($content = toutf8($content)) {
+    $content = preg_replace(array('/<style.*?\/style>/si', '/<script.*?\/script>/si'), '', $content); //remove js element
+    $tidy = new tidy;
+    $tidy->parseString($content);
+    $tidy->cleanRepair();
+    $content = $tidy;
+    require $include_dir . 'readability/config.inc.php';
+    require $include_dir . 'readability/common.inc.php';
+    require $include_dir . 'readability/Readability.inc.php';
+    $Readability = new Readability($content, 'utf8');
+    $ReadabilityData = $Readability->getContent();
+    $content = '<h1>'.$ReadabilityData['title'].'</h1>'.$ReadabilityData['content'];
+
+    $content = preg_replace('/<([^>]* +)(src) *= *("|\')\//si','<$1$2=$3'.substr($url, 0, strpos($url, '/', 8) + 1).'/', $content); //modify img src
+
+    return $content;
+  }
+
   return '';
 }
 function cut($str, $highlight = '', $len = 140) {
