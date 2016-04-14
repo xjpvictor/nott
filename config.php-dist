@@ -32,3 +32,5 @@ $allowed_mail = array(
   '', // must set if allow note via email
 );
 $mail_passphrase = '';
+
+$passcode = ''; // leave empty to disable lock screen

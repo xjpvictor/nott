@@ -146,6 +146,7 @@ p#otp{padding:1em 0 2em;text-align:center;}
 .kindle-note{font-style:italic;color:#444;}
 .kindle-note:before{content:"// ";}
 .kindle-separator:last-of-type{border:none !important;margin-bottom:0 !important;}
+#lock{position:fixed;top:0;right:0;bottom:0;left:0;z-index:9999;background:#fff;padding:20px;}
 
 @media screen and (max-width:960px){
 #main{float:none;margin-right:0;}

@@ -31,9 +31,11 @@ $site_url = ($site_url ? (stripos($site_url, 'http://') === false && stripos($si
 $ever_limit = '5';
 
 $cost = 12; //Need to reset password if change this
-if ($password && !preg_match('/\$2y\$'.$cost.'\$[\.\/0-9a-zA-Z]{'.(60-5-strlen($cost)).'}/', $password)) {
+if ($password && !preg_match('/\$2y\$'.$cost.'\$[\.\/0-9a-zA-Z]{'.(60-5-strlen($cost)).'}/', $password))
   file_put_contents(__DIR__ . '/config.php', str_replace('$password = \''.$password.'\'', '$password = \''.($password = password_hash($password, PASSWORD_BCRYPT, ['cost' => $cost])).'\'', file_get_contents(__DIR__ . '/config.php')), LOCK_EX);
-}
+
+if (isset($passcode) && $passcode && !preg_match('/\$2y\$'.$cost.'\$[\.\/0-9a-zA-Z]{'.(60-5-strlen($cost)).'}/', $passcode))
+  file_put_contents(__DIR__ . '/config.php', str_replace('$passcode = \''.$passcode.'\'', '$passcode = \''.($passcode = password_hash($passcode, PASSWORD_BCRYPT, ['cost' => $cost])).'\'', file_get_contents(__DIR__ . '/config.php')), LOCK_EX);
 
 $salt = substr($password, -10);
 

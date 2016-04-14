@@ -17,6 +17,7 @@ if (isset($_POST['p']) && isset($_POST['u'])) {
     if (!$otp || !isset($otp_key) || (isset($_POST['o']) && verifyotp($_POST['o']))) {
       session_regenerate_id(true);
       $_SESSION['auth'] = 1;
+      setcookie('_nott_lock', microtime(), 31536000, '/', '', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 1 : 0), 1);
       if ($otp && !isset($otp_key)) {
         $otp_key_gen = generaterandomstring();
         file_put_contents(__DIR__.'/config.php', '$otp_key = \''.$otp_key_gen.'\'; //remove this line to regenerate otp secret key', LOCK_EX | FILE_APPEND);

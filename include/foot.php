@@ -62,5 +62,46 @@ var base_url = 'attachment.php?id=0&action=add';
 <script src="include/edit.js"></script>
 <?php } ?>
 
+<?php if (isset($passcode) && $passcode && (isset($clipboard) || (isset($single) && $single) || (isset($post) && $post))) { ?>
+<div id="lock" style="display:none;">
+<div id="login">
+<p>Enter Pass code:<br/><br/>
+<input id="passcode" type="password"></p><br/>
+<input class="compose" type="submit" value="Unlock" onclick="var elem=document.getElementById('passcode');var script=document.createElement('script');script.id='lock_s';script.src='passcode.php?p='+elem.value;document.body.appendChild(script);elem.value='';">
+</div>
+</div>
+<script>
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+  else return '';
+}
+function setLockCookie() {
+  n = Date.now();
+  d = new Date();
+  d.setTime(n+31536000000);
+  document.cookie = "_nott_lock="+n+";expires="+d.toGMTString()+";path=/";
+}
+function lockDown() {
+  t = getCookie('_nott_lock');
+  if (t && Date.now() - t >= 600000) {
+    document.getElementById('lock').style.display='block';
+    window.removeEventListener("scroll", setLockCookie);
+    window.removeEventListener("mousemove", setLockCookie);
+    window.removeEventListener("keypress", setLockCookie);
+    document.title = 'Locked | <?php echo str_replace('\'', '\\\'', htmlentities($site_name)); ?>';
+  } else
+    setTimeout("lockDown()", 60000);
+}
+lockDown();
+setTimeout(function() {
+  window.addEventListener("scroll", setLockCookie);
+  window.addEventListener("mousemove", setLockCookie);
+  window.addEventListener("keypress", setLockCookie);
+}, 10000);
+</script>
+<?php } ?>
+
 </body>
 </html>
