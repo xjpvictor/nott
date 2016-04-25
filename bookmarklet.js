@@ -18,7 +18,7 @@ function getSelectionHtml() {
     }
   }
   function removeAttr(str) {
-    var s = ['id','class','on[^=]+','data','dynsrc','accesskey','tabindex','jsaction','align','border'];
+    var s = ['id','class','on[^=]+','data','data-[a-z]+','dynsrc','accesskey','tabindex','jsaction','align','border','srcset'];
     for (var i = 0; i < s.length; i++) {
       str = str.replace(new RegExp('<([^>]* +)?'+s[i]+' *= *(("[^"]*")|(\'[^\']*\'))?( +[^>]*)?(\\/)?>','gi'),'<$1$5$6>');
     }

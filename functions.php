@@ -25,7 +25,7 @@ function isurl($str) {
 function escattr($match) {
   if (is_array($match))
     $match = '<'.$match[1].$match[6].'>';
-  return preg_replace_callback('/<([^>]*\s+)?(on[^=]+|jsaction|data|dynsrc|accesskey|tabindex|shape)\s*=\s*(("[^"]*")|(\'[^\']*\'))?(\s+[^>]*\/?)?>/i', 'escattr', $match);
+  return preg_replace_callback('/<([^>]*\s+)?(on[^=]+|jsaction|data|data-[a-z]+|dynsrc|accesskey|tabindex|shape|srcset)\s*=\s*(("[^"]*")|(\'[^\']*\'))?(\s+[^>]*\/?)?>/i', 'escattr', $match);
 }
 function escpost($str, $id, $source, $edit = 0) {
   global $allowed_tags, $site_url;
