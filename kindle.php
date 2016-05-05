@@ -78,7 +78,7 @@ foreach ($highlights as $highlight) {
   $i++;
   $highlight = parsekindle($highlight);
   if ($highlight['type'] == 'highlight' && $highlight['date'] > $ts) {
-    $str = ($highlight['date'] ? '<span class="kindle-date">'.date('M. d, Y', $highlight['date']).'</span>'.($highlight['page'] ? ' on <span class="kindle-page">Page '.$highlight['page'].'</span>'."\n" : "\n") : ($highlight['page'] ? 'on <span class="kindle-page">Page '.$highlight['page'].'</span>'."\n" : '')).(isset($notes[hash('md5', $highlight['title'].$highlight['author'])][$highlight['date']]) && ($note = $notes[hash('md5', $highlight['title'].$highlight['author'])][$highlight['date']]) ? '<span class="kindle-note">'.$note.'</span>'."\n" : '').'<blockquote class="kindle-highlight">'.$highlight['quote'].'</blockquote><hr class="kindle-separator">'."\n\n";
+    $str = ($highlight['date'] ? '<span class="kindle-date">'.date('M. d, Y', $highlight['date']).'</span>'.($highlight['page'] ? ' on <span class="kindle-page">Page '.$highlight['page'].'</span>' : '') : ($highlight['page'] ? 'on <span class="kindle-page">Page '.$highlight['page'].'</span>'."\n" : '')).(isset($notes[hash('md5', $highlight['title'].$highlight['author'])][$highlight['date']]) && ($note = $notes[hash('md5', $highlight['title'].$highlight['author'])][$highlight['date']]) ? '<span class="kindle-note">'.$note.'</span>' : '').'<blockquote class="kindle-highlight">'.$highlight['quote'].'</blockquote><hr class="kindle-separator">'."\n\n";
     if (isset($book) && isset($author) && ($highlight['title'] !== $book || $highlight['author'] !== $author)) {
       postkindle($book, $author);
     }
