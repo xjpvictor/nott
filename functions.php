@@ -142,6 +142,10 @@ function getnote($id, $markdown = 0) {
 function postnote($id = null) {
   global $data_dir, $content_dir, $html_dir, $default_privacy, $id_file;
 
+  if ((!isset($_POST['d']) || !trim(strip_tags($_POST['d'], '<img>'))) && isset($_POST['u']) && isurl($_POST['u'])) {
+    $_POST['d'] = $_POST['u'];
+  }
+
   if (extension_loaded('tidy') && !isset($id) && isset($_POST['d']) && isurl($_POST['d'])) {
     if (!isset($_POST['u']) || !$_POST['u'])
       $_POST['u'] = $_POST['d'];

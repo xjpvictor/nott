@@ -115,7 +115,7 @@ if (isset($_POST['d']) && $_POST['d']) {
 </div>
 <?php } else { ?>
 <form method="POST" action="post.php?r=bookmarklet&url=<?php echo rawurlencode($url); ?>">
-<textarea id="text-d" name="d" required>
+<textarea id="text-d" name="d">
 <?php
 if (isset($_POST['d']) && $_POST['d']) {
   echo htmlentities($_POST['d']);
