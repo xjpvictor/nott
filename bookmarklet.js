@@ -32,7 +32,7 @@ if (!document.getElementById('nott_iframe')) {
   var iframe = document.createElement('iframe');
   iframe.frameBorder = 0;
   iframe.width = '500px';
-  iframe.height = '490px';
+  iframe.height = '500px';
   iframe.id = 'nott_iframe';
   iframe.src = url + 'frame.php?url=' + encodeURIComponent(window.location.origin) + '&href=' + encodeURIComponent(document.location.href);
   if (clip) {
@@ -46,7 +46,7 @@ if (!document.getElementById('nott_iframe')) {
   iframe.style.right = '10px';
   iframe.style.top = '10px';
   iframe.style.zIndex = 100000;
-  iframe.style.border = 'none';
+  iframe.style.border = '1px solid #ccc';
   document.body.appendChild(iframe);
 
   function closeFrame(e) {

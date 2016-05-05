@@ -28,9 +28,9 @@ if (!$auth)
 <link rel="profile" href="http://gmpg.org/xfn/11" />
     <style type="text/css" media="all">
 html, body, div, span, h1, p, a, input, textarea{font-family:"Lucida Sans Unicode","Lucida Grande","wenquanyi micro hei","droid sans fallback",FreeSans,Helvetica,Arial,"hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,sans-serif !important;font-size:14px;line-height:1.8em;}
-html{background:transparent;}
-body{padding:0;margin:0;}
-#frame{height:auto;min-width:400px;max-width:660px;margin:0;padding:10px;background:#f9f9f9;border-width:1px;border-color:#ccc;border-style:solid;color:#000;}
+html{background:transparent;height:100%;}
+body{padding:0;margin:0;height:100%;background:#f9f9f9;}
+#frame{height:auto;min-width:400px;max-width:660px;margin:0;padding:10px;background:#f9f9f9;border:none;color:#000;}
 #wrap{padding:10px 2%;border:1px solid #ccc;background:#fff;}
 h1{font-size:16px;color:#000;text-decoration:none;text-align:center;padding-bottom:20px;border-bottom:1px solid #000;}
 h1 a{font-size:16px;color:#000;text-decoration:none;}
