@@ -71,6 +71,11 @@ if ((isset($note) && $list = getattachment($note['id'])) || (isset($clipboard) &
 <form id="search" method="get" action="index.php">
 <input type="text" name="s"><input type="submit" value="">
 </form>
+<?php if ((!isset($post) || !$post) && (!isset($id) || !$id)) { ?>
+<div class="widget">
+<p>Total <?php echo count(glob($data_dir . '[0-9]*.json', GLOB_NOSORT)); ?> Notes</p>
+</div>
+<?php } ?>
 <?php
 if (isset($note)) {
   if ($note['tags']) {
