@@ -380,9 +380,12 @@ function geturlcontent($url = '') {
   if ($content = toutf8($content)) {
     $content = preg_replace(array('/<style.*?\/style>/si', '/<script.*?\/script>/si'), '', $content); //remove js element
     $tidy = new tidy;
-    $tidy->parseString($content);
-    $tidy->cleanRepair();
-    $content = $tidy;
+    $content = $tidy->repairString($content);
+    if (!$content || !($tidy->parseString($content)) || !($tidy->cleanRepair()))
+      return '';
+    else
+      $content = $tidy;
+
     require $include_dir . 'readability/config.inc.php';
     require $include_dir . 'readability/common.inc.php';
     require $include_dir . 'readability/Readability.inc.php';
