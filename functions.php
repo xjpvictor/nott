@@ -154,6 +154,7 @@ function postnote($id = null) {
     if (($p = geturlcontent($url)))
       $_POST['d'] = 'Original url: <a href="'.$url.'">'.$url.'</a>'."\n\n".$p;
     $_POST['t'] = 'inbox'.(isset($_POST['t']) && $_POST['t'] ? ','.$_POST['t'] : '');
+    // mail()
   }
 
   $note = array();
