@@ -9,16 +9,22 @@
 <?php if (!isset($clipboard)) { ?>
 <div class="widget">
 <h2>Tags</h2>
-<input name="t" type="text" id="post-t" value="<?php if (isset($note) && $note['tags']) {foreach ($note['tags'] as $tag) {echo $tag.',';}} ?>">
+<input name="t" type="text" id="post-t" value="<?php if (isset($note) && $note['tags']) {foreach ($note['tags'] as $tag) {echo ($tag !== 'inbox' ? $tag.',' : '');}} ?>">
 <?php
 if ($tags = gettaglist()) {
-  echo '<p>';
+  $tag_str = '';
   foreach ($tags as $tag => $ids) {
-    echo '<span class="tag" onclick="var e=document.getElementById(\'post-t\');e.value=e.value+this.innerHTML+\',\';">'.$tag.'</span>';
+    if ($tag !== 'inbox')
+      $tag_str .= '<span class="tag" onclick="var e=document.getElementById(\'post-t\');e.value=e.value+this.innerHTML+\',\';">'.$tag.'</span>';
   }
-  echo '</p>';
+  if ($tag_str)
+    echo '<p>'.$tag_str.'</p>';
 }
 ?>
+</div>
+<div class="widget">
+<h2>Location</h2>
+<label><input type="radio" name="inbox" value="0" <?php echo (!isset($note['tags']) || !$note['tags'] || !in_array('inbox', $note['tags']) ? 'checked' : ''); ?>> Notes</label><br/><label><input type="radio" name="inbox" value="1" <?php echo (isset($note) && isset($note['tags']) && $note['tags'] && in_array('inbox', $note['tags']) ? 'checked' : ''); ?>> Inbox</label>
 </div>
 <div class="widget">
 <h2>Privacy</h2>
@@ -73,38 +79,44 @@ if ((isset($note) && $list = getattachment($note['id'])) || (isset($clipboard) &
 </form>
 <?php if ((!isset($post) || !$post) && (!isset($id) || !$id)) { ?>
 <div class="widget">
-<p>Total <?php echo count(glob($data_dir . '[0-9]*.json', GLOB_NOSORT)); ?> Notes</p>
+<p>Total <?php echo count(glob($data_dir . '[0-9]*.json', GLOB_NOSORT)); ?> Notes <a class="tag" href="inbox.php" title="View Inbox">View Inbox</a></p>
 </div>
 <?php } ?>
 <?php
 if (isset($note)) {
   if ($note['tags']) {
+    $tag_str = '';
+    foreach ($note['tags'] as $tag) {
+      if ($tag !== 'inbox')
+        $tag_str .= '<a class="tag" href="index.php?tag='.rawurlencode($tag).'" title="'.$tag.'">'.$tag.'</a>';
+    }
+    if ($tag_str) {
 ?>
 <div class="widget">
 <h2>Tags</h2>
 <?php
-    echo '<p>';
-    foreach ($note['tags'] as $tag) {
-      echo '<a class="tag" href="index.php?tag='.rawurlencode($tag).'" title="'.$tag.'">'.$tag.'</a>';
-    }
-    echo '</p>';
+      echo '<p>'.$tag_str.'</p>';
 ?>
 </div>
 <?php
+    }
   }
 } elseif ($tags = gettaglist()) {
+  $tag_str = '';
+  foreach ($tags as $tag => $ids) {
+    if ($tag !== 'inbox')
+      $tag_str .= '<a class="tag" href="index.php?tag='.rawurlencode($tag).'" title="'.$tag.'">'.$tag.'</a>';
+  }
+  if ($tag_str) {
 ?>
 <div class="widget">
 <h2>Tags</h2>
 <?php
-  echo '<p>';
-  foreach ($tags as $tag => $ids) {
-    echo '<a class="tag" href="index.php?tag='.rawurlencode($tag).'" title="'.$tag.'">'.$tag.'</a>';
-  }
-  echo '</p>';
+    echo '<p>'.$tag_str.'</p>';
 ?>
 </div>
 <?php
+  }
 }
 ?>
 <?php if (isset($note) && $note['source']['url']) { ?>

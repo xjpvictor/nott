@@ -62,10 +62,13 @@ if ($id) {
     }
     include($include_dir . 'head.php');
     echo '<div id="main">';
-    if (isset($tag) && $tag)
-      echo '<h1 id="title">Tag: <span>'.htmlspecialchars($tag).'</span></h1>';
-    elseif (isset($search) && $search)
-      echo '<h1 id="title">Search: <span>'.htmlspecialchars($search).'</span></h1>';
+    if (isset($tag) && $tag) {
+      if ($tag == 'inbox')
+        echo '<h1 id="title"><span>Inbox</span> ('.count($list).' Notes)</h1>';
+      else
+        echo '<h1 id="title">Tag: <span>'.htmlspecialchars($tag).'</span> ('.count($list).' Notes)</h1>';
+    } elseif (isset($search) && $search)
+      echo '<h1 id="title">Search: <span>'.htmlspecialchars($search).'</span> ('.count($list).' Notes)</h1>';
     foreach ($list as $file) {
       if (isset($search))
         displaynote(getnote($file), $search);
@@ -88,9 +91,12 @@ if ($id) {
   } else {
     include($include_dir . 'head.php');
     echo '<div id="main">';
-    if (isset($tag) && $tag)
-      echo '<h1 id="title">Tag: <span>'.htmlspecialchars($tag).'</span></h1>';
-    elseif (isset($search) && $search)
+    if (isset($tag) && $tag) {
+      if ($tag == 'inbox')
+        echo '<h1 id="title"><span>Inbox</span> ('.count($list).' Notes)</h1>';
+      else
+        echo '<h1 id="title">Tag: <span>'.htmlspecialchars($tag).'</span></h1>';
+    } elseif (isset($search) && $search)
       echo '<h1 id="title">Search: <span>'.htmlspecialchars($search).'</span></h1>';
     echo '<div class="content">No note yet!</div>';
   }

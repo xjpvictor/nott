@@ -144,13 +144,16 @@ function postnote($id = null) {
 
   if ((!isset($_POST['d']) || !trim(strip_tags($_POST['d'], '<img>'))) && isset($_POST['u']) && isurl($_POST['u'])) {
     $_POST['d'] = $_POST['u'];
-  }
+    $url = $_POST['u'];
+  } elseif ((!isset($_POST['u']) || !$_POST['u']) && isset($_POST['d']) && trim(strip_tags($_POST['d'], '<img>')))
+    $url = trim(strip_tags($_POST['d'], '<img>'));
 
-  if (extension_loaded('tidy') && !isset($id) && isset($_POST['d']) && isurl($_POST['d'])) {
+  if (extension_loaded('tidy') && !isset($id) && isset($url) && isurl($url)) {
     if (!isset($_POST['u']) || !$_POST['u'])
-      $_POST['u'] = $_POST['d'];
-    if (($p = geturlcontent($_POST['d'])))
-      $_POST['d'] = 'Original url: <a href="'.$_POST['d'].'">'.$_POST['d'].'</a>'."\n\n".$p;
+      $_POST['u'] = $url;
+    if (($p = geturlcontent($url)))
+      $_POST['d'] = 'Original url: <a href="'.$url.'">'.$url.'</a>'."\n\n".$p;
+    $_POST['t'] = 'inbox'.(isset($_POST['t']) && $_POST['t'] ? ','.$_POST['t'] : '');
   }
 
   $note = array();
@@ -177,6 +180,8 @@ function postnote($id = null) {
     'tags' => (isset($note['tags']) ? $note['tags'] : array()),
   );
   if (isset($_POST['t'])) {
+    if (isset($_POST['inbox']) && $_POST['inbox'] == 1)
+      $_POST['t'] = 'inbox,'.$_POST['t'];
     $data['tags'] = array_unique(array_filter(array_map('trim', explode(',', htmlspecialchars($_POST['t'], ENT_QUOTES))), 'strlen'));
     sort($data['tags'], SORT_NATURAL | SORT_FLAG_CASE);
   }
@@ -278,7 +283,7 @@ function displaynote($note, $search = '', $single = 0) {
 
   echo '<div class="content" id="post-'.$note['id'].'">';
   if (!$note['public'] && !$auth && ($single || (!$single && (!isset($show_snippet) || !$show_snippet || !$note['source']['url'])))) {
-    echo '<p class="private">Private note</p>';
+    echo '<p class="private">Private</p>';
     echo '<div class="meta">';
   } else {
     if ($note['content']) {
@@ -314,16 +319,19 @@ function displaynote($note, $search = '', $single = 0) {
       echo '</p></div>';
     }
     if (!$single && $note['tags']) {
-      echo '<p class="taglist">';
-      foreach ($note['tags'] as $tag)
-        echo '<a href="index.php?tag='.rawurlencode($tag).'" title="'.$tag.'">#'.$tag.'</a>';
-      echo '</p>';
+      $tag_str = '';
+      foreach ($note['tags'] as $tag) {
+        if ($tag !== 'inbox')
+          $tag_str .= '<a href="index.php?tag='.rawurlencode($tag).'" title="'.$tag.'">#'.$tag.'</a>';
+      }
+      if ($tag_str)
+        echo '<p class="taglist">'.$tag_str.'</p>';
     }
   }
-  echo date('M. d, Y', $note['time']).(!$note['public'] ? ($auth ? '<a class="private-s" href="privacy.php?id='.$note['id'].'&p=1&url='.getrefurl($note['id'], $single).'" title="Set to public">Private note</a>' : '<span class="private-s">Private note</span>') : '').'<span class="link">'.(!$single && ($note['public'] || $auth) ? '<a title="view" href="index.php?id='.$note['id'].'">View</a>' : ($auth && class_exists('ZipArchive') ? '<a title="export" href="export.php?id='.$note['id'].'">Export</a>' : '')).($auth ? '<a title="edit" href="edit.php?id='.$note['id'].'">Edit</a><a title="delete" onclick="return confirm(\'Permanently delete this note?\');" href="delete.php?id='.$note['id'].'">Delete</a>' : '').'</span></div>';
+  echo date('M. d, Y', $note['time']).(!$note['public'] ? ($auth ? '<a class="private-s" href="privacy.php?id='.$note['id'].'&p=1&url='.getrefurl($note['id'], $single).'" title="Set to public">Private</a>' : '<span class="private-s">Private</span>') : '').(in_array('inbox', $note['tags']) ? '<a class="private-s" href="inbox.php?id='.$note['id'].'&i=0&url='.getrefurl($note['id'], $single, 1).'" title="Move from inbox to note">Inbox</a>' : '').'<span class="link">'.(!$single && ($note['public'] || $auth) ? '<a title="view" href="index.php?id='.$note['id'].'">View</a>' : ($auth && class_exists('ZipArchive') ? '<a title="export" href="export.php?id='.$note['id'].'">Export</a>' : '')).($auth ? '<a title="edit" href="edit.php?id='.$note['id'].'">Edit</a><a title="delete" onclick="return confirm(\'Permanently delete this note?\');" href="delete.php?id='.$note['id'].'">Delete</a>' : '').'</span></div>';
   echo '</div>';
 }
-function getrefurl($id, $single) {
+function getrefurl($id, $single, $inbox = 0) {
   global $site_url;
 
   if ($single)
@@ -342,7 +350,8 @@ function getrefurl($id, $single) {
   } elseif (!isset($url))
     $url = $site_url;
 
-  $url .= '#post-'.$id;
+  if (!$inbox)
+    $url .= '#post-'.$id;
 
   return rawurlencode($url);
 }

@@ -27,7 +27,7 @@ This is a simple notebook written in PHP
 
 ## Usage ##
 
-* Email "[private|public] tags: tag1, tag2" as subject to take private/public note with tags
+* Email "[private|public] tags: tag1, tag2" without quote and brackets as subject to take private/public note with tags
 
 * Add url in subject to create a note with reference
 
