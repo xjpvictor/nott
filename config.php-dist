@@ -34,3 +34,12 @@ $allowed_mail = array(
 $mail_passphrase = '';
 
 $passcode = ''; // leave empty to disable lock screen
+
+/*
+ * Send auto-fetched web page to designated email address
+ * For Read it Later
+ */
+
+$mail_note_to = ''; // leave empty to stop sending notes
+$mail_note_account = ''; // msmtp account to be sent from, optional
+$mail_note_from = ''; // email address to be sent from, optional

@@ -140,7 +140,7 @@ function getnote($id, $markdown = 0) {
   return $data;
 }
 function postnote($id = null) {
-  global $data_dir, $content_dir, $html_dir, $default_privacy, $id_file;
+  global $data_dir, $content_dir, $html_dir, $default_privacy, $id_file, $mail_note_to, $mail_note_account, $mail_note_from, $site_name;
 
   if ((!isset($_POST['d']) || !trim(strip_tags($_POST['d'], '<img>'))) && isset($_POST['u']) && isurl($_POST['u'])) {
     $_POST['d'] = $_POST['u'];
@@ -151,10 +151,15 @@ function postnote($id = null) {
   if (extension_loaded('tidy') && !isset($id) && isset($url) && isurl($url)) {
     if (!isset($_POST['u']) || !$_POST['u'])
       $_POST['u'] = $url;
-    if (($p = geturlcontent($url)))
+    if (($p = geturlcontent($url))) {
       $_POST['d'] = 'Original url: <a href="'.$url.'">'.$url.'</a>'."\n\n".$p;
+
+      if ($mail_note_to) {
+        sendmail($mail_note_to, $mail_note_from, 'Note saved in Inbox by '.htmlentities($site_name), $_POST['d'], $mail_note_account);
+      }
+
+    }
     $_POST['t'] = 'inbox'.(isset($_POST['t']) && $_POST['t'] ? ','.$_POST['t'] : '');
-    // mail()
   }
 
   $note = array();
@@ -650,3 +655,21 @@ function verifypw($pw) {
   else
     return false;
 }
+
+function sendmail($to, $from = '', $subject = '', $message = '', $account = '') {
+  global $user_name;
+
+  if (!$to)
+    return 0;
+
+  $headers =
+    'MIME-Version: 1.0'."\r\n".
+    'Content-type: text/html; charset=utf-8'."\r\n".
+    ($from ? 'From: '.$user_name.' <'.$from.'>' : '');
+
+  if ($account)
+    mail($to, $subject, $message, $headers, '-a '.$account);
+  else
+    mail($to, $subject, $message, $headers);
+}
+
