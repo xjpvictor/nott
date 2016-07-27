@@ -154,6 +154,7 @@ p#otp{padding:1em 0 2em;text-align:center;}
 .content{padding-left:10px;padding-right:10px;}
 .link{float:none;display:block;padding-top:30px;}
 .link a{margin-left:0;margin-right:15px;}
+.content:hover>.meta .link{display:block;}
 #sidebar{float:none;width:100%;padding-left:0;}
 #pager{margin-right:0;}
 }
