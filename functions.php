@@ -48,8 +48,8 @@ function escpost($str, $id, $source, $edit = 0) {
     '/'.$url.'attachment\.php\?(?:[^& =]+(?<!name|tmp)=[^& =]+&)*(?:name=([^& ]+)&)?(?:[^& =]+(?<!name|tmp)=[^& =]+&)*tmp=1(?:&[^& =]+(?<!name|tmp)=[^& =]+)*(?:&name=([^& ]+))?(?:&[^& =]+(?<!name|tmp)=[^& =]+)*/i', //change image url for new post
     '/<\s*img ((?:[^>]*\s)*)src\s*=\s*("|\')cid:([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle image in email
     '/<\s*a ((?:[^>]*\s)*)href\s*=\s*("|\')#([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url anchor point
-    '/<\s*(a|img|iframe) ((?:[^>]*\s)*)(src|href)\s*=\s*("|\')\/\/([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle url starting with double slash
-    '/<\s*(a|img|iframe) ((?:[^>]*\s)*)(src|href)\s*=\s*("|\')\/([^"\'\/]*)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url
+    '/<\s*(a|img|iframe) ((?:[^>]*\s)*)(src|href)\s*=\s*("|\')\/\/([^"\']+)("|\')(\s+[^>]*)?(\/)?>/i', //handle url starting with double slash
+    '/<\s*(a|img|iframe) ((?:[^>]*\s)*)(src|href)\s*=\s*("|\')\/([^"\'\/][^"\']+)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url
     '/<\s*blockquote(\s+[^>]*)?>[\r\n]+/i',
     '/\r\n/',
     '/\r/',
@@ -101,7 +101,7 @@ function gettaglist($tag = null) {
 
   if (file_exists($tags_file)) {
     $tags = json_decode(file_get_contents($tags_file), true);
-    if (isset($tag))
+    if (isset($tags[$tag]))
       return $tags[$tag];
     else
       return $tags;
@@ -172,9 +172,6 @@ function postnote($id = null) {
     chmod($id_file, 0600);
   }
 
-  if (isset($send_mail) && $send_mail)
-    sendmail($mail_note_to, $mail_note_from, 'Note saved in Inbox by '.htmlentities($site_name), $_POST['d']."\n\n".'<p><a href="'.$site_url.'?id='.$id.'" target="_blank">View Note</a></p>', $mail_note_account);
-
   saveattachment($id);
 
   $data = array(
@@ -225,6 +222,9 @@ function postnote($id = null) {
     file_put_contents($data_dir.$id.'.json', json_encode($data), LOCK_EX);
     chmod($data_dir.$id.'.json', 0600);
   }
+
+  if (isset($send_mail) && $send_mail)
+    sendmail($mail_note_to, $mail_note_from, 'Note saved in Inbox by '.htmlentities($site_name), "\n\n\n\n".'<p><a href="'.$site_url.'?id='.$note['id'].'" target="_blank">View Note</a></p>'."\n\n\n\n".$note['content'], $mail_note_account);
 
   return $note;
 }
