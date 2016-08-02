@@ -142,16 +142,6 @@ function getnote($id, $markdown = 0) {
 function postnote($id = null) {
   global $data_dir, $content_dir, $html_dir, $default_privacy, $id_file, $mail_note_to, $mail_note_account, $mail_note_from, $site_name, $site_url;
 
-  $note = array();
-  if (!isset($id) || !($note = getnote($id, 1))) {
-    if (file_exists($id_file))
-      $id = file_get_contents($id_file) + 1;
-    else
-      $id = '1';
-    file_put_contents($id_file, $id, LOCK_EX);
-    chmod($id_file, 0600);
-  }
-
   if ((!isset($_POST['d']) || !trim(strip_tags($_POST['d'], '<img>'))) && isset($_POST['u']) && isurl($_POST['u'])) {
     $_POST['d'] = $_POST['u'];
     $url = $_POST['u'];
@@ -165,12 +155,25 @@ function postnote($id = null) {
       $_POST['d'] = 'Original url: <a href="'.$url.'">'.$url.'</a>'."\n\n".$p;
 
       if ($mail_note_to) {
-        sendmail($mail_note_to, $mail_note_from, 'Note saved in Inbox by '.htmlentities($site_name), $_POST['d']."\n\n".'<p><a href="'.$site_url.'?id='.$id.'" target="_blank">View Note</a></p>', $mail_note_account);
+        $send_mail = 1;
       }
 
     }
     $_POST['t'] = 'inbox'.(isset($_POST['t']) && $_POST['t'] ? ','.$_POST['t'] : '');
   }
+
+  $note = array();
+  if (!isset($id) || !($note = getnote($id, 1))) {
+    if (file_exists($id_file))
+      $id = file_get_contents($id_file) + 1;
+    else
+      $id = '1';
+    file_put_contents($id_file, $id, LOCK_EX);
+    chmod($id_file, 0600);
+  }
+
+  if (isset($send_mail) && $send_mail)
+    sendmail($mail_note_to, $mail_note_from, 'Note saved in Inbox by '.htmlentities($site_name), $_POST['d']."\n\n".'<p><a href="'.$site_url.'?id='.$id.'" target="_blank">View Note</a></p>', $mail_note_account);
 
   saveattachment($id);
 
