@@ -64,11 +64,11 @@ if ($id) {
     echo '<div id="main">';
     if (isset($tag) && $tag) {
       if ($tag == 'inbox')
-        echo '<h1 id="title"><span>Inbox</span> ('.count($list).' Notes)</h1>';
+        echo '<h1 id="title"><span>Inbox</span> ('.$n.' Notes)</h1>';
       else
-        echo '<h1 id="title">Tag: <span>'.htmlspecialchars($tag).'</span> ('.count($list).' Notes)</h1>';
+        echo '<h1 id="title">Tag: <span>'.htmlspecialchars($tag).'</span> ('.$n.' Notes)</h1>';
     } elseif (isset($search) && $search)
-      echo '<h1 id="title">Search: <span>'.htmlspecialchars($search).'</span> ('.count($list).' Notes)</h1>';
+      echo '<h1 id="title">Search: <span>'.htmlspecialchars($search).'</span> ('.$n.' Notes)</h1>';
     foreach ($list as $file) {
       if (isset($search))
         displaynote(getnote($file), $search);
@@ -93,7 +93,7 @@ if ($id) {
     echo '<div id="main">';
     if (isset($tag) && $tag) {
       if ($tag == 'inbox')
-        echo '<h1 id="title"><span>Inbox</span> ('.count($list).' Notes)</h1>';
+        echo '<h1 id="title"><span>Inbox</span></h1>';
       else
         echo '<h1 id="title">Tag: <span>'.htmlspecialchars($tag).'</span></h1>';
     } elseif (isset($search) && $search)

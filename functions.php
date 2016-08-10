@@ -101,8 +101,10 @@ function gettaglist($tag = null) {
 
   if (file_exists($tags_file)) {
     $tags = json_decode(file_get_contents($tags_file), true);
-    if (isset($tags[$tag]))
+    if (isset($tag) && isset($tags[$tag]))
       return $tags[$tag];
+    elseif (isset($tag))
+      return false;
     else
       return $tags;
   } else
