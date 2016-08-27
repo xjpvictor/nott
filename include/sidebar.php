@@ -161,7 +161,7 @@ if ($auth) {
     echo '<p id="clipboard">Switch to <a href="clipboard.php">Clipboard</a></p>';
     echo '<p id="bookmarklet">Note with bookmarklet <a href="javascript:var url=\''.$site_url.'\';var clip=false;var x=document.createElement(\'SCRIPT\');x.type=\'text/javascript\';x.src=url+\'bookmarklet.js\';document.getElementsByTagName(\'head\')[0].appendChild(x);void(0)" title="Drag to bookmarks bar">Clip to '.htmlspecialchars($site_name).'</a></p>';
 ?>
-<form id="kindle-upload" method="POST" action="/kindle.php" enctype="multipart/form-data">
+<form id="kindle-upload" method="POST" action="kindle.php" enctype="multipart/form-data">
 <p>Import kindle highlights</p>
 <div id="kindle-button-wrap">
 <div class="file-button-wrap" id="kindle-button">
@@ -173,7 +173,7 @@ if ($auth) {
 </div>
 </div>
 </form>
-<form id="evernote-upload" method="POST" action="/evernote.php" enctype="multipart/form-data">
+<form id="evernote-upload" method="POST" action="evernote.php" enctype="multipart/form-data">
 <p>Import evernote notes (.enex)</p>
 <div id="evernote-button-wrap">
 <div class="file-button-wrap" id="evernote-button">
