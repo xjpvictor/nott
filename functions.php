@@ -79,7 +79,7 @@ function escpost($str, $id, $source, $edit = 0) {
     //"  \n",
   );
   $str = preg_replace($search, $replace, $str);
-  $str = preg_replace_callback('/<img ((?:[^>]*\s)*)src\s*=\s*("|\')(?!'.$url.'|attachment\.php)([^"\']*)("|\')(\s+[^>]*)?(\/\s*)?>/i', function ($match) use ($id) {
+  $str = preg_replace_callback('/<img ((?:[^>]*\s)*)src\s*=\s*("|\')(?!'.$url.'|attachment\.php)([^"\']+)("|\')(\s+[^>]*)?(\/\s*)?>/i', function ($match) use ($id) {
     return '<img '.$match[1].'src='.$match[2].'attachment.php?id='.$id.'&cache='.rawurlencode($match[3]).$match[4].(isset($match[5]) ? $match[5] : '').(isset($match[6]) ? $match[6] : '/').'>';
   }, $str);
 
