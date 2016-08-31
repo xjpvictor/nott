@@ -375,6 +375,7 @@ function geturlmeta($url = '') {
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_HEADER, 0);
   curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
   $str = curl_exec($ch);
   curl_close($ch);
   if (strlen($str)) {
@@ -395,6 +396,7 @@ function geturlcontent($url = '') {
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_HEADER, 0);
   curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
   $content = curl_exec($ch);
   curl_close($ch);
   if ($content = toutf8($content)) {

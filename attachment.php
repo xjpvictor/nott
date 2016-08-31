@@ -75,10 +75,11 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, $url);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($ch, CURLOPT_HEADER, 0);
+      curl_setopt($ch, CURLOPT_HEADER, o);
       curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-      curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+      curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36');
       curl_setopt($ch, CURLOPT_REFERER, $url);
+      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
       $content = curl_exec($ch);
       curl_close($ch);
       if ($content) {
