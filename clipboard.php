@@ -11,7 +11,13 @@ if (!$auth) {
 $post = true;
 $clipboard = (file_exists($clipboard_file) ? file_get_contents($clipboard_file) : '');
 
-if (isset($_POST['d'])) {
+if (isset($_GET['c']) && $_GET['c']) {
+  $clipboard .= "\n\n".urldecode($_GET['c']);
+  file_put_contents($clipboard_file, $clipboard);
+  chmod($clipboard_file, 0600);
+  header('Location: clipboard.php');
+  exit;
+} elseif (isset($_POST['d']) && $_POST['d']) {
   $clipboard = $_POST['d'];
   file_put_contents($clipboard_file, $clipboard);
   chmod($clipboard_file, 0600);
