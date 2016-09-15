@@ -15,7 +15,8 @@ if (isset($_GET['c']) && $_GET['c']) {
   $clipboard .= "\n\n".urldecode($_GET['c']);
   file_put_contents($clipboard_file, $clipboard);
   chmod($clipboard_file, 0600);
-  header('Location: clipboard.php');
+  echo '<html><body><script>alert("Text copied to clipboard.");window.close();</script></body></html>';
+  //header('Location: clipboard.php');
   exit;
 } elseif (isset($_POST['d']) && $_POST['d']) {
   $clipboard = $_POST['d'];
