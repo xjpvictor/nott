@@ -280,7 +280,6 @@ function pasteImage(event) {
           if (xhr.readyState == 4) {
             if (xhr.status == 200) {
               document.getElementById('attachment-list').innerHTML = xhr.responseText + document.getElementById('attachment-list').innerHTML;
-              //document.getElementById('post-d').innerHTML = document.getElementById('attachment-list').innerHTML;
             }
           }
         }
