@@ -267,8 +267,7 @@ function autoSave(s) {
 }
 function pasteImage(event) {
   var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-  console.log(event);
-  if (items[0]) {
+  if (typeof items !== "undefined" && items.length) {
     var blob = items[0].getAsFile();
     if (blob) {
       var reader = new FileReader();

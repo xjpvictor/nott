@@ -59,6 +59,7 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
       http_response_code(404);
       exit;
     }
+    header('Content-type: application/javascript;');
     echo 'var elem = document.getElementById(\''.$_GET['elem'].'\');elem.parentNode.removeChild(elem);';
     exit;
   }
