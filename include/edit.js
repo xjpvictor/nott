@@ -261,7 +261,7 @@ function autoSave(s) {
       setTimeout("document.getElementById('submit').value=str;document.getElementById('submit').disabled=false;", 1500);
     }
   }
-  http.send("d="+s);
+  http.send("d="+encodeURIComponent(s));
 }
 function pasteImage(e) {
   var items = (e.clipboardData || e.originale.clipboardData).items;
