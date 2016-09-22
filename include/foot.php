@@ -66,8 +66,10 @@ var base_url = 'attachment.php?id=0&action=add';
 <div id="lock" style="display:none;">
 <div id="login">
 <p>Enter Pass code:<br/><br/>
-<input id="passcode" type="password"></p><br/>
-<input class="compose" type="submit" value="Unlock" onclick="var elem=document.getElementById('passcode');var script=document.createElement('script');script.id='lock_s';script.src='passcode.php?p='+elem.value;document.body.appendChild(script);elem.value='';">
+<form method="POST" action="javascript:void(0);" onSubmit="var elem=document.getElementById('passcode');var script=document.createElement('script');script.id='lock_s';script.src='passcode.php?p='+elem.value;document.body.appendChild(script);elem.value='';">
+<input id="passcode" type="password" autofocus></p><br/>
+<input class="compose" type="submit" value="Unlock">
+</form>
 </div>
 </div>
 <script>
