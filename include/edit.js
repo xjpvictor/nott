@@ -249,39 +249,45 @@ function deleteAttachment(id, name, elem) {
   }
 }
 function autoSave(s) {
-  var http = new XMLHttpRequest();
-  http.open("POST", 'clipboard.php', true);
-  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  http.withCredentials = true;
-  http.onreadystatechange = function() {
-    if (http.readyState == 4 && http.status == 200) {
-      str = document.getElementById('submit').value;
-      document.getElementById('submit').value = 'Saved';
-      document.getElementById('submit').disabled = true;
-      setTimeout("document.getElementById('submit').value=str;document.getElementById('submit').disabled=false;", 1500);
+  if (typeof s !== "undefined") {
+    var http = new XMLHttpRequest();
+    http.open("POST", 'clipboard.php', true);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.withCredentials = true;
+    http.onreadystatechange = function() {
+      if (http.readyState == 4 && http.status == 200) {
+        str = document.getElementById('submit').value;
+        document.getElementById('submit').value = 'Saved';
+        document.getElementById('submit').disabled = true;
+        setTimeout("document.getElementById('submit').value=str;document.getElementById('submit').disabled=false;", 1500);
+      }
     }
+    http.send("d="+encodeURIComponent(s));
   }
-  http.send("d="+encodeURIComponent(s));
 }
-function pasteImage(e) {
-  var items = (e.clipboardData || e.originale.clipboardData).items;
-  var blob = items[0].getAsFile();
-  if (blob) {
-    var reader = new FileReader();
-    reader.onload = function(event){
-      var t = Math.round(+new Date()/1000);
-      var url = base_url + '&name=' + t + '-0-' + 'clipboard-' + t;
-      xhr.open("POST", url, true);
-      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-          if (xhr.status == 200) {
-            document.getElementById('attachment-list').innerHTML = xhr.responseText + document.getElementById('attachment-list').innerHTML;
+function pasteImage(event) {
+  var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+  console.log(event);
+  if (items[0]) {
+    var blob = items[0].getAsFile();
+    if (blob) {
+      var reader = new FileReader();
+      reader.onload = function(event){
+        var t = Math.round(+new Date()/1000);
+        var url = base_url + '&name=' + t + '-0-' + 'clipboard-' + t;
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+              document.getElementById('attachment-list').innerHTML = xhr.responseText + document.getElementById('attachment-list').innerHTML;
+              //document.getElementById('post-d').innerHTML = document.getElementById('attachment-list').innerHTML;
+            }
           }
         }
+        xhr.send("file="+event.target.result);
       }
-      xhr.send("file="+event.target.result);
+      reader.readAsDataURL(blob);
     }
-    reader.readAsDataURL(blob);
   }
 }
