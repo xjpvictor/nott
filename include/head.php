@@ -2,7 +2,7 @@
 <html lang="en-US">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="robots" content="noindex, nofollow">
 <title><?php echo (isset($clipboard) ? 'Clipboard by ' : '').htmlspecialchars($site_name); ?></title>
 <?php echo ($site_description ? '<meta name="description" content="'.htmlspecialchars($site_description).'" />' : ''); ?>
