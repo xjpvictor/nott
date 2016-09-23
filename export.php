@@ -24,8 +24,16 @@ if (class_exists('ZipArchive')) {
   $zip_file = $tmp_dir.$note['id'].'-export.zip';
   $zip->open($zip_file, ZipArchive::CREATE);
   $zip->addFile($data_dir.$note['id'].'.json', $note['id'].'.json');
-  if (file_exists(($file = $content_dir.$note['id'].'.txt')))
-    $zip->addFile($file, $note['id'].'.txt');
+  if (file_exists(($file = $content_dir.$note['id'].'.txt'))) {
+    $html = '<html><body><div>'.file_get_contents($file).'</div></body></html>';
+    $id = $note['id'];
+    $html = preg_replace_callback('/<img ((?:[^>]*\s)*)src\s*=\s*("|\')attachment\.php\?id='.$id.'&cache=([^"\']+)("|\')(\s+[^>]*)?(\/\s*)?>/i', function ($match) use ($id) {
+      return '<br/><img '.$match[1].'src='.$match[2].'./'.$id.'-0-'.hash('sha1', rawurldecode($match[3])).$match[4].(isset($match[5]) ? $match[5] : '').(isset($match[6]) ? $match[6] : '').'><br/>';
+    }, $html);
+    $html_file = $tmp_dir.$id.'.html';
+    file_put_contents($html_file, $html);
+    $zip->addFile($html_file, $note['id'].'.html');
+  }
   if ($attachment = getattachment($note['id'], 1)) {
     foreach ($attachment as $file) {
       $zip->addFile($file, basename($file));
@@ -42,5 +50,7 @@ if (class_exists('ZipArchive')) {
   header('Content-length: '.filesize($zip_file));
   readfile($zip_file);
   unlink($zip_file);
+  if (isset($html_file) && file_exists($html_file))
+    unlink($html_file);
   exit;
 }
