@@ -18,7 +18,7 @@
 #readability blockquote{margin:0px 0px 1em;padding:1em;border-left:4px solid #aaa;color:#666;font-family:"Lucida Sans Unicode","Lucida Grande","wenquanyi micro hei","droid sans fallback",FreeSans,Helvetica,Arial,"hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,sans-serif;background:#f6f6f6;}
 #readability blockquote p{padding-bottom:0;}
 #readability code{background:#f6f6f6;border:1px solid #ccc;border-radius:3px;padding:3px 5px;margin:0 5px;display:inline-block;max-width:95%;line-height:1em;font-family:inherit;}
-#readability pre{padding:0;margin:0 0 1em;}
+#readability pre{padding:0;margin:0 0 1em;word-wrap:break-word;white-space:pre-wrap;}
 #readability pre code{background:#fff;display:block;font-size:0.8em;font-family:"Lucida Console",Monaco,"wenquanyi micro hei mono","droid sans mono",FreeMono,"hiragino sans gb","stheiti","droid sans fallback","microsoft yahei",\5FAE\8F6F\96C5\9ED1,monospace !important;white-space:pre-wrap;word-wrap:break-word;border:none;margin:0;padding:0;max-width:none;}
 #readability pre code:before{content:"Code";line-height:3em;border-bottom:1px solid #000;}
 #readability pre code ol{margin:0;color:#999;list-style:none;padding:0 0 0 3em;}
