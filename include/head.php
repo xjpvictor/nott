@@ -13,6 +13,8 @@
 <?php } ?>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="shortcut icon" href="favicon.ico" />
+<link rel="apple-touch-icon" href="webapp-icon.png" />
+<link rel="icon" href="webapp-icon.png" />
 </head>
 
 <div id="header">
