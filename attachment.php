@@ -76,7 +76,7 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, $url);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($ch, CURLOPT_HEADER, o);
+      curl_setopt($ch, CURLOPT_HEADER, 0);
       curl_setopt($ch, CURLOPT_TIMEOUT, 30);
       curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36');
       curl_setopt($ch, CURLOPT_REFERER, $url);

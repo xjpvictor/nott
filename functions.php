@@ -46,10 +46,10 @@ function escpost($str, $id, $source, $edit = 0) {
 
   $search = array(
     '/'.$url.'attachment\.php\?(?:[^& =]+(?<!name|tmp)=[^& =]+&)*(?:name=([^& ]+)&)?(?:[^& =]+(?<!name|tmp)=[^& =]+&)*tmp=1(?:&[^& =]+(?<!name|tmp)=[^& =]+)*(?:&name=([^& ]+))?(?:&[^& =]+(?<!name|tmp)=[^& =]+)*/i', //change image url for new post
-    '/<\s*img ((?:[^>]*\s)*)src\s*=\s*("|\')cid:([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle image in email
-    '/<\s*a ((?:[^>]*\s)*)href\s*=\s*("|\')#([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url anchor point
-    '/<\s*(a|img|iframe) ((?:[^>]*\s)*)(src|href)\s*=\s*("|\')\/\/([^"\']+)("|\')(\s+[^>]*)?(\/)?>/i', //handle url starting with double slash
-    '/<\s*(a|img|iframe) ((?:[^>]*\s)*)(src|href)\s*=\s*("|\')\/([^"\'\/][^"\']+)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url
+    '/<\s*img ((?!src).*\s)?src\s*=\s*("|\')cid:([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle image in email
+    '/<\s*a ((?!href).*\s)?href\s*=\s*("|\')#([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url anchor point
+    '/<\s*(a|img|iframe) ((?!src|href).*\s)?(src|href)\s*=\s*("|\')\/\/([^"\']+)("|\')(\s+[^>]*)?(\/)?>/i', //handle url starting with double slash
+    '/<\s*(a|img|iframe) ((?!src|href).*\s)?(src|href)\s*=\s*("|\')\/([^"\'\/][^"\']+)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url
     '/<\s*blockquote(\s+[^>]*)?>[\r\n]+/i',
     '/\r\n/',
     '/\r/',

@@ -15,7 +15,7 @@
 #readability figcaption{padding-bottom:1em;margin-top:-0.5em;}
 #readability iframe{margin-bottom:1em;display:block;border:none;max-width:95%;}
 #readability table{font-size:0.8em;text-align:left;border-collapse:collapse;border-spacing:0;}
-#readability blockquote{margin:0px 0px 1em;padding:1em;border-left:4px solid #aaa;color:#666;font-family:"Lucida Sans Unicode","Lucida Grande","wenquanyi micro hei","droid sans fallback",FreeSans,Helvetica,Arial,"hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,sans-serif;background:#f6f6f6;}
+#readability blockquote{margin:0px 0px 1em;padding:1em;border-left:4px solid #aaa;color:#666;font-family:"Lucida Sans Unicode","Lucida Grande","wenquanyi micro hei","droid sans fallback",FreeSans,Helvetica,Arial,"hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,sans-serif;background:#f6f6f6;white-space:pre-line;}
 #readability blockquote p{padding-bottom:0;}
 #readability code{background:#f6f6f6;border:1px solid #ccc;border-radius:3px;padding:3px 5px;margin:0 5px;display:inline-block;max-width:95%;line-height:1em;font-family:inherit;}
 #readability pre{padding:0;margin:0 0 1em;word-wrap:break-word;white-space:pre-wrap;}
@@ -27,7 +27,7 @@
 #readability pre code ol li:nth-of-type(2n) {background:#fff;}
 #readability pre code ol li{padding:0 1em;background:#f7f7e5;border-left:1px solid #ccc;color:#999;}
 #readability ol,#readability ul{margin:0 0 1em;padding:0 0 0 3em;color:#000;}
-#readability li{padding-left:1em;}
+#readability li{padding-left:1em;white-space:pre-line;}
 #readability li:last-child p:last-child{padding-bottom:0}
 #readability abbr{border-bottom: 1px solid;font-variant:normal;cursor:help;}
 #readability del{text-decoration:line-through;}
