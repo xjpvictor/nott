@@ -105,5 +105,11 @@ setTimeout(function() {
 </script>
 <?php } ?>
 
+<script>
+document.addEventListener('gesturestart', function (e) {
+  e.preventDefault();
+});
+</script>
+
 </body>
 </html>
