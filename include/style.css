@@ -7,7 +7,7 @@ h3{font-size:1.05em;}
 small{font-size:.7em;}
 a{color:#3953d4;text-decoration:none;font-size:1em;font-family:inherit;}
 a:visited{color:#3953d4;}
-a:hover{text-decoration:none;color:#ca2017;}
+a:hover,a:hover>span{text-decoration:none;color:#ca2017;}
 span{font-size:1em;font-family:inherit;}
 textarea,input{border:1px solid #999;font-size:18px;padding:3px 5px;box-sizing:border-box;vertical-align:baseline;}
 [draggable]{cursor:move;}
@@ -140,7 +140,7 @@ p#otp{padding:1em 0 2em;text-align:center;}
 #meta p{line-height:2em;}
 #bookmarklet a,#bookmarklet a:visited,#bookmarklet a:hover{padding:3px 7px;margin:0;color:#444;text-decoration:none;background-color:#eee;border-radius:5px;border:none;display:inline-block;font-size:0.9em;}
 #bookmarklet a:hover{cursor:move;}
-#clipboard,#bookmarklet,#kindle-button-wrap,#evernote-button-wrap{padding-bottom:1em;margin-bottom:1em;border-bottom:1px solid #ccc;}
+#clipboard,#bookmarklet,#kindle-button-wrap,#evernote-button-wrap,#export{padding-bottom:1em;margin-bottom:1em;border-bottom:1px solid #ccc;}
 #kindle-button,#evernote-button{width:150px;margin-top:0.5em;}
 .kindle-page,.kindle-date,.kindle-author{font-style:italic;}
 .kindle-title{font-weight:bold;}
