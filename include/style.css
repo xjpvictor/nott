@@ -1,7 +1,7 @@
-html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, pre, a, img, strong, b, u, i, ol, ul, li, table, tr, td, blockquote {margin: 0;padding: 0;font-size: 20px;color:#000;vertical-align: baseline;border: 0;outline: 0;background: transparent;font-family:"Lucida Sans Unicode","Lucida Grande","wenquanyi micro hei","droid sans fallback",FreeSans,Helvetica,Arial,"hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,sans-serif;line-height:1.5em;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;text-rendering:optimizelegibility;}
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, pre, a, img, strong, b, u, i, ol, ul, li, table, tr, td, blockquote {margin: 0;padding: 0;font-size: 20px;color:#000;vertical-align: baseline;border: 0;outline: 0;background: transparent;font-family:"Lucida Sans Unicode","Lucida Grande","Noto Sans",FreeSans,Helvetica,Arial,sans-serif !important;line-height:1.5em;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;text-rendering:optimizelegibility;}
 html,body{max-width:100%;overflow-x:hidden;}
 body{background-color:#f9f9f9;min-width:360px;color:#000;}
-h1{font-size:1.25em;font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Times New Roman","wenquanyi micro hei","droid sans fallback","hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,serif;}
+h1{font-size:1.25em;font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Noto Serif","Times New Roman",serif !important;}
 h2{font-size:1.125em;}
 h3{font-size:1.05em;}
 small{font-size:.7em;}
@@ -16,13 +16,13 @@ textarea,input{border:1px solid #999;font-size:18px;padding:3px 5px;box-sizing:b
 #header-content{padding:10px 30px;max-width:1500px;margin:0 auto;}
 #logo{width:100%;text-align:center;}
 #logo h1{font-weight:bold;}
-#logo h1 a{color:#000;font-size:26px;font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Times New Roman","wenquanyi micro hei","droid sans fallback","hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,serif;}
+#logo h1 a{color:#000;font-size:26px;font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Noto Serif","Times New Roman",serif !important;}
 #logo h1 a:hover{color:#ca2017;}
 #logo p{font-size:18px;font-style:italic;padding-bottom:5px;}
 #wrap{max-width:1500px;margin:0px auto 0;padding: 20px 10px 0px;overflow:hidden;}
 #main{width:100%;float:left;margin-right:-360px;}
 #title{padding-bottom:1em;margin-right:360px;word-wrap:break-word;padding-left:3px;}
-#title span{border-bottom:3px solid #000;font-size:1em;font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Times New Roman","wenquanyi micro hei","droid sans fallback","hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,serif;}
+#title span{border-bottom:3px solid #000;font-size:1em;font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Noto Serif","Times New Roman",serif !important;}
 .highlight{background:#40cf53;color:#fff;padding:3px 0px;margin:0;}
 .content{background:#fff;padding:20px;border:none;box-shadow:0 0 1px #333;word-wrap:break-word;margin-right:360px;margin-bottom:15px;font-size:1em;}
 .content a:hover{text-decoration:underline;}
@@ -51,7 +51,7 @@ a.nav:hover{color:#fff !important;background:#e63f2a;border-color:#e63f2a;text-d
 #next{float:right;}
 #sidebar{width:340px;float:left;padding-left:20px;}
 .widget{background:#fff;padding:20px;margin:0 0 15px 0px;border:none;box-shadow:0 0 1px #333;word-wrap:break-word;display:block;}
-.widget h2{font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Times New Roman","wenquanyi micro hei","droid sans fallback","hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,serif;padding-bottom:20px;}
+.widget h2{font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Noto Serif","Times New Roman",serif !important;padding-bottom:20px;}
 .tag{font-size:0.8em;display:inline-block;margin-right:15px;margin-bottom:10px;padding:0px 8px;box-shadow:0 0 1px #333;background-color:#eee;color:#666;text-decoration:none;border-radius:3px;word-wrap:break-word;max-width:284px;border:none;}
 .tag:visited{color:#666;text-decoration:none;}
 .tag:hover{cursor:pointer;color:#fff;text-decoration:none;background-color:#ca2017;}
@@ -78,7 +78,7 @@ span.view:hover,a.view:hover{background-color:#ddd;color:#000;}
 #preview>h1{text-align:center;padding-bottom:0.5em;margin-bottom:1em;border-bottom:1px solid #ccc;}
 #post input[type='text']{width:100%;margin-bottom:1em;}
 input[type='file']:hover{cursor:pointer;}
-#post #url h2{font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Times New Roman","wenquanyi micro hei","droid sans fallback","hiragino sans gb","stheiti","microsoft yahei",\5FAE\8F6F\96C5\9ED1,serif;padding-bottom:20px;}
+#post #url h2{font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Noto Serif","Times New Roman",serif !important;padding-bottom:20px;}
 #post #url{background:#fff;padding:20px;border:none;box-shadow:0 0 1px #333;word-wrap:break-word;margin-right:360px;margin-bottom:15px;}
 #login{width:260px;margin:30px auto;padding:30px 30px;box-shadow:0 0 1px #333;background:#fff;}
 #login p{padding-bottom:1em;}
