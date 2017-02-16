@@ -17,6 +17,9 @@ if (!isset($post) || !$post) {
 </div>
 <!--end of wrap-->
 
+</div>
+<!--end of lock-hide-->
+
 <script>
 function notRobot() {
   document.cookie = "_nott_notRobot=1;path=/";
@@ -91,17 +94,24 @@ function lockDown() {
     document.getElementById('lock').style.display='block';
     window.removeEventListener("scroll", setLockCookie);
     window.removeEventListener("mousemove", setLockCookie);
+    window.removeEventListener("mousedown", setLockCookie);
     window.removeEventListener("keypress", setLockCookie);
     document.title = 'Locked | <?php echo str_replace('\'', '\\\'', htmlentities($site_name)); ?>';
-  } else
+    return true;
+  } else {
     setTimeout("lockDown()", 60000);
+    return false;
+  }
 }
-lockDown();
-setTimeout(function() {
-  window.addEventListener("scroll", setLockCookie);
-  window.addEventListener("mousemove", setLockCookie);
-  window.addEventListener("keypress", setLockCookie);
-}, 10000);
+if (!lockDown()) {
+  setTimeout(function() {
+    window.addEventListener("scroll", setLockCookie);
+    window.addEventListener("mousemove", setLockCookie);
+    window.addEventListener("mousedown", setLockCookie);
+    window.addEventListener("keypress", setLockCookie);
+  }, 1000);
+}
+document.getElementById('lock-hide').style.display='block';
 </script>
 <?php } ?>
 

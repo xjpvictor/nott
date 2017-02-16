@@ -17,6 +17,8 @@
 <link rel="icon" href="webapp-icon.png" />
 </head>
 
+<div id="lock-hide"<?php echo (isset($passcode) && $passcode && (isset($clipboard) || (isset($single) && $single) || (isset($post) && $post)) ? ' style="display:none;"' : ''); ?>>
+
 <div id="header">
 <div id="header-content">
 <div id="logo">
