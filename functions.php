@@ -570,7 +570,7 @@ function displayattachment($id, $attachment, $tmp = 0, $post = 0) {
     <span class="attachment">
       <a href="attachment.php?id='.$id.'&name='.$attachment['url_name'].'&action=get'.($tmp ? '&tmp=1' : '').'" target="_blank">'.$attachment['display_name'].'</a>'.($id && $attachment['type'] == '1' && $post ? '&nbsp;&nbsp;
       <span class="insert" onclick="mdAddHR(\'!['.$attachment['display_name'].'](attachment.php?id='.$id.'&name='.$attachment['url_name'].'&action=get'.($tmp ? '&tmp=1' : '').' &quot;'.$attachment['display_name'].'&quot;)\')">Insert</span>' : '').'
-    </span>'.($post ? '<span class="delete" onclick="deleteAttachment(\''.$id.'\', \''.$attachment['url_name'].'\', \'attachment-'.$id.'-'.$attachment['t'].'\')">&#10007;</span>' : '').'</div>';
+    </span>'.($post ? '<span class="delete" onclick="deleteAttachment(\''.$id.'\', \''.$attachment['url_name'].'\', \'attachment-'.$id.'-'.$attachment['t'].'\')">&#9747;</span>' : '').'</div>';
 }
 function saveattachment($id = null, $dir = null) {
   global $upload_dir, $tmp_dir;

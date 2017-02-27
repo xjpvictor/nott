@@ -44,7 +44,7 @@ if ($tags = gettaglist()) {
      var t = Math.round(+new Date()/1000);
      var files = this.files;
      for (var i=0;i<files.length;i++) {
-      str += '<div class=\'upload-file\' data-id=\''+t+'-'+i+'\'>'+uploadStringHtmlentities(files[i].name)+'<span class=\'delete\' id=\'upload-cancel-'+t+'-'+i+'\' onclick=\'this.parentNode.parentNode.removeChild(this.parentNode);\'>&#10007;</span><div class=\'upload-progress\' id=\'upload-progress-'+t+'-'+i+'\'></div></div>';
+      str += '<div class=\'upload-file\' data-id=\''+t+'-'+i+'\'>'+uploadStringHtmlentities(files[i].name)+'<span class=\'delete\' id=\'upload-cancel-'+t+'-'+i+'\' onclick=\'this.parentNode.parentNode.removeChild(this.parentNode);\'>&#9747;</span><div class=\'upload-progress\' id=\'upload-progress-'+t+'-'+i+'\'></div></div>';
      }
      document.getElementById('upload-list').innerHTML = str;
    }
