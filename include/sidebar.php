@@ -151,7 +151,7 @@ if (!isset($post) || !$post) {
 
 <div class="widget" id="meta">
 <h2>Meta</h2>
-<?php echo ($auth && class_exists('ZipArchive') ? '<p id="export"><a title="export" href="export.php">Export <span>all notes</span></a></p>' : ''); ?>
+<?php echo ($auth && !isset($clipboard) && class_exists('ZipArchive') ? '<p id="export"><a title="export" href="export.php">Export <span>all notes</span></a></p>' : ''); ?>
 <?php
 if ($auth) {
   if (isset($clipboard)) {
