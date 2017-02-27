@@ -11,7 +11,14 @@ if (!$auth) {
 $post = true;
 $clipboard = (file_exists($clipboard_file) ? file_get_contents($clipboard_file) : '');
 
-if (isset($_GET['c']) && $_GET['c']) {
+if (isset($_GET['ts']) && $_GET['ts']) {
+  if (!file_exists($clipboard_file) || filemtime($clipboard_file) <= $_GET['ts']) {
+    http_response_code(304);
+    exit;
+  }
+  echo json_encode(array(filemtime($clipboard_file), $clipboard));
+  exit;
+} elseif (isset($_GET['c']) && $_GET['c']) {
   $clipboard .= "\n\n".urldecode($_GET['c']);
   file_put_contents($clipboard_file, $clipboard);
   chmod($clipboard_file, 0600);
@@ -36,6 +43,7 @@ include($include_dir . 'head.php');
 <textarea id="post-d" name="d" onblur="autoSave(this.value);" onpaste="pasteImage(event);"><?php echo htmlentities($clipboard); ?></textarea>
 </div>
 </div>
+<div id="clip-ts" style="display:none;"></div>
 <!--end of main-->
 
 <?php

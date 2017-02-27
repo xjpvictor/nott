@@ -63,6 +63,27 @@ var base_url = 'attachment.php?id=<?php echo (isset($note) ? $note['id'] : $new_
 var base_url = 'attachment.php?id=0&action=add';
 </script>
 <script src="include/edit.js"></script>
+<script>
+var tsElem = document.getElementById('clip-ts');
+tsElem.innerHTML = '<?php echo (file_exists($clipboard_file) ? filemtime($clipboard_file) : time()); ?>';
+function updateClip() {
+  var clipTs = tsElem.innerHTML;
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", 'clipboard.php?ts='+clipTs, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        var data = JSON.parse(xhr.responseText);
+        tsElem.innerHTML = data[0];
+        document.getElementById('post-d').value = data[1];
+      }
+    }
+  }
+  xhr.send(null);
+  setTimeout(updateClip, 3000);
+}
+setTimeout(updateClip, 3000);
+</script>
 <?php } ?>
 
 <?php if (isset($passcode) && $passcode && (isset($clipboard) || (isset($single) && $single) || (isset($post) && $post))) { ?>
