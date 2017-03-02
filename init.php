@@ -64,6 +64,7 @@ $limit = ($limit ? $limit : '10');
 $default_privacy = ($default_privacy ? $default_privacy : '0');
 $otp = ($otp ? $otp : '0');
 
-$auth = auth();
-
-$nlist = getlist();
+if (!defined('NOINIT') || NOINIT !== true) {
+  $auth = auth();
+  $nlist = getlist();
+}

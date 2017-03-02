@@ -519,7 +519,7 @@ function auth() {
   }
   session_name('_nott_'.str_replace(array('.', '/'), '_', substr($site_url, stripos($site_url, '//')+2)));
   session_save_path(__DIR__ . '/session');
-  if(session_status() !== PHP_SESSION_ACTIVE)
+  if (session_status() !== PHP_SESSION_ACTIVE)
     session_start();
 
   if (session_status() === PHP_SESSION_ACTIVE && (!isset($_SESSION['robot']) || $_SESSION['robot'] !== 0)) {

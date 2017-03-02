@@ -4,6 +4,9 @@ if (!function_exists('imap_open')) {
   exit('IMAP extension not installed');
 }
 
+define('NOINIT', true);
+include(__DIR__ . '/init.php');
+
 $img = __DIR__ . '/favicon.ico';
 ob_end_clean();
 ob_start();
@@ -23,7 +26,6 @@ if (function_exists('fastcgi_finish_request'))
 if (session_id())
   session_write_close();
 
-include(__DIR__ . '/init.php');
 include(__DIR__ . '/functions_mail.php');
 
 $conn = getimap($mail_server, $mail_port, $mail_service, $mail_cert, $mail_ssl, $mail_tls, $mail_folder, $mail_box, $mail_pwd);
