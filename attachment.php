@@ -64,7 +64,7 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
     exit;
   }
 } elseif (isset($_GET['cache']) && $_GET['cache'] && isset($_GET['id']) && $_GET['id']) {
-  if (($note = getnote($_GET['id'])) && ($note['public'] || $auth)) {
+  if (($note = getnote($_GET['id'])) && ($note['public'] || $auth || (isset($_GET['token']) && $_GET['token'] == hash($str_hash_algo, $note['time'])))) {
     $url = rawurldecode($_GET['cache']);
     $file = $upload_dir.$note['id'].'-0-'.hash('sha1', $url);
     if (file_exists($file)) {

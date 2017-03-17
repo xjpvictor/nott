@@ -142,7 +142,7 @@ function getnote($id, $markdown = 0) {
   return $data;
 }
 function postnote($id = null) {
-  global $data_dir, $content_dir, $html_dir, $default_privacy, $id_file, $mail_note_to, $mail_note_account, $mail_note_from, $site_name, $site_url;
+  global $data_dir, $content_dir, $html_dir, $default_privacy, $id_file, $mail_note_to, $mail_note_account, $mail_note_from, $site_name, $site_url, $str_hash_algo;
 
   if ((!isset($_POST['d']) || !trim(strip_tags($_POST['d'], '<img>'))) && isset($_POST['u']) && isurl($_POST['u'])) {
     $_POST['d'] = $_POST['u'];
@@ -226,7 +226,7 @@ function postnote($id = null) {
   }
 
   if (isset($send_mail) && $send_mail)
-    sendmail($mail_note_to, $mail_note_from, 'Note saved in Inbox by '.htmlentities($site_name), "\n\n\n\n".'<p><a href="'.$site_url.'?id='.$note['id'].'" target="_blank">View Note</a></p>'."\n\n\n\n".$note['content'], $mail_note_account);
+    sendmail($mail_note_to, $mail_note_from, 'Note saved in Inbox by '.htmlentities($site_name), "\n\n\n\n".'<p><a href="'.$site_url.'?id='.$note['id'].'" target="_blank">View Note</a></p>'."\n\n\n\n".preg_replace('/src=("|\')attachment.php\?/i', 'src=$1'.$site_url.'attachment.php?token='.hash($str_hash_algo, $note['time']).'&', $note['content']), $mail_note_account);
 
   return $note;
 }
