@@ -27,7 +27,7 @@ if (!$auth)
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 <link rel="profile" href="http://gmpg.org/xfn/11" />
     <style type="text/css" media="all">
-html, body, div, span, h1, p, a, input, textarea{font-family:"Lucida Sans Unicode","Lucida Grande","Noto Sans",FreeSans,Helvetica,Arial,sans-serif !important;font-size:14px;line-height:1.8em;}
+html, body, div, span, h1, p, a, input, textarea{font-family:"Lucida Sans Unicode","Lucida Grande","Noto Sans",Helvetica,Arial,sans-serif !important;font-size:14px;line-height:1.8em;}
 html{background:transparent;height:100%;}
 body{padding:0;margin:0;height:100%;background:#f9f9f9;}
 #frame{height:auto;min-width:400px;max-width:660px;margin:0;padding:10px;background:#f9f9f9;border:none;color:#000;}

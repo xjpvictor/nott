@@ -1,4 +1,4 @@
-#readability{font-size:20px;font-family:"Lucida Sans Unicode","Lucida Grande","Noto Sans",FreeSans,Helvetica,Arial,sans-serif !important;text-align:left;word-wrap:break-word !important;line-height:1.8em;}
+#readability{font-size:20px;font-family:"Lucida Sans Unicode","Lucida Grande","Noto Sans",Helvetica,Arial,sans-serif !important;text-align:left;word-wrap:break-word !important;line-height:1.8em;}
 #readability p,#readability h1,#readability h2,#readability h3,#readability h4,#readability h5,#readability h6{padding-bottom:1em;}
 #readability p{line-height:1.8em;}
 #readability br{display:block;overflow:hidden;visibility:hidden;width:0;height:0;padding:0;margin:0;}
@@ -14,11 +14,11 @@
 #readability figcaption{padding-bottom:1em;margin-top:-0.5em;}
 #readability iframe{margin-bottom:1em;display:block;border:none;max-width:95%;}
 #readability table{font-size:0.8em;text-align:left;border-collapse:collapse;border-spacing:0;}
-#readability blockquote{margin:0px 0px 1em;padding:1em;border-left:4px solid #aaa;color:#666;font-family:"Lucida Sans Unicode","Lucida Grande","Noto Sans",FreeSans,Helvetica,Arial,sans-serif !important;background:#f6f6f6;white-space:pre-line;}
+#readability blockquote{margin:0px 0px 1em;padding:1em;border-left:4px solid #aaa;color:#666;font-family:"Lucida Sans Unicode","Lucida Grande","Noto Sans",Helvetica,Arial,sans-serif !important;background:#f6f6f6;white-space:pre-line;}
 #readability blockquote p{padding-bottom:0;}
 #readability code{background:#f6f6f6;border:1px solid #ccc;border-radius:3px;padding:3px 5px;margin:0 5px;display:inline-block;max-width:95%;line-height:1em;font-family:inherit;}
 #readability pre{padding:0;margin:0 0 1em;word-wrap:break-word;white-space:pre-wrap;}
-#readability pre code{background:#fff;display:block;font-size:0.8em;font-family:"Lucida Console",Monaco,Menlo,"Source Code Pro","Noto Mono",FreeMono,monospace !important;white-space:pre-wrap;word-wrap:break-word;border:none;margin:0;padding:0;max-width:none;}
+#readability pre code{background:#fff;display:block;font-size:0.8em;font-family:"Lucida Console",Monaco,Menlo,"Source Code Pro","Noto Mono",Consolas,monospace !important;white-space:pre-wrap;word-wrap:break-word;border:none;margin:0;padding:0;max-width:none;}
 #readability pre code:before{content:"Code";line-height:3em;border-bottom:1px solid #000;}
 #readability pre code ol{margin:0;color:#999;list-style:none;padding:0 0 0 3em;}
 #readability pre code ol li:nth-of-type(5n) {list-style:decimal;}
