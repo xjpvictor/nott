@@ -90,7 +90,7 @@ setTimeout(updateClip, 3000);
 <div id="lock" style="display:none;">
 <div id="login">
 <p>Enter Pass code:<br/><br/>
-<form method="POST" action="javascript:void(0);" onSubmit="var elem=document.getElementById('passcode');var script=document.createElement('script');script.id='lock_s';script.src='passcode.php?p='+elem.value;document.body.appendChild(script);elem.value='';">
+<form method="POST" action="javascript:void(0);" onSubmit="var elem=document.getElementById('passcode');lockUnlock(elem.value);elem.value='';">
 <input id="passcode" type="password" autofocus></p><br/>
 <input class="compose" type="submit" value="Unlock">
 </form>
@@ -123,6 +123,28 @@ function lockDown() {
     setTimeout("lockDown()", 60000);
     return false;
   }
+}
+function lockUnlock(p) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", 'passcode.php', true);
+  xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        document.getElementById('lock').style.display='none';
+        document.title = '<?php echo str_replace('\'', '\\\'', htmlentities($site_name)); ?>';
+        setLockCookie();
+        window.addEventListener('scroll', setLockCookie);
+        window.addEventListener('mousemove', setLockCookie);
+        window.addEventListener('mousedown', setLockCookie);
+        window.addEventListener('keypress', setLockCookie);
+        lockDown();
+      }
+      if (document.getElementById('lock_s'))
+        document.head.removeChild(document.getElementById('lock_s'));
+    }
+  }
+  xhr.send('p='+p);
 }
 if (!lockDown()) {
   setTimeout(function() {
