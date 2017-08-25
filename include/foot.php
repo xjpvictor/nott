@@ -91,8 +91,8 @@ setTimeout(updateClip, 3000);
 <div id="login">
 <p>Enter Pass code:<br/><br/>
 <form method="POST" action="javascript:void(0);" onSubmit="var elem=document.getElementById('passcode');lockUnlock(elem.value);elem.value='';">
-<input id="passcode" type="password" autofocus></p><br/>
-<input class="compose" type="submit" value="Unlock">
+<input id="passcode" type="password" tabindex="1" autofocus></p><br/>
+<input class="compose" type="submit" value="Unlock" tabindex="2">
 </form>
 </div>
 </div>
@@ -118,6 +118,7 @@ function lockDown() {
     window.removeEventListener("mousedown", setLockCookie);
     window.removeEventListener("keypress", setLockCookie);
     document.title = 'Locked | <?php echo str_replace('\'', '\\\'', htmlentities($site_name)); ?>';
+    document.getElementById('passcode').focus();
     return true;
   } else {
     setTimeout("lockDown()", 60000);

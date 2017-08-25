@@ -26,7 +26,7 @@ if (isset($_GET['i']) && isset($_GET['id'])) {
       $note['tags'] = array_diff($note['tags'], array('inbox'));
 
       file_put_contents($data_dir.$note['id'].'.json', json_encode($note), LOCK_EX);
-      chmod($data_dir.$id.'.json', 0600);
+      chmod($data_dir.$note['id'].'.json', 0600);
       updatetag($note['tags'], $tags, $note['id']);
     }
 

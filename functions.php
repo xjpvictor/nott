@@ -23,9 +23,16 @@ function isurl($str) {
     return false;
 }
 function escattr($match) {
-  if (is_array($match))
-    $match = '<'.$match[1].$match[6].'>';
-  return preg_replace_callback('/<([^>]*\s+)?(on[^=]+|jsaction|data|data-[a-z]+|dynsrc|accesskey|tabindex|shape|srcset|alt|title)\s*=\s*(("[^"]*")|(\'[^\']*\'))?(\s+[^>]*\/?)?>/i', 'escattr', $match);
+  $i = 1;
+  if (is_array($match)) {
+    if (!isset($match[2]) || !$match[2])
+      $i = 0;
+    $match = '<'.$match[1].(isset($match[3]) ? $match[3] : '').'>';
+  }
+  if ($i)
+    return preg_replace_callback('/<([^>]*\s+)+(on[^=]+|jsaction|data|data-[a-z]+|dynsrc|accesskey|tabindex|shape|srcset|alt|title)\s*=\s*(?:(?:"[^"]*")|(?:\'[^\']*\'))(\s+[^>]*\/?)?>/i', 'escattr', $match);
+  else
+    return $match;
 }
 function escpost($str, $id, $source, $edit = 0) {
   global $allowed_tags, $site_url;
