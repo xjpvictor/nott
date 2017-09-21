@@ -28,7 +28,9 @@ $tags_file = $data_dir.'tags.json';
 $kindle_file = $data_dir.'kindle.json';
 $clipboard_file = $data_dir.'clipboard.txt';
 
-$allowed_tags = '<p><span><h1><h2><h3><h4><h5><h6><br><br/><small><a><img><figure><figcaption><iframe><table><caption><tbody><thead><tfoot><tr><td><th><blockquote><pre><code><ol><ul><li><abbr><del><strong><b><i><ins><u><em><sub><sup><hr>';
+$allowed_tags = '<div><p><span><h1><h2><h3><h4><h5><h6><br><br/><small><a><img><figure><figcaption><iframe><table><caption><tbody><thead><tfoot><tr><td><th><blockquote><pre><code><ol><ul><li><abbr><del><strong><b><i><ins><u><em><sub><sup><hr>';
+$webclip_identify_tag_open = '##NOTTwebclipBegin##';
+$webclip_identify_tag_close = '##NOTTwebclipEnd##';
 
 $site_name = ($site_name ? $site_name : 'My Notebook');
 $site_url = ($site_url ? (stripos($site_url, 'http://') === false && stripos($site_url, 'https://') === false ? (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https://' : 'http://') : '').$site_url.(substr($site_url, -1) !== '/' ? '/' : '') : (isset($_SERVER['SERVER_NAME']) ? (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['SERVER_NAME'].'/' : ''));

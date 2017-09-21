@@ -35,7 +35,7 @@ function escattr($match) {
     return $match;
 }
 function escpost($str, $id, $source, $edit = 0) {
-  global $allowed_tags, $site_url;
+  global $allowed_tags, $site_url, $webclip_identify_tag_open, $webclip_identify_tag_close;
 
   if (!$str)
     return '';
@@ -51,6 +51,16 @@ function escpost($str, $id, $source, $edit = 0) {
 
   $str = escattr($str);
 
+  if (($webclip_end = strrpos($str, $webclip_identify_tag_close)) !== false)
+    $webclip_start = 0;
+  if (($ws = strpos($str, $webclip_identify_tag_open)) !== false) {
+    $webclip_start = $ws;
+    $webclip_end = ($webclip_end === false ? strlen($str) : $webclip_end);
+  }
+
+  if (isset($webclip_start))
+    $str = geturlcontent('', '<div><p>'.substr($str, $webclip_start + strlen($webclip_identify_tag_open), $webclip_end - $webclip_start - strlen($webclip_identify_tag_open)).'</p></div>');
+
   $search = array(
     '/'.$url.'attachment\.php\?(?:[^& =]+(?<!name|tmp)=[^& =]+&)*(?:name=([^& ]+)&)?(?:[^& =]+(?<!name|tmp)=[^& =]+&)*tmp=1(?:&[^& =]+(?<!name|tmp)=[^& =]+)*(?:&name=([^& ]+))?(?:&[^& =]+(?<!name|tmp)=[^& =]+)*/i', //change image url for new post
     '/<\s*img ((?!src).*\s)?src\s*=\s*("|\')cid:([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle image in email
@@ -62,7 +72,7 @@ function escpost($str, $id, $source, $edit = 0) {
     '/\r/',
     '/\n[\s　(\xc2)(\xa0)]+\n/',
     '/<\s*br( +[^>]*)*\/?>\n?/i',
-    '/<\/?p( +[^>]*)*>/i',
+    //'/<\/?p( +[^>]*)*>/i',
     '/<\s*\S+\s*>(\s|&nbsp;)*<\/\s*\1\s*>/',
     '/\n{2,}/',
     '/^\n+/',
@@ -79,7 +89,7 @@ function escpost($str, $id, $source, $edit = 0) {
     "\n",
     "\n\n\n",
     "\n",
-    "\n\n",
+    //"\n\n",
     '',
     "\n\n",
     '',
@@ -392,20 +402,23 @@ function geturlmeta($url = '') {
   }
   return '';
 }
-function geturlcontent($url = '') {
+function geturlcontent($url = '', $content = false) {
   global $include_dir;
 
-  if (!$url)
+  if (!$url && !$content)
     return '';
 
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $url);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_HEADER, 0);
-  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-  $content = curl_exec($ch);
-  curl_close($ch);
+  if (!$content) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    $content = curl_exec($ch);
+    curl_close($ch);
+  }
+
   if ($content = toutf8($content)) {
     $content = preg_replace(array('/<style.*?\/style>/si', '/<script.*?\/script>/si'), '', $content); //remove js element
     $tidy = new tidy;
@@ -420,7 +433,7 @@ function geturlcontent($url = '') {
     require $include_dir . 'readability/Readability.inc.php';
     $Readability = new Readability($content, 'utf8');
     $ReadabilityData = $Readability->getContent();
-    $content = '<h1>'.$ReadabilityData['title'].'</h1>'.$ReadabilityData['content'];
+    $content = ($ReadabilityData['title'] ? '<h1>'.$ReadabilityData['title'].'</h1>' : '').$ReadabilityData['content'];
 
     //$content = preg_replace('/<([^>]* +)(src) *= *("|\')\//si','<$1$2=$3'.substr($url, 0, strpos($url, '/', 8) + 1).'/', $content); //modify img src
 

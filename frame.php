@@ -16,7 +16,7 @@ if (!$auth && isset($_POST['p']) && isset($_POST['u'])) {
     }
   }
 }
-if (!$auth)
+if (!$auth && session_status() === PHP_SESSION_ACTIVE)
   session_destroy();
 ?>
 
@@ -58,6 +58,7 @@ input.compose:hover{background-color:#ca2017;}
 p#otp{padding:1em 0 2em;text-align:center;}
 #create{text-align:center;}
 #more-control{text-align:center;background:#eee;}
+#more-control:hover{cursor:pointer;}
 .hide{display:none !important;}
     </style>
   </head>
@@ -118,7 +119,7 @@ if (isset($_POST['d']) && $_POST['d']) {
 <textarea id="text-d" name="d">
 <?php
 if (isset($_POST['d']) && $_POST['d']) {
-  echo htmlentities($_POST['d']);
+  echo $webclip_identify_tag_open."\n".htmlentities($_POST['d'])."\n".$webclip_identify_tag_close."\n\n";
   unset($_POST['d']);
 }
 ?>
@@ -144,7 +145,7 @@ window.onload = function() {
     if (e.origin == '<?php echo $url; ?>') {
       var message = e.data;
       if (document.getElementById('text-d')) {
-        document.getElementById('text-d').innerHTML = message;
+        document.getElementById('text-d').innerHTML = (message ? '<?php echo $webclip_identify_tag_open; ?>'+"\n"+message+"\n"+'<?php echo $webclip_identify_tag_close; ?>'+"\n\n" : '');
       }
     }
   });

@@ -24,7 +24,7 @@ function getSelectionHtml() {
     }
     return str;
   }
-  return html ? removeAttr(('\n'+html).replace(/<\/?(style|script|input|select|option|textarea|audio|video|source|form|object|embed|iframe|frame|frameset|label|meta|noscript|xml|applet|bgsound|fieldset|button|link|legend|b|i|u)( +[^>]*)?>/gi,'')).replace(/<a +href *= *("|\')#/gi,'<a href=$1'+document.location.href+'#').replace(/<\/?p( [^>]*)?>/gi,'\n\n').replace(/[\r\n]+(\r|\n| |&nbsp;)*[\r\n]+/gi,'\n\n').replace(/[\r\n]+( |&nbsp;){4,}/gi,'\n\n').replace(/([\r\n]+(\d+))\.(\s+)/g,'$1\\.$3').replace(/([\r\n]+)((>|#)+)/g,'$1\\$2').replace(/<([^> ]+)(\s+[^>]*)?\s+(class|id)\s*=\s*("|\')[^"\']*("|\')(\s+[^>]*)?(\/?)>/i,'<$1$2$6$7>').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/^[\r\n]*/,'').replace(/[\r\n]{2,}$/,'') : '';
+  return html ? removeAttr(('\n'+html).replace(/<\/?(style|script|input|select|option|textarea|audio|video|source|form|object|embed|iframe|frame|frameset|label|meta|noscript|xml|applet|bgsound|fieldset|button|link|legend|b|i|u)( +[^>]*)?>/gi,'')).replace(/<a +href *= *("|\')#/gi,'<a href=$1'+document.location.href+'#').replace(/[\r\n]+(\r|\n| |&nbsp;)*[\r\n]+/gi,'\n\n').replace(/[\r\n]+( |&nbsp;){4,}/gi,'\n\n').replace(/([\r\n]+(\d+))\.(\s+)/g,'$1\\.$3').replace(/([\r\n]+)((>|#)+)/g,'$1\\$2').replace(/<([^> ]+)(\s+[^>]*)?\s+(class|id)\s*=\s*("|\')[^"\']*("|\')(\s+[^>]*)?(\/?)>/i,'<$1$2$6$7>').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/^[\r\n]*/,'').replace(/[\r\n]{2,}$/,'') : '';
 };
 
 if (!document.getElementById('nott_iframe')) {
