@@ -32,7 +32,7 @@ window.addEventListener("mousemove", notRobot);
 window.addEventListener("keypress", notRobot);
 </script>
 
-<?php if (!isset($clipboard)) { ?>
+<?php if (!isset($clipboard) && !isset($paper)) { ?>
 <?php if ((isset($single) && $single) || (isset($post) && $post)) { ?>
 <script src="include/highlight/highlight.pack.js"></script>
 <script>
@@ -58,7 +58,7 @@ var base_url = 'attachment.php?id=<?php echo (isset($note) ? $note['id'] : $new_
 </script>
 <script src="include/edit.js"></script>
 <?php } ?>
-<?php } else { ?>
+<?php } elseif (!isset($paper)) { ?>
 <script>
 var base_url = 'attachment.php?id=0&action=add';
 </script>
@@ -86,7 +86,7 @@ setTimeout(updateClip, 3000);
 </script>
 <?php } ?>
 
-<?php if (isset($passcode) && $passcode && (isset($clipboard) || (isset($single) && $single) || (isset($post) && $post))) { ?>
+<?php if (isset($passcode) && $passcode && (isset($clipboard) || (isset($single) && $single) || (isset($post) && $post)) && !isset($paper)) { ?>
 <div id="lock" style="display:none;">
 <div id="login">
 <p>Enter Pass code:<br/><br/>

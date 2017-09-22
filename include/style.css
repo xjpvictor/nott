@@ -56,6 +56,9 @@ a.nav:hover{color:#fff !important;background:#e63f2a;border-color:#e63f2a;text-d
 #sidebar{width:340px;float:left;padding-left:20px;}
 .widget{background:#fff;padding:20px;margin:0 0 15px 0px;border:none;box-shadow:0 0 1px #333;word-wrap:break-word;display:block;}
 .widget h2{font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Noto Serif","Times New Roman",serif !important;padding-bottom:20px;}
+#sidebar .header:before{border-top:5px solid #000;content:'';position:absolute;margin-left:-21px;width:342px;margin-top:-21px;padding:0;}
+.header h2{font-size:1.7em;}
+.header .description{font-style:italic;}
 .tag{font-size:0.8em;display:inline-block;margin-right:15px;margin-bottom:10px;padding:0px 8px;box-shadow:0 0 1px #333;background-color:#eee;color:#666;text-decoration:none;border-radius:3px;word-wrap:break-word;max-width:284px;border:none;}
 .tag:visited{color:#666;text-decoration:none;}
 .tag:hover{cursor:pointer;color:#fff;text-decoration:none;background-color:#ca2017;}
@@ -161,5 +164,6 @@ p#otp{padding:1em 0 2em;text-align:center;}
 .link a{margin-left:0;margin-right:15px;}
 .content:hover>.meta .link{display:block;}
 #sidebar{float:none;width:100%;padding-left:0;}
+#sidebar .header:before{margin-left:0;width:auto;left:9px;right:9px;}
 #pager{margin-right:0;}
 }

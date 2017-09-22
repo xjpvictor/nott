@@ -1,5 +1,11 @@
 <div id="sidebar">
-<?php if (isset($post) && $post) { ?>
+<?php if (isset($paper)) { ?>
+<a class="widget compose" onclick="document.getElementById('post-d').value='';document.getElementById('post-d').focus();" href="javascript:;">Erase</a>
+<div class="widget header">
+<h2>Paper</h2>
+<p class="description"><?php echo 'By '.htmlspecialchars($site_name); ?></p>
+</div>
+<?php } elseif (isset($post) && $post) { ?>
 <input class="widget compose" type="submit" id="submit" value="<?php echo (isset($note) || isset($clipboard) ? 'Update' : 'Add Note'); ?>" />
 
 <?php if (!isset($clipboard)) { ?>
@@ -151,15 +157,17 @@ if (!isset($post) || !$post) {
 
 <div class="widget" id="meta">
 <h2>Meta</h2>
-<?php echo ($auth && !isset($clipboard) && class_exists('ZipArchive') ? '<p id="export"><a title="export" href="export.php">Export <span>all notes</span></a></p>' : ''); ?>
+<?php echo ($auth && !isset($clipboard) && !isset($paper) && class_exists('ZipArchive') ? '<p id="export"><a title="export" href="export.php">Export <span>all notes</span></a></p>' : ''); ?>
 <?php
 if ($auth) {
   if (isset($clipboard)) {
-    echo '<p id="clipboard">Switch to <a href="index.php">Notes</a></p>';
+    echo '<p id="clipboard">Switch to <a href="index.php">Notes</a> &middot; <a href="paper.php">Paper</a></p>';
     echo '<p id="bookmarklet">Drag to add bookmarklet <a href="javascript:var url=\''.$site_url.'\';var clip=true;var x=document.createElement(\'SCRIPT\');x.type=\'text/javascript\';x.src=url+\'bookmarklet.js\';document.getElementsByTagName(\'head\')[0].appendChild(x);void(0)" title="Drag to bookmarks bar">Clipboard by '.htmlspecialchars($site_name).'</a></p>';
+  } elseif (isset($paper)) {
+    echo '<p id="clipboard">Switch to <a href="index.php">Notes</a> &middot; <a href="clipboard.php">Clipboard</a></p>';
   }
   if ((!isset($post) || !$post) && (!isset($id) || !$id)) {
-    echo '<p id="clipboard">Switch to <a href="clipboard.php">Clipboard</a></p>';
+    echo '<p id="clipboard">Switch to <a href="clipboard.php">Clipboard</a> &middot; <a href="paper.php">Paper</a></p>';
     echo '<p id="bookmarklet">Note with bookmarklet <a href="javascript:var url=\''.$site_url.'\';var clip=false;var x=document.createElement(\'SCRIPT\');x.type=\'text/javascript\';x.src=url+\'bookmarklet.js\';document.getElementsByTagName(\'head\')[0].appendChild(x);void(0)" title="Drag to bookmarks bar">Clip to '.htmlspecialchars($site_name).'</a></p>';
 ?>
 <form id="kindle-upload" method="POST" action="kindle.php" enctype="multipart/form-data">

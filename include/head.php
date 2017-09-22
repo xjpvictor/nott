@@ -4,10 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="robots" content="noindex, nofollow">
-<title><?php echo (isset($clipboard) ? 'Clipboard by ' : '').htmlspecialchars($site_name); ?></title>
+<title><?php echo (isset($clipboard) ? 'Clipboard by ' : (isset($paper) ? 'Paper by ' : '')).htmlspecialchars($site_name); ?></title>
 <?php echo ($site_description ? '<meta name="description" content="'.htmlspecialchars($site_description).'" />' : ''); ?>
 <link rel="stylesheet" href="include/style.css" type="text/css" media="all" />
-<?php if ((isset($post) && $post) || (isset($single) && $single)) { ?>
+<?php if (((isset($post) && $post) || (isset($single) && $single)) && !isset($paper)) { ?>
 <link rel="stylesheet" href="include/readability.css" type="text/css" media="all" />
 <link rel="stylesheet" href="include/highlight/styles/xcode.css">
 <?php } ?>
@@ -17,8 +17,9 @@
 <link rel="icon" href="webapp-icon.png" />
 </head>
 
-<div id="lock-hide"<?php echo (isset($passcode) && $passcode && (isset($clipboard) || (isset($single) && $single) || (isset($post) && $post)) ? ' style="display:none;"' : ''); ?>>
+<div id="lock-hide"<?php echo (isset($passcode) && $passcode && (isset($clipboard) || (isset($single) && $single) || (isset($post) && $post)) && !isset($paper) ? ' style="display:none;"' : ''); ?>>
 
+<?php if (!isset($paper)) { ?>
 <div id="header">
 <div id="header-content">
 <div id="logo">
@@ -29,6 +30,7 @@
 </div>
 </div>
 <!--end of header-->
+<?php } ?>
 
 <?php
 if (!isset($post) || !$post) {
