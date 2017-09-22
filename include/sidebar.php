@@ -1,10 +1,12 @@
 <div id="sidebar">
 <?php if (isset($paper)) { ?>
-<a class="widget compose" onclick="document.getElementById('post-d').value='';document.getElementById('post-d').focus();" href="javascript:;">Erase</a>
+<a class="widget compose paper" onclick="clearContent();document.getElementById('post-d').focus();" href="javascript:;">Erase</a>
 <div class="widget header">
 <h2>Paper</h2>
 <p class="description"><?php echo 'By '.htmlspecialchars($site_name); ?></p>
 </div>
+<input class="widget compose paper" type="submit" id="submit" value="Save as Note" />
+<a class="widget compose view paper" id="view" data-href="mailto:?body=" href="" onclick="this.href=this.dataset.href+encodeURIComponent(document.getElementById('post-d').value);" target="_blank">Send via Email</a><a class="widget compose paper" id="delete" href="">Share</a>
 <?php } elseif (isset($post) && $post) { ?>
 <input class="widget compose" type="submit" id="submit" value="<?php echo (isset($note) || isset($clipboard) ? 'Update' : 'Add Note'); ?>" />
 

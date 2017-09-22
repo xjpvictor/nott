@@ -84,6 +84,15 @@ function updateClip() {
 }
 setTimeout(updateClip, 3000);
 </script>
+<?php } else { ?>
+<script>
+function clearContent() {
+  document.getElementById('post-d').value = '';
+}
+clearContent();
+document.getElementById('post-d').focus();
+window.onbeforeunload = function(){clearContent();};
+</script>
 <?php } ?>
 
 <?php if (isset($passcode) && $passcode && (isset($clipboard) || (isset($single) && $single) || (isset($post) && $post)) && !isset($paper)) { ?>

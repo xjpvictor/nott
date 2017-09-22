@@ -22,7 +22,7 @@ if (isset($_GET['id']) && $_GET['id']) {
 $post = true;
 include($include_dir . 'head.php');
 ?>
-<form id="post" method="POST" action="post.php<?php echo (isset($note) ? '?id='.$note['id'] : ''); ?>" enctype="multipart/form-data">
+<form id="post" method="POST" action="post.php<?php echo (isset($note) ? '?id='.$note['id'] : '?r=view'); ?>" enctype="multipart/form-data">
 <div id="main">
 <div class="content">
 <div id="edit-button">

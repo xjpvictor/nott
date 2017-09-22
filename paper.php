@@ -13,12 +13,13 @@ $paper = true;
 
 include($include_dir . 'head.php');
 ?>
-<form id="post" method="POST" action="" enctype="multipart/form-data">
+<form id="post" method="POST" action="post.php?r=view" enctype="multipart/form-data">
 <div id="main">
 <div class="content">
 <textarea id="post-d" name="d"></textarea>
 </div>
 </div>
+<input name="t" type="hidden" id="post-t" value="Nott Paper">
 <!--end of main-->
 
 <?php
