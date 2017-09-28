@@ -32,6 +32,8 @@ window.addEventListener("mousemove", notRobot);
 window.addEventListener("keypress", notRobot);
 </script>
 
+<?php if (!isset($error)) { ?>
+
 <?php if (!isset($clipboard) && !isset($paper)) { // In Notes mode ?>
 <?php if ((isset($single) && $single) || (isset($post) && $post)) { ?>
 <script src="include/highlight/highlight.pack.js"></script>
@@ -188,6 +190,8 @@ if (!lockDown()) {
 }
 document.getElementById('lock-hide').style.display='block';
 </script>
+<?php } ?>
+
 <?php } ?>
 
 <script>

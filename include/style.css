@@ -15,6 +15,7 @@ input[type="text"],input[type="password"]{border:1px solid #999;padding:0 3px;ma
 input[type="submit"]{border:1px solid #4285f1;margin:0;padding:1px 8px;background:#4285f1;color:#fff;}
 input[type="submit"]:hover{cursor:pointer;background:#d42;border-color:#d42;}
 [draggable]{cursor:move;}
+label:hover{cursor:pointer;}
 .clear {clear:both;display:block;overflow:hidden;visibility:hidden;width:0;height:0;}
 #header{width:100%;font-size:14px;line-height:1.8em;box-shadow:0 3px 3px #666;background:#fff;border-top:5px solid #000;}
 #header-content{padding:10px 30px;max-width:1500px;margin:0 auto;}
@@ -88,7 +89,8 @@ a.compose.paper{background:#ca2017;}
 #paper-revise-avatar .avatar:first-child:before{margin-left:-50%;}
 #paper-revise-avatar .avatar.touched:before{display:block;}
 #paper-revise-user{width:100%;margin:0 0 15px;}
-#paper-revise-user input{font-size:.75em;width:100%;margin:0 0 5px;}
+#paper-revise-user input:not([type="checkbox"]){font-size:.75em;width:100%;margin:0 0 5px !important;line-height:1em;padding:3px 5px;}
+#paper-revise-user input[type="checkbox"]{margin-top:2px;vertical-align:middle;}
 #paper-revise-user p{font-size:.75em;}
 #paper-revise-user p.red{color:#d42;}
 #footer{margin:20px 0 35px;text-align:center;}

@@ -30,8 +30,10 @@ if (isset($paper_content)) {
   if (!$auth) {
     echo '<div id="paper-revise-user">';
     echo '<p id="paper-revise-message">You need to provide your email to revise</p>';
-    echo '<input id="paper-revise-email" name="e" required placeholder="Email, Required" tabindex=3 />';
-    echo '<input id="paper-revise-name" name="n" placeholder="Name" tabindex=4 />';
+    echo '<input type="email" id="paper-revise-email" name="e" required placeholder="Email, Required" tabindex=3 />';
+    echo '<input type="text" id="paper-revise-name" name="n" placeholder="Name" tabindex=4 />';
+    if ($allow_set_subscribe_paper)
+      echo '<p><label><input name="s" value="0" type="hidden" /><input name="s" value="1" type="checkbox" '.($default_subscribe_paper ? 'checked ' : '').'/> Email me with new revision</label></p>';
     echo '</div>';
   }
 }

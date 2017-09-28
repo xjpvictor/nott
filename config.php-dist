@@ -42,5 +42,13 @@ $passcode = ''; // leave empty to disable lock screen
  */
 
 $mail_note_to = ''; // leave empty to stop sending notes
-$mail_note_account = ''; // msmtp account to be sent from, optional
-$mail_note_from = ''; // email address to be sent from, optional
+$mail_note_account = ''; // msmtp account to be sent from, optional. this is also used for sending paper subscription
+$mail_note_from = ''; // email address to be sent from, optional. this is also used for sending paper subscription
+
+/*
+ * Send email notification when paper has new revision
+ */
+
+$notify_paper_revision = '1'; // 1 for sending, 0 for not sending
+$allow_set_subscribe_paper = '1'; // 1 for allowing people to decide whether want to receive notification, 0 for not allowing
+$default_subscribe_paper = '1'; // 1 for default sending notification, 0 for default not sending

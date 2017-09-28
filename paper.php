@@ -3,6 +3,7 @@ include(__DIR__ . '/init.php');
 
 $post = true;
 $paper = (file_exists($paper_file) && ($t = file_get_contents($paper_file)) ? json_decode($t, 1) : array());
+$paper_notify_emails = (file_exists($paper_notify_email_file) ? json_decode(file_get_contents($paper_notify_email_file), 1) : array());
 
 if (isset($_GET['id']) && $_GET['id']) {
   if (isset($_GET['action']) && $_GET['action']) {
@@ -34,6 +35,35 @@ if (isset($_GET['id']) && $_GET['id']) {
       header('Location: '.$site_url.'paper.php'.(isset($_GET['ver']) && $_GET['ver'] ? '?id='.$_GET['id'] : ''));
       exit;
 
+    } else {
+      switch ($_GET['action']) {
+      case 'verify':
+        if (isset($paper_notify_emails[$_GET['id']]) && isset($_GET['code']) && hash($paper_hash_algo, abs($paper_notify_emails[$_GET['id']])) == $_GET['code']) {
+          $paper_notify_emails[$_GET['id']] = abs($paper_notify_emails[$_GET['id']]);
+          file_put_contents($paper_notify_email_file, json_encode($paper_notify_emails));
+          chmod($paper_notify_email_file, 0600);
+          $error = 'Your email is successfully verified.';
+        } else
+          $error = 'Sorry, your email cannot be verified.';
+        include($include_dir . 'error.php');
+        exit;
+      case 'unsubscribe':
+      case 'subscribe':
+        if (isset($paper_notify_emails[$_GET['id']]) && isset($_GET['code']) && hash($paper_hash_algo, abs($paper_notify_emails[$_GET['id']])) == $_GET['code'] && isset($_GET['paper']) && isset($paper[$_GET['paper']]['subscribe'][$_GET['id']])) {
+          $paper[$_GET['paper']]['subscribe'][$_GET['id']]['subscribe'] = ($_GET['action'] == 'unsubscribe' ? 0 : 1);
+          file_put_contents($paper_file, json_encode($paper));
+          chmod($paper_file, 0600);
+          $error = ($_GET['action'] == 'unsubscribe' ? 'You have successfully unsubscribed. You may use the link in your email to subscribe again.' : 'You have successfully subscribed. You may use the link in your email to unsubscribe.');
+        } else
+          $error = 'Sorry, there\'s something wrong.';
+        include($include_dir . 'error.php');
+        exit;
+      }
+
+      http_response_code(404);
+      $error = 'Sorry, action not defined.';
+      include($include_dir . 'error.php');
+      exit;
     }
   } else {
     if ($paper && isset($paper[$_GET['id']]) && $paper[$_GET['id']] && isset($paper[$_GET['id']]['review']) && ($paper_reviews = $paper[$_GET['id']]['review'])) {
@@ -85,6 +115,24 @@ if (isset($_POST['d']) && $_POST['d'] && isset($_POST['comment']) && !$_POST['co
 
     $version = max(array_keys($paper[$paper_id]['review'])) + 1;
     $paper[$paper_id]['review'][$version] = array('time' => time(), 'email' => ($auth ? $user_email : $_POST['e']), 'name' => ($auth ? $user_name : $_POST['n']));
+    if (!$auth)
+      $paper[$paper_id]['subscribe'][hash($paper_hash_algo, $_POST['e'])] = array('email' => $_POST['e'], 'subscribe' => ($allow_set_subscribe_paper && isset($_POST['s']) ? $_POST['s'] : $default_subscribe_paper));
+
+    if ($notify_paper_revision) {
+      // Send email to paper editors
+      foreach ($paper[$paper_id]['subscribe'] as $email_hash => $subscribe) {
+        $email = $subscribe['email'];
+        $subscribe = $subscribe['subscribe'];
+        if ($subscribe && $email !== ($auth ? $user_email : $_POST['e']) && (!isset($paper_notify_emails[$email_hash]) || $paper_notify_emails[$email_hash] > 0)) {
+          sendmail($email, $mail_note_from, 'New revision for Paper by '.htmlentities($site_name), '<p>Hi,</p>'."\n\n\n\n".'<p>You received this email because you have made a revision for a <a href="'.$site_url.'paper.php?id='.$paper_id.'" target="_blank">Paper</a> on '.htmlentities($site_name).'</p>'."\n\n\n\n".(!isset($paper_notify_emails[$email_hash]) ? '<p>You need to verify your email address using the link below if you want to receive this notification in the future.<br><a href="'.($verify_url = $site_url.'paper.php?id='.$email_hash.'&action=verify&code='.($verify_hash = hash($paper_hash_algo, ($verify_code = rand(1000, 9999))))).'" target="_blank">'.htmlentities($verify_url).'</a></p>' : '<p><a href="'.$site_url.'paper.php?id='.$email_hash.'&action=unsubscribe&paper='.$paper_id.'&code='.hash($paper_hash_algo, $paper_notify_emails[$email_hash]).'" target="_blank">Unsubscribe</a> | <a href="'.$site_url.'paper.php?id='.$email_hash.'&action=subscribe&paper='.$paper_id.'&code='.hash($paper_hash_algo, $paper_notify_emails[$email_hash]).'" target="_blank">Subscribe</a></p>'), $mail_note_account);
+          if (!isset($paper_notify_emails[$email_hash])) {
+            $paper_notify_emails[$email_hash] = '-'.$verify_code;
+            file_put_contents($paper_notify_email_file, json_encode($paper_notify_emails));
+            chmod($paper_notify_email_file, 0600);
+          }
+        }
+      }
+    }
   }
 
   if (isset($version)) {
