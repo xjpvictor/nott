@@ -4,6 +4,7 @@ $site_name = ''; // *
 $site_description = '';
 
 $user_name = ''; // *
+$user_email = ''; // *
 $password = ''; // * will be automatically encrypted
 
 $limit = '10'; // number of notes displayed on one page

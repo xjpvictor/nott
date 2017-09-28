@@ -103,11 +103,11 @@ function escpost($str, $id, $source, $edit = 0) {
   return trim($str);
 }
 function getlist() {
-  global $data_dir, $id_file, $tags_file, $kindle_file;
+  global $data_dir, $id_file, $tags_file, $kindle_file, $paper_file;
 
   $list = glob($data_dir.'*.json', GLOB_NOSORT);
   if ($list) {
-    $list = array_diff($list, array($id_file, $tags_file, $kindle_file));
+    $list = array_diff($list, array($id_file, $tags_file, $kindle_file, $paper_file));
     natsort($list);
     return array_reverse($list);
   }

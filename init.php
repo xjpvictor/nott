@@ -19,6 +19,7 @@ $user_dir = __DIR__ .'/usr/';
 $data_dir = $user_dir.'data/';
 $content_dir = $user_dir.'content/';
 $upload_dir = $user_dir.'upload/';
+$paper_dir = $user_dir.'paper/';
 $include_dir = __DIR__ . '/include/';
 $tmp_dir = __DIR__ . '/tmp/';
 $html_dir = __DIR__ . '/html/';
@@ -27,6 +28,7 @@ $id_file = $data_dir.'id.json';
 $tags_file = $data_dir.'tags.json';
 $kindle_file = $data_dir.'kindle.json';
 $clipboard_file = $data_dir.'clipboard.txt';
+$paper_file = $data_dir.'paper.json';
 
 $allowed_tags = '<div><p><span><h1><h2><h3><h4><h5><h6><br><br/><small><a><img><figure><figcaption><iframe><table><caption><tbody><thead><tfoot><tr><td><th><blockquote><pre><code><ol><ul><li><abbr><del><strong><b><i><ins><u><em><sub><sup><hr>';
 $webclip_identify_tag_open = '##NOTTwebclipBegin##';
@@ -50,10 +52,10 @@ if (isset($passcode) && $passcode && !preg_match('/\$2y\$'.$cost.'\$[\.\/0-9a-zA
 
 $salt = substr($password, -10);
 
-if (!$site_url || !$user_name || !$password) {
-  if (!$site_url)
+if (!isset($site_url) || !$site_url || !isset($user_name) || !$user_name || !isset($user_email) || !$user_email || !isset($password) || !$password) {
+  if (!isset($site_url) || !$site_url)
     $site_url = 'https://github.com/xjpvictor/nott/';
-  if (!$user_name)
+  if (!isset($user_name) || !$user_name)
     $user_name = 'nott';
 
   http_response_code(403);
@@ -67,6 +69,10 @@ $default_privacy = ($default_privacy ? $default_privacy : '0');
 $otp = ($otp ? $otp : '0');
 
 $str_hash_algo = 'sha1';
+$paper_hash_algo = 'sha1';
+$paper_id_length = 4;
+
+$avatar_hash_algo = 'md5';
 
 if (!defined('NOINIT') || NOINIT !== true) {
   $auth = auth();

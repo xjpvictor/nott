@@ -1,14 +1,44 @@
 <div id="sidebar">
 <?php if (isset($paper)) { ?>
+<?php if (!isset($paper_content) && !isset($papers)) { ?>
 <a class="widget compose paper" onclick="clearContent();document.getElementById('post-d').focus();" href="javascript:;">Erase</a>
+<?php } ?>
 <div class="widget header">
-<h2>Paper</h2>
+<h2><a href="<?php echo $site_url; ?>paper.php<?php echo (!isset($paper_content) && !isset($papers) ? '?view=1' : ''); ?>">Paper</a></h2>
 <p class="description"><?php echo 'By '.htmlspecialchars($site_name); ?></p>
 </div>
-<input class="widget compose paper" type="submit" id="submit" value="Save as Note" />
-<a class="widget compose view paper" id="view" data-href="mailto:?body=" href="" onclick="this.href=this.dataset.href+encodeURIComponent(document.getElementById('post-d').value);" target="_blank">Send via Email</a><a class="widget compose paper" id="delete" href="">Share</a>
+<?php if (isset($paper_content)) { ?>
+URL:<br><input id="paper-url" value="<?php echo htmlentities($site_url.'paper.php?id='.$_GET['id']); ?>" onclick="this.select();" tabindex=2 />
+<?php } ?>
+<?php if (!isset($papers)) { ?>
+<?php if ($auth) { ?>
+<input class="widget compose paper" type="submit" id="btnSubmit" value="Save as Note" />
+<?php } ?>
+<a class="widget compose view paper" id="view" data-href="mailto:?body=" href="javascript:;" onclick="this.href=this.dataset.href+encodeURIComponent(document.getElementById('post-d').value);" target="_blank">Send via Email</a><a class="widget compose paper" id="delete" href="javascript:;" onclick="if(!document.getElementById('paper-revise-email') || document.getElementById('paper-revise-email').value){document.getElementById('post').action='paper.php<?php echo (isset($paper_content) ? '?id='.$_GET['id'] : ''); ?>';document.getElementById('post').submit();}else if(document.getElementById('paper-revise-message')){document.getElementById('paper-revise-message').classList.add('red');}"><?php echo (isset($paper_content) ? 'Revise' : 'Share'); ?></a>
+<?php
+if (isset($paper_content)) {
+  $review_emails = array();
+  echo '<div id="paper-revise-avatar">';
+  foreach ($paper_reviews as $review) {
+    if (!isset($review_emails[$review['email']])) {
+      echo '<span class="avatar" data-name="'.($name = htmlentities(($review['name'] ? $review['name'] : $review['email']))).'" ontouchstart="this.classList.add(\'touched\');" ontouchend="this.classList.remove(\'touched\');"><img title="'.$name.'" src="avatar.php?hash='.hash($avatar_hash_algo, $review['email']).'&s=36" /></span>';
+      $review_emails[$review['email']] = 1;
+    }
+  }
+  echo '</div>';
+
+  if (!$auth) {
+    echo '<div id="paper-revise-user">';
+    echo '<p id="paper-revise-message">You need to provide your email to revise</p>';
+    echo '<input id="paper-revise-email" name="e" required placeholder="Email, Required" tabindex=3 />';
+    echo '<input id="paper-revise-name" name="n" placeholder="Name" tabindex=4 />';
+    echo '</div>';
+  }
+}
+?>
+<?php } ?>
 <?php } elseif (isset($post) && $post) { ?>
-<input class="widget compose" type="submit" id="submit" value="<?php echo (isset($note) || isset($clipboard) ? 'Update' : 'Add Note'); ?>" />
+<input class="widget compose" type="submit" id="btnSubmit" value="<?php echo (isset($note) || isset($clipboard) ? 'Update' : 'Add Note'); ?>" />
 
 <?php if (!isset($clipboard)) { ?>
 <span class="widget compose view" onclick="if(!document.getElementById('edit-button').className){document.getElementById('readability').innerHTML=converter.makeHtml(document.getElementById('post-d').value);noteSH();this.innerHTML='Edit';uploadAddClass('post-d','hide');uploadAddClass('edit-button','hide');uploadAddClass('edit-title','hide');uploadAddClass('preview','show');}else{this.innerHTML='Preview';uploadRemoveClass('post-d','hide');uploadRemoveClass('edit-button','hide');uploadRemoveClass('edit-title','hide');uploadRemoveClass('preview','show');}">Preview</span>
@@ -198,9 +228,9 @@ if ($auth) {
 </form>
 <?php
   }
-  echo '<a title="Logout" href="logout.php?url='.rawurlencode($site_url.(isset($note) ? '?id='.$note['id'] : (isset($_GET['p']) && $_GET['p'] && is_numeric($_GET['p']) && $_GET['p'] > 1 ? '?p='.$_GET['p'] : ''))).'">Logout</a>';
+  echo '<a title="Logout" href="logout.php?url='.rawurlencode($site_url.(isset($paper) && isset($paper_content) ? 'paper.php?id='.$_GET['id'] : (isset($note) ? '?id='.$note['id'] : (isset($_GET['p']) && $_GET['p'] && is_numeric($_GET['p']) && $_GET['p'] > 1 ? '?p='.$_GET['p'] : '')))).'">Logout</a>';
 } else
-  echo '<a title="Login" href="login.php?url='.rawurlencode($site_url.(isset($note) ? '?id='.$note['id'] : (isset($_GET['p']) && $_GET['p'] && is_numeric($_GET['p']) && $_GET['p'] > 1 ? '?p='.$_GET['p'] : ''))).'">Login</a>';
+  echo '<a title="Login" href="login.php?url='.rawurlencode($site_url.(isset($paper) ? 'paper.php'.(isset($paper_content) ? '?id='.$_GET['id'] : '') : (isset($note) ? '?id='.$note['id'] : (isset($_GET['p']) && $_GET['p'] && is_numeric($_GET['p']) && $_GET['p'] > 1 ? '?p='.$_GET['p'] : '')))).'">Login</a>';
 ?>
 </div>
 </div>

@@ -32,7 +32,7 @@ window.addEventListener("mousemove", notRobot);
 window.addEventListener("keypress", notRobot);
 </script>
 
-<?php if (!isset($clipboard) && !isset($paper)) { ?>
+<?php if (!isset($clipboard) && !isset($paper)) { // In Notes mode ?>
 <?php if ((isset($single) && $single) || (isset($post) && $post)) { ?>
 <script src="include/highlight/highlight.pack.js"></script>
 <script>
@@ -58,7 +58,7 @@ var base_url = 'attachment.php?id=<?php echo (isset($note) ? $note['id'] : $new_
 </script>
 <script src="include/edit.js"></script>
 <?php } ?>
-<?php } elseif (!isset($paper)) { ?>
+<?php } elseif (!isset($paper)) { // In Clipboard mode ?>
 <script>
 var base_url = 'attachment.php?id=0&action=add';
 </script>
@@ -84,7 +84,7 @@ function updateClip() {
 }
 setTimeout(updateClip, 3000);
 </script>
-<?php } else { ?>
+<?php } elseif (!isset($paper_content) && !isset($papers)) { // In Paper mode ?>
 <script>
 function clearContent() {
   document.getElementById('post-d').value = '';
@@ -92,6 +92,28 @@ function clearContent() {
 clearContent();
 document.getElementById('post-d').focus();
 window.onbeforeunload = function(){clearContent();};
+</script>
+<?php } elseif (!isset($papers)) { // Show single Paper ?>
+<script>
+function focusVersion(element, scroll = true, version = false) {
+  document.getElementById('post-d').value = element.dataset.content;
+  var elems = document.getElementsByClassName('selected');
+  for (var i = 0; i < elems.length; i++) {
+    elems[i].classList.remove('selected');
+  }
+  element.classList.add('selected');
+  document.getElementById('paper-list-editing-preview').innerHTML = document.getElementById('paper-list-editing').dataset.content.substring(0, 100);
+  if (scroll === true)
+    document.getElementById('post-d').scrollTop = 0;
+  else if (scroll === -1)
+    document.getElementById('post-d').scrollTop = document.getElementById('post-d').scrollHeight;
+  elemDelVer = document.getElementById('paper-delete-ver');
+  if (version) {
+    elemDelVer.href = elemDelVer.dataset.href + version;
+    elemDelVer.classList.remove('hide');
+  } else
+    elemDelVer.classList.add('hide');
+}
 </script>
 <?php } ?>
 
