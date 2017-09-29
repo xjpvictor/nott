@@ -77,6 +77,7 @@ $avatar_hash_algo = 'md5';
 $notify_paper_revision = (isset($notify_paper_revision) ? $notify_paper_revision : 1);
 $allow_set_subscribe_paper = (isset($allow_set_subscribe_paper) ? $allow_set_subscribe_paper : 1);
 $default_subscribe_paper = (isset($default_subscribe_paper) ? $default_subscribe_paper : 1);
+$notify_me_paper_revision = (isset($notify_me_paper_revision) ? $notify_me_paper_revision : 1);
 $paper_notify_email_file = $data_dir.'paper_notify_email.json';
 
 if (!defined('NOINIT') || NOINIT !== true) {

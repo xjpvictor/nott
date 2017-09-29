@@ -117,21 +117,30 @@ if (isset($_POST['d']) && $_POST['d'] && isset($_POST['comment']) && !$_POST['co
     $paper[$paper_id]['review'][$version] = array('time' => time(), 'email' => ($auth ? $user_email : $_POST['e']), 'name' => ($auth ? $user_name : $_POST['n']));
     if (!$auth)
       $paper[$paper_id]['subscribe'][hash($paper_hash_algo, $_POST['e'])] = array('email' => $_POST['e'], 'subscribe' => ($allow_set_subscribe_paper && isset($_POST['s']) ? $_POST['s'] : $default_subscribe_paper));
+    else
+      $paper[$paper_id]['subscribe'][hash($paper_hash_algo, $user_email)] = array('email' => $user_email, 'subscribe' => $notify_me_paper_revision);
 
     if ($notify_paper_revision) {
       // Send email to paper editors
       foreach ($paper[$paper_id]['subscribe'] as $email_hash => $subscribe) {
         $email = $subscribe['email'];
         $subscribe = $subscribe['subscribe'];
-        if ($subscribe && $email !== ($auth ? $user_email : $_POST['e']) && (!isset($paper_notify_emails[$email_hash]) || $paper_notify_emails[$email_hash] > 0)) {
-          sendmail($email, $mail_note_from, 'New revision for Paper by '.htmlentities($site_name), '<p>Hi,</p>'."\n\n\n\n".'<p>You received this email because you have made a revision for a <a href="'.$site_url.'paper.php?id='.$paper_id.'" target="_blank">Paper</a> on '.htmlentities($site_name).'</p>'."\n\n\n\n".(!isset($paper_notify_emails[$email_hash]) ? '<p>You need to verify your email address using the link below if you want to receive this notification in the future.<br><a href="'.($verify_url = $site_url.'paper.php?id='.$email_hash.'&action=verify&code='.($verify_hash = hash($paper_hash_algo, ($verify_code = rand(1000, 9999))))).'" target="_blank">'.htmlentities($verify_url).'</a></p>' : '<p><a href="'.$site_url.'paper.php?id='.$email_hash.'&action=unsubscribe&paper='.$paper_id.'&code='.hash($paper_hash_algo, $paper_notify_emails[$email_hash]).'" target="_blank">Unsubscribe</a> | <a href="'.$site_url.'paper.php?id='.$email_hash.'&action=subscribe&paper='.$paper_id.'&code='.hash($paper_hash_algo, $paper_notify_emails[$email_hash]).'" target="_blank">Subscribe</a></p>'), $mail_note_account);
+
+        if ($subscribe && (!isset($paper_notify_emails[$email_hash]) || $paper_notify_emails[$email_hash] > 0)) {
+          if ($email !== $user_email && $email !== (!$auth ? $_POST['e'] : $user_email)) {
+            sendmail($email, $mail_note_from, 'New revision for Paper by '.htmlentities($site_name), '<p>Hi,</p>'."\n\n\n\n".'<p>You received this email because you made a revision for a <a href="'.$site_url.'paper.php?id='.$paper_id.'" target="_blank">Paper</a> on '.htmlentities($site_name).'. There\'s new revision for the Paper.</p>'."\n\n\n\n".(!isset($paper_notify_emails[$email_hash]) ? '<p>You need to verify your email address using the link below if you want to receive this notification in the future.<br><a href="'.($verify_url = $site_url.'paper.php?id='.$email_hash.'&action=verify&code='.($verify_hash = hash($paper_hash_algo, ($verify_code = rand(1000, 9999))))).'" target="_blank">'.htmlentities($verify_url).'</a></p>' : '<p><a href="'.$site_url.'paper.php?id='.$email_hash.'&action=unsubscribe&paper='.$paper_id.'&code='.hash($paper_hash_algo, $paper_notify_emails[$email_hash]).'" target="_blank">Unsubscribe</a> | <a href="'.$site_url.'paper.php?id='.$email_hash.'&action=subscribe&paper='.$paper_id.'&code='.hash($paper_hash_algo, $paper_notify_emails[$email_hash]).'" target="_blank">Subscribe</a></p>'), $mail_note_account);
+          }
+
           if (!isset($paper_notify_emails[$email_hash])) {
-            $paper_notify_emails[$email_hash] = '-'.$verify_code;
+            $paper_notify_emails[$email_hash] = ($email !== $user_email ? '-'.$verify_code : rand(1000, 9999));
             file_put_contents($paper_notify_email_file, json_encode($paper_notify_emails));
             chmod($paper_notify_email_file, 0600);
           }
         }
       }
+    }
+    if ($notify_me_paper_revision && !$auth) {
+      sendmail($user_email, $mail_note_from, 'New revision for Paper by '.htmlentities($site_name), '<p>Hi '.$user_name.',</p>'."\n\n\n\n".'<p>You received this email because someone just made a revision for a <a href="'.$site_url.'paper.php?id='.$paper_id.'" target="_blank">Paper</a> on '.htmlentities($site_name).'</p>', $mail_note_account);
     }
   }
 
