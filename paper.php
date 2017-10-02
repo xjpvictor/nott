@@ -175,10 +175,12 @@ if (isset($paper_reviews) && $paper_reviews) {
     echo '<div class="papers'.(isset($display_select) && $display_select == $paper_version ? ' selected' : '').'" onclick="focusVersion(this,true'.($paper_version ? ',\''.$paper_version.'\'' : '').');" data-content="'.htmlentities(($str = file_get_contents($paper_dir.$paper[$_GET['id']]['time'].'-'.$paper_version.'.txt'))).'" data-info="'.htmlentities($paper_review['name'] ? $paper_review['name'] : $paper_review['email'])."\n".date('d M, Y H:i', $paper_review['time']).'"><div>'.htmlentities(substr($str, 0, 100)).'</div><img class="avatar" src="avatar.php?hash='.hash($avatar_hash_algo, $paper_review['email']).'&s=36" /></div>';
   }
   echo '</div>';
-  echo '<div id="paper-delete">';
-  echo '<a href="paper.php?id='.$_GET['id'].'&action=delete" onclick="return confirm(\'Permanently delete this paper?\');">Delete Paper</a>';
-  echo '<a id="paper-delete-ver" '.(count($paper_reviews) > 1 ? '' : 'class="hide" ').'data-href="paper.php?id='.$_GET['id'].'&action=delete&ver=" href="paper.php?id='.$_GET['id'].'&action=delete&ver='.(isset($display_select) ? $display_select : '').'" onclick="return confirm(\'Permanently delete this revision?\');"> / this revision</a>';
-  echo '</div>';
+  if ($auth) {
+    echo '<div id="paper-delete">';
+    echo '<a href="paper.php?id='.$_GET['id'].'&action=delete" onclick="return confirm(\'Permanently delete this paper?\');">Delete Paper</a>';
+    echo '<a id="paper-delete-ver" '.(count($paper_reviews) > 1 ? '' : 'class="hide" ').'data-href="paper.php?id='.$_GET['id'].'&action=delete&ver=" href="paper.php?id='.$_GET['id'].'&action=delete&ver='.(isset($display_select) ? $display_select : '').'" onclick="return confirm(\'Permanently delete this revision?\');"> / this revision</a>';
+    echo '</div>';
+  }
 }
 ?>
 </div>
