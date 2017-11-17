@@ -431,6 +431,7 @@ function geturlcontent($url = '', $content = false) {
     require $include_dir . 'readability/config.inc.php';
     require $include_dir . 'readability/common.inc.php';
     require $include_dir . 'readability/Readability.inc.php';
+    $content = preg_replace(array('/<body(\s+[^>]*)?>/si', '/<\/body\s*>/si'), array('<body><div class="article-body"><p></p>', '</div></body>'), $content);
     $Readability = new Readability($content, 'utf8');
     $ReadabilityData = $Readability->getContent();
     $content = ($ReadabilityData['title'] ? '<h1>'.$ReadabilityData['title'].'</h1>' : '').$ReadabilityData['content'];
