@@ -15,6 +15,7 @@
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="apple-touch-icon" href="webapp-icon.png" />
 <link rel="icon" href="webapp-icon.png" />
+<link rel="mask-icon" href="website-icon.svg" color="#000000" />
 
 <meta name="apple-mobile-web-app-title" content="<?php echo (isset($clipboard) ? 'Clipboard' : (isset($paper) ? 'Paper' : 'NOTT')); ?>" />
 <meta name="application-name" content="<?php echo (isset($clipboard) ? 'Clipboard' : (isset($paper) ? 'Paper' : 'NOTT')); ?>" />
