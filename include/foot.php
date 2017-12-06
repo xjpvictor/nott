@@ -123,10 +123,8 @@ function focusVersion(element, scroll = true, version = false) {
 <div id="lock" style="display:none;">
 <div id="login">
 <p>Enter Pass code:<br/><br/>
-<form method="POST" action="javascript:void(0);" onSubmit="var elem=document.getElementById('passcode');lockUnlock(elem.value);elem.value='';">
-<input id="passcode" type="password" tabindex="1" autofocus></p><br/>
-<input class="compose" type="submit" value="Unlock" tabindex="2">
-</form>
+<input id="passcode" type="password" tabindex="1" autofocus onKeypress="if((window.event ? event.keyCode : (event.which ? event.which : false))=='13'){var elem=document.getElementById('passcode');lockUnlock(elem.value);elem.value='';}"></p><br/>
+<input class="compose" type="submit" value="Unlock" tabindex="2" onClick="var elem=document.getElementById('passcode');lockUnlock(elem.value);elem.value='';">
 </div>
 </div>
 <script>
