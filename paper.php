@@ -16,7 +16,7 @@ if (isset($_GET['id']) && $_GET['id']) {
             file_put_contents($paper_file, json_encode($paper));
             chmod($paper_file, 0600);
           }
-          if (file_exists($paper_dir.$paper[$_GET['id']]['time'].'-'.$_GET['ver'].'.txt'))
+          if (isset($paper[$_GET['id']]['time']) && file_exists($paper_dir.$paper[$_GET['id']]['time'].'-'.$_GET['ver'].'.txt'))
             unlink($paper_dir.$paper[$_GET['id']]['time'].'-'.$_GET['ver'].'.txt');
         } else {
           if ($paper && isset($paper[$_GET['id']])) {
@@ -24,7 +24,7 @@ if (isset($_GET['id']) && $_GET['id']) {
             file_put_contents($paper_file, json_encode($paper));
             chmod($paper_file, 0600);
           }
-          if (($paper_txts = glob($paper_dir.$paper[$_GET['id']]['time'].'-*.txt', GLOB_NOSORT))) {
+          if (isset($paper[$_GET['id']]['time']) && ($paper_txts = glob($paper_dir.$paper[$_GET['id']]['time'].'-*.txt', GLOB_NOSORT))) {
             foreach ($paper_txts as $paper_txt)
               unlink($paper_txt);
           }
