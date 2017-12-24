@@ -256,10 +256,10 @@ function autoSave(s) {
     http.withCredentials = true;
     http.onreadystatechange = function() {
       if (http.readyState == 4 && http.status == 200) {
-        str = document.getElementById('submit').value;
-        document.getElementById('submit').value = 'Saved';
-        document.getElementById('submit').disabled = true;
-        setTimeout("document.getElementById('submit').value=str;document.getElementById('submit').disabled=false;", 1500);
+        str = document.getElementById('btnSubmit').value;
+        document.getElementById('btnSubmit').value = 'Saved';
+        document.getElementById('btnSubmit').disabled = true;
+        setTimeout("document.getElementById('btnSubmit').value=str;document.getElementById('btnSubmit').disabled=false;", 1500);
       }
     }
     http.send("d="+encodeURIComponent(s));
