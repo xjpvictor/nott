@@ -170,6 +170,7 @@ function uploadUploadFile() {
         if (xhr.readyState == 4) {
           if (xhr.status == 200) {
             document.getElementById('attachment-list').innerHTML = xhr.responseText + document.getElementById('attachment-list').innerHTML;
+            autoDraft('attachment-list', document.getElementById('attachment-list').innerHTML);
           }
           if (document.getElementById('upload-file-'+id)) {
             item.parentNode.removeChild(item);
@@ -207,7 +208,7 @@ function uploadShowlist(files) {
   uploadAddClass('upload-file-button-wrap', 'half');
   var t = Math.round(+new Date()/1000);
   for (var i=0;i<files.length;i++) {
-   upl.innerHTML += '<div id="upload-file-'+t+'-'+i+'" class="upload-file show" data-id="'+t+'-'+i+'">'+uploadStringHtmlentities(files[i].name)+'<span class="delete" id="upload-cancel-'+t+'-'+i+'" onclick="this.parentNode.parentNode.removeChild(this.parentNode);">&#10007;</span><div class="upload-progress" id="upload-progress-'+t+'-'+i+'"></div></div>';
+   upl.innerHTML += '<div id="upload-file-'+t+'-'+i+'" class="upload-file show" data-id="'+t+'-'+i+'">'+uploadStringHtmlentities(files[i].name)+'<span class="delete" id="upload-cancel-'+t+'-'+i+'" onclick="this.parentNode.parentNode.removeChild(this.parentNode);">&#9747;</span><div class="upload-progress" id="upload-progress-'+t+'-'+i+'"></div></div>';
    upload['_'+t+'-'+i] = files[i];
   }
 }
@@ -256,6 +257,9 @@ function autoSave(s) {
     http.withCredentials = true;
     http.onreadystatechange = function() {
       if (http.readyState == 4 && http.status == 200) {
+        if (typeof document.getElementById('btnSubmit') == 'undefined' || document.getElementById('btnSubmit') === null) {
+          return false;
+        }
         str = document.getElementById('btnSubmit').value;
         document.getElementById('btnSubmit').value = 'Saved';
         document.getElementById('btnSubmit').disabled = true;
@@ -287,5 +291,12 @@ function pasteImage(event) {
       }
       reader.readAsDataURL(blob);
     }
+  }
+}
+function autoDraft(key, value) {
+  // New note page
+  if (typeof window.sessionStorage != 'undefined') {
+    if (new_post != '')
+      window.sessionStorage[key] = value;
   }
 }

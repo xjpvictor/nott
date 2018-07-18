@@ -49,13 +49,13 @@ if (isset($paper_content)) {
 <?php if (!isset($clipboard)) { ?>
 <div class="widget">
 <h2>Tags</h2>
-<input name="t" type="text" id="post-t" value="<?php if (isset($note) && $note['tags']) {foreach ($note['tags'] as $tag) {echo ($tag !== 'inbox' ? $tag.',' : '');}} ?>">
+<input name="t" type="text" id="post-t" class="autoDraft" value="<?php if (isset($note) && $note['tags']) {foreach ($note['tags'] as $tag) {echo ($tag !== 'inbox' ? $tag.',' : '');}} ?>"<?php echo (!isset($note) ? ' onkeyup="autoDraft(this.name, this.value);"' : ''); ?>>
 <?php
 if ($tags = gettaglist()) {
   $tag_str = '';
   foreach ($tags as $tag => $ids) {
     if ($tag !== 'inbox')
-      $tag_str .= '<span class="tag" onclick="var e=document.getElementById(\'post-t\');e.value=e.value+this.innerHTML+\',\';">'.$tag.'</span>';
+      $tag_str .= '<span class="tag" onclick="var e=document.getElementById(\'post-t\');e.value=(e.value ? e.value+\',\' : \'\')+this.innerHTML;if(\'createEvent\' in document){var evt=document.createEvent(\'HTMLEvents\');evt.initEvent(\'keyup\',false,true);e.dispatchEvent(evt);}">'.$tag.'</span>';
   }
   if ($tag_str)
     echo '<p>'.$tag_str.'</p>';
@@ -64,11 +64,11 @@ if ($tags = gettaglist()) {
 </div>
 <div class="widget">
 <h2>Location</h2>
-<label><input type="radio" name="inbox" value="0" <?php echo (!isset($note['tags']) || !$note['tags'] || !in_array('inbox', $note['tags']) ? 'checked' : ''); ?>> Notes</label><br/><label><input type="radio" name="inbox" value="1" <?php echo (isset($note) && isset($note['tags']) && $note['tags'] && in_array('inbox', $note['tags']) ? 'checked' : ''); ?>> Inbox</label>
+<label<?php echo (!isset($note) ? ' onclick="autoDraft(\'inbox\', 0);"' : ''); ?>><input type="radio" name="inbox" value="0" class="autoDraft" <?php echo (!isset($note['tags']) || !$note['tags'] || !in_array('inbox', $note['tags']) ? 'checked' : ''); ?>> Notes</label><br/><label<?php echo (!isset($note) ? ' onclick="autoDraft(\'inbox\', 1);"' : ''); ?>><input type="radio" name="inbox" value="1" class="autoDraft" <?php echo (isset($note) && isset($note['tags']) && $note['tags'] && in_array('inbox', $note['tags']) ? 'checked' : ''); ?>> Inbox</label>
 </div>
 <div class="widget">
 <h2>Privacy</h2>
-<label><input type="radio" name="p" value="1" <?php echo ((isset($note) && $note['public']) ? 'checked' : (!isset($note) && $default_privacy ? 'checked' : '')); ?>> Public</label><br/><label><input type="radio" name="p" value="0" <?php echo (isset($note) && !$note['public'] ? 'checked' : (!isset($note) && !$default_privacy ? 'checked' : '')); ?>> Private</label>
+<label<?php echo (!isset($note) ? ' onclick="autoDraft(\'p\', 1);"' : ''); ?>><input type="radio" name="p" value="1" class="autoDraft" <?php echo ((isset($note) && $note['public']) ? 'checked' : (!isset($note) && $default_privacy ? 'checked' : '')); ?>> Public</label><br/><label<?php echo (!isset($note) ? ' onclick="autoDraft(\'p\', 0);"' : ''); ?>><input type="radio" name="p" value="0" class="autoDraft" <?php echo (isset($note) && !$note['public'] ? 'checked' : (!isset($note) && !$default_privacy ? 'checked' : '')); ?>> Private</label>
 </div>
 <?php } ?>
 <div class="widget" id="attachment">
@@ -112,7 +112,7 @@ if ((isset($note) && $list = getattachment($note['id'])) || (isset($clipboard) &
 </div>
 <?php } else { ?>
 <?php if ($auth) { ?>
-<a class="widget compose" title="Add note" href="edit.php">Add Note</a>
+<a class="widget compose" title="Add note" href="edit.php" onclick="if(typeof window.sessionStorage!='undefined')window.sessionStorage['new_id']='';">Add Note</a>
 <?php } ?>
 <form id="search" method="get" action="index.php">
 <input type="text" name="s"><input type="submit" value="">

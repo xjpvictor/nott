@@ -60,7 +60,7 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
       exit;
     }
     header('Content-type: application/javascript;');
-    echo 'var elem = document.getElementById(\''.$_GET['elem'].'\');elem.parentNode.removeChild(elem);';
+    echo 'var elem = document.getElementById(\''.$_GET['elem'].'\');elem.parentNode.removeChild(elem);if(typeof autoDraft==\'function\')autoDraft(\'attachment-list\', document.getElementById(\'attachment-list\').innerHTML);';
     exit;
   }
 } elseif (isset($_GET['cache']) && $_GET['cache'] && isset($_GET['id']) && $_GET['id']) {

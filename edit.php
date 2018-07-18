@@ -22,7 +22,7 @@ if (isset($_GET['id']) && $_GET['id']) {
 $post = true;
 include($include_dir . 'head.php');
 ?>
-<form id="post" method="POST" action="post.php<?php echo (isset($note) ? '?id='.$note['id'] : '?r=view'); ?>" enctype="multipart/form-data">
+<form id="post" method="POST" action="post.php<?php echo (isset($note) ? '?id='.$note['id'] : '?r=view'); ?>" enctype="multipart/form-data"<?php echo (!isset($note) ? 'onsubmit="if(typeof window.sessionStorage!=\'undefined\')window.sessionStorage[\'new_id\']=\'\';"' : ''); ?>>
 <div id="main">
 <div class="content">
 <div id="edit-button">
@@ -47,14 +47,14 @@ include($include_dir . 'head.php');
 Markdown supported
 </div>
 <?php $new_id = (!isset($note) ? generaterandomstring(4) : ''); ?>
-<?php echo (!isset($note) ? '<input name="tmp" type="hidden" value="'.$new_id.'">' : ''); ?>
-<textarea id="post-d" name="d"><?php echo ((isset($note) && $note['content']) ? htmlentities($note['content']) : ''); ?></textarea>
+<?php echo (!isset($note) ? '<input name="tmp" id="new_id" type="hidden" value="'.$new_id.'">' : ''); ?>
+<textarea id="post-d" name="d"<?php echo (!isset($note) ? ' onfocus="autoDraft(this.id, this.value);" onkeyup="autoDraft(this.id, this.value);"' : ''); ?>><?php echo ((isset($note) && $note['content']) ? htmlentities($note['content']) : ''); ?></textarea>
 <div id="preview"><h1>Preview</h1><div id="readability"></div></div>
 </div>
 <div id="url">
 <h2>Source</h2>
 <p>URL:</p>
-<input name="u" type="text" <?php echo ((isset($note) && $note['source']['url']) ? 'value="'.htmlentities($note['source']['url']).'"' : ''); ?>>
+<input name="u" type="text" class="autoDraft" <?php echo ((isset($note) && $note['source']['url']) ? 'value="'.htmlentities($note['source']['url']).'"' : ''); ?><?php echo (!isset($note) ? ' onkeyup="autoDraft(this.name, this.value);"' : ''); ?>>
 <?php echo ((isset($note) && $note['source']['title']) ? '<p>Site title:</p><p>'.$note['source']['title'].'</p><br/>' : ''); ?>
 <?php echo ((isset($note) && $note['source']['description']) ? '<p>Site description:</p><p>'.$note['source']['description'].'</p>' : ''); ?>
 </div>

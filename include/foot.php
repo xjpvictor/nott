@@ -56,19 +56,25 @@ noteSH();
 <script src="include/Markdown.Converter.js"></script>
 <script>
 var converter = new Markdown.Converter();
-var base_url = 'attachment.php?id=<?php echo (isset($note) ? $note['id'] : $new_id); ?>&action=add<?php echo (!isset($note) ? '&tmp=1' : ''); ?>';
+var url_id = '<?php echo (isset($note) ? $note['id'] : $new_id); ?>';
+var base_url = 'attachment.php?id='+url_id+'&action=add<?php echo (!isset($note) ? '&tmp=1' : ''); ?>';
+var new_post = '<?php echo (!isset($note) ? '1' : ''); ?>';
 </script>
 <script src="include/edit.js"></script>
 <?php } ?>
 <?php } elseif (!isset($paper)) { // In Clipboard mode ?>
 <script>
 var base_url = 'attachment.php?id=0&action=add';
+var new_post = '';
 </script>
 <script src="include/edit.js"></script>
 <script>
 var tsElem = document.getElementById('clip-ts');
 tsElem.innerHTML = '<?php echo (file_exists($clipboard_file) ? filemtime($clipboard_file) : time()); ?>';
 function updateClip() {
+  if (typeof document.getElementById('post-d') == 'undefined' || document.getElementById('post-d') === null) {
+    return false;
+  }
   var clipTs = tsElem.innerHTML;
   var xhr = new XMLHttpRequest();
   xhr.open("GET", 'clipboard.php?ts='+clipTs, true);
@@ -143,7 +149,13 @@ function setLockCookie() {
 function lockDown() {
   t = getCookie('_nott_lock');
   if (t && Date.now() - t >= 600000) {
+
+<?php if (isset($clipboard)) { // In Clipboard mode ?>
+    e.blur();
+<?php } ?>
+
     document.getElementById('lock').style.display='block';
+    document.getElementById('lock-hide').innerHTML='';
     window.removeEventListener("scroll", setLockCookie);
     window.removeEventListener("mousemove", setLockCookie);
     window.removeEventListener("mousedown", setLockCookie);
@@ -163,14 +175,8 @@ function lockUnlock(p) {
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4) {
       if (xhr.status == 200) {
-        document.getElementById('lock').style.display='none';
-        document.title = '<?php echo str_replace('\'', '\\\'', htmlentities($site_name)); ?>';
         setLockCookie();
-        window.addEventListener('scroll', setLockCookie);
-        window.addEventListener('mousemove', setLockCookie);
-        window.addEventListener('mousedown', setLockCookie);
-        window.addEventListener('keypress', setLockCookie);
-        lockDown();
+        location.reload();
       }
       if (document.getElementById('lock_s'))
         document.head.removeChild(document.getElementById('lock_s'));
@@ -187,6 +193,63 @@ if (!lockDown()) {
   }, 1000);
 }
 document.getElementById('lock-hide').style.display='block';
+
+<?php if (!isset($clipboard) && !isset($note)) { // In New Note mode ?>
+
+if (typeof window.sessionStorage != 'undefined') {
+
+  if (typeof window.sessionStorage['new_id'] != 'undefined' && window.sessionStorage['new_id'] !== null && window.sessionStorage['new_id']) {
+
+    if (typeof(e=document.getElementById('new_id')) != 'undefined' && e !== null) {
+      e.value = (url_id = window.sessionStorage['new_id']);
+    }
+
+    if (typeof window.sessionStorage['post-d'] != 'undefined' && window.sessionStorage['post-d'] !== null && window.sessionStorage['post-d'] && typeof(e=document.getElementById('post-d')) != 'undefined' && e !== null) {
+      e.value = window.sessionStorage['post-d'];
+    }
+
+    if (typeof window.sessionStorage['attachment-list'] != 'undefined' && window.sessionStorage['attachment-list'] !== null && window.sessionStorage['attachment-list'] && typeof(e=document.getElementById('attachment-list')) != 'undefined' && e !== null) {
+      e.innerHTML = window.sessionStorage['attachment-list'];
+    }
+
+    var elems = document.getElementsByClassName('autoDraft');
+    for (var i = 0; i < elems.length; i++) {
+      var e = elems[i];
+
+      if (e.type == 'radio') {
+        if (typeof window.sessionStorage[e.name] != 'undefined' && window.sessionStorage[e.name] !== null && window.sessionStorage[e.name]) {
+          if (e.value == window.sessionStorage[e.name]) {
+            e.checked = true;
+          } else {
+            e.checked = false;
+          }
+        }
+      } else {
+        if (typeof window.sessionStorage[e.name] != 'undefined' && window.sessionStorage[e.name] !== null && window.sessionStorage[e.name]) {
+          e.value = window.sessionStorage[e.name];
+        }
+      }
+
+    }
+
+  } else {
+
+    window.sessionStorage['new_id'] = url_id;
+    window.sessionStorage['post-d'] = '';
+    window.sessionStorage['attachment-list'] = '';
+
+    var elems = document.getElementsByClassName('autoDraft');
+    for (var i = 0; i < elems.length; i++) {
+      var e = elems[i];
+      window.sessionStorage[e.name] = '';
+    }
+
+  }
+
+}
+
+<?php } ?>
+
 </script>
 <?php } ?>
 
