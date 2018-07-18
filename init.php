@@ -4,6 +4,32 @@ if ((isset($_SERVER["HTTP_X_PURPOSE"]) && strtolower($_SERVER["HTTP_X_PURPOSE"])
   exit;
 }
 
+$user_dir = __DIR__ .'/usr/';
+if (!file_exists($user_dir)) {
+  mkdir($user_dir);
+}
+
+$data_dir = $user_dir.'data/';
+if (!file_exists($data_dir)) {
+  mkdir($data_dir);
+}
+
+$content_dir = $user_dir.'content/';
+if (!file_exists($content_dir)) {
+  mkdir($content_dir);
+}
+
+$upload_dir = $user_dir.'upload/';
+if (!file_exists($upload_dir)) {
+  mkdir($upload_dir);
+}
+
+$paper_dir = $user_dir.'paper/';
+if (!file_exists($paper_dir)) {
+  mkdir($paper_dir);
+}
+
+
 if (!file_exists(__DIR__ . '/config.php'))
   exit('Please update "config.php" file according to "config.php-dist"');
 if (!function_exists('password_hash'))
@@ -12,14 +38,12 @@ if (!function_exists('password_hash'))
 if (@filemtime(__DIR__ . '/config.php') && function_exists('opcache_invalidate'))
   opcache_invalidate(__DIR__ . '/config.php',true);
 include(__DIR__ . '/config.php');
+
+$cookie_name = '_nott_'.str_replace(array('.', '/'), '_', substr($site_url, stripos($site_url, '//')+2));
+
 include(__DIR__ . '/functions.php');
 include(__DIR__ . '/include/Parsedown.php');
 
-$user_dir = __DIR__ .'/usr/';
-$data_dir = $user_dir.'data/';
-$content_dir = $user_dir.'content/';
-$upload_dir = $user_dir.'upload/';
-$paper_dir = $user_dir.'paper/';
 $include_dir = __DIR__ . '/include/';
 $tmp_dir = __DIR__ . '/tmp/';
 $html_dir = __DIR__ . '/html/';

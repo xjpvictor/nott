@@ -1,9 +1,8 @@
 .*
-/usr/*
-/usr/*/*
-/tmp/*
-/html/*
-/session/*
+/usr
+/tmp
+/html
+/session
 config.php
 robots.txt
 !.gitkeep

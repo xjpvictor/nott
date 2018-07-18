@@ -529,7 +529,7 @@ function oathtruncate($hash,$otpLength) {
   ) % pow(10, $otpLength);
 }
 function auth() {
-  global $site_url, $login;
+  global $site_url, $login, $cookie_name;
 
   if (isset($login)) {
     if (isset($_POST['r']) && $_POST['r'])
@@ -538,7 +538,7 @@ function auth() {
       $expire = 0;
     session_set_cookie_params($expire, '/', '', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 1 : 0), 1);
   }
-  session_name('_nott_'.str_replace(array('.', '/'), '_', substr($site_url, stripos($site_url, '//')+2)));
+  session_name($cookie_name);
   session_save_path(__DIR__ . '/session');
   if (session_status() !== PHP_SESSION_ACTIVE)
     session_start();
@@ -547,6 +547,7 @@ function auth() {
     if (isset($_COOKIE['_nott_notRobot']) && $_COOKIE['_nott_notRobot'] == 1)
       $_SESSION['robot'] = 0;
     else {
+      setcookie($cookie_name, '', 1, '/', '', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 1 : 0), 1);
       session_destroy();
       return false;
     }

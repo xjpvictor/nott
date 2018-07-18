@@ -28,8 +28,10 @@ if (isset($_POST['p']) && isset($_POST['u'])) {
     }
   }
 }
-if (!isset($otp_key_gen))
+if (!isset($otp_key_gen) && session_status() === PHP_SESSION_ACTIVE) {
+  setcookie($cookie_name, '', 1, '/', '', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 1 : 0), 1);
   session_destroy();
+}
 
 include($include_dir.'head.php');
 ?>

@@ -8,23 +8,42 @@ define('NOINIT', true);
 include(__DIR__ . '/init.php');
 
 $img = __DIR__ . '/favicon.ico';
-ob_end_clean();
-ob_start();
-header('HTTP/1.1 200 Ok');
-$size=ob_get_length();
-header('Content-Type: image/png');
-header("Cache-Control: no-cache, must-revalidate");
-header("Pragma: no-cache");
-header('Expires: '.gmdate('D, d M Y H:i:s', time()).' GMT');
-header("Content-Length: ".($size + filesize($img)));
-header("Connection: close");
-readfile($img);
-ob_end_flush();
-flush();
-if (function_exists('fastcgi_finish_request'))
-  fastcgi_finish_request();
-if (session_id())
-  session_write_close();
+
+if (!isset($_GET[($h = hash('md5', $_SERVER['SCRIPT_FILENAME']))]) || $_GET[$h] != '1') {
+  if (ob_get_level())
+    ob_end_clean();
+  ob_start();
+  header('HTTP/1.1 200 Ok');
+  header('Content-Type: image/png');
+  header("Cache-Control: no-cache, must-revalidate");
+  header("Pragma: no-cache");
+  header('Expires: '.gmdate('D, d M Y H:i:s', time()).' GMT');
+  $size=ob_get_length();
+  header("Content-Length: ".($size + filesize($img)));
+  header("Connection: close");
+  readfile($img);
+  ob_end_flush();
+  flush();
+  if (function_exists('fastcgi_finish_request'))
+    fastcgi_finish_request();
+  if (session_id())
+    session_write_close();
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, (isset($_SERVER['HTTPS']) ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" . ($_GET ? '&' : '?').hash('md5', $_SERVER['SCRIPT_FILENAME']).'=1');
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+  if ($_POST) {
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
+  }
+  curl_exec($ch);
+  curl_close($ch);
+
+  exit;
+}
 
 include(__DIR__ . '/functions_mail.php');
 

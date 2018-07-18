@@ -16,8 +16,10 @@ if (!$auth && isset($_POST['p']) && isset($_POST['u'])) {
     }
   }
 }
-if (!$auth && session_status() === PHP_SESSION_ACTIVE)
+if (!$auth && session_status() === PHP_SESSION_ACTIVE) {
+  setcookie($cookie_name, '', 1, '/', '', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 1 : 0), 1);
   session_destroy();
+}
 ?>
 
 <!DOCTYPE html>

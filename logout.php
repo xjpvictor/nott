@@ -7,6 +7,7 @@ else
   $url = $site_url;
 
 if ($auth) {
+  setcookie($cookie_name, '', 1, '/', '', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 1 : 0), 1);
   session_destroy();
 }
 header("Location: $url");
