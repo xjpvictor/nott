@@ -33,9 +33,10 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
           $error = 'File not found.';
           include($include_dir.'error.php');
         }
+        exit;
       }
     } else {
-      if ((!$_GET['id'] && $auth) || ($note = getnote($_GET['id']) && ($note['public'] || $auth))) {
+      if ((!$_GET['id'] && $auth) || (($note = getnote($_GET['id'])) && ($auth || (isset($note['public']) && $note['public'])))) {
         if (file_exists($file = $upload_dir.$file_name)) {
           $finfo = finfo_open(FILEINFO_MIME_TYPE);
           $file_type = finfo_file($finfo, $file);

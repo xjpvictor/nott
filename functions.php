@@ -297,7 +297,7 @@ function updatetag($tags, $origin, $id) {
   uasort($taglist, function ($tag1, $tag2) {
     if (($o = count($tag2)-count($tag1)))
       return $o;
-    elseif (($o = $tag2[0]-$tag1[0]))
+    elseif (isset($tag1[0]) && isset($tag2[0]) && ($o = $tag2[0]-$tag1[0]))
       return $o;
     else
       return 0;
