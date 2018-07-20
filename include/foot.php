@@ -151,7 +151,8 @@ function lockDown() {
   if (t && Date.now() - t >= 600000) {
 
 <?php if (isset($clipboard)) { // In Clipboard mode ?>
-    e.blur();
+    if (typeof(e=document.getElementById('post-d')) != 'undefined' && e !== null)
+      e.blur();
 <?php } ?>
 
     document.getElementById('lock').style.display='block';
