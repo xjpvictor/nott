@@ -702,3 +702,16 @@ function sendmail($to, $from = '', $subject = '', $message = '', $account = '') 
     mail($to, $subject, $message, $headers);
 }
 
+function send_cache_header() {
+  header('Cache-Control: max-age=604800');
+  header('Expires: ' . gmdate('D, d M Y H:i:s', strtotime('+1 week')) . ' GMT');
+  header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+  header('Pragma: cache');
+}
+
+function send_no_cache_header() {
+  header("Cache-Control: no-cache, must-revalidate");
+  header('Expires: '.gmdate('D, d M Y H:i:s').' GMT');
+  header("Pragma: no-cache");
+}
+

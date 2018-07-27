@@ -6,6 +6,7 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
     if (isset($_GET['tmp']) && $_GET['tmp']) {
       if (($attachment = saveattachment($_GET['id'], $tmp_dir)) === false) {
         http_response_code(400);
+        send_no_cache_header();
         $error = 'Error uploading.';
         include($include_dir.'error.php');
       } else {
@@ -13,6 +14,7 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
       }
     } elseif (($_GET['id'] && !getnote($_GET['id'])) || ($attachment = saveattachment($_GET['id'])) === false) {
       http_response_code(400);
+      send_no_cache_header();
       $error = 'Error uploading.';
       include($include_dir.'error.php');
     } else {
@@ -28,10 +30,12 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
         if (file_exists($file = $tmp_dir.$file_name)) {
           $finfo = finfo_open(FILEINFO_MIME_TYPE);
           $file_type = finfo_file($finfo, $file);
+          send_cache_header();
           header('Content-type: '.$file_type);
           readfile($file);
         } else {
           http_response_code(404);
+          send_no_cache_header();
           $error = 'File not found.';
           include($include_dir.'error.php');
         }
@@ -42,10 +46,12 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
         if (file_exists($file = $upload_dir.$file_name)) {
           $finfo = finfo_open(FILEINFO_MIME_TYPE);
           $file_type = finfo_file($finfo, $file);
+          send_cache_header();
           header('Content-type: '.$file_type);
           readfile($file);
         } else {
           http_response_code(404);
+          send_no_cache_header();
           $error = 'File not found.';
           include($include_dir.'error.php');
         }
@@ -60,6 +66,7 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
       unlink($tmp_dir.$file_name);
     } else {
       http_response_code(404);
+      send_no_cache_header();
       exit;
     }
     header('Content-type: application/javascript;');
@@ -75,6 +82,7 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
     if (file_exists($file)) {
       $finfo = finfo_open(FILEINFO_MIME_TYPE);
       $file_type = finfo_file($finfo, $file);
+      send_no_cache_header();
       header('Content-type: '.$file_type);
       readfile($file);
     } else {
@@ -92,10 +100,12 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
         file_put_contents($file, $content);
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $file_type = finfo_file($finfo, $file);
+        send_no_cache_header();
         header('Content-type: '.$file_type);
         readfile($file);
       } else {
         http_response_code(404);
+        send_no_cache_header();
         $error = 'File not found.';
         include($include_dir.'error.php');
       }
@@ -108,10 +118,12 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
     if (file_exists($file)) {
       $finfo = finfo_open(FILEINFO_MIME_TYPE);
       $file_type = finfo_file($finfo, $file);
+      send_cache_header();
       header('Content-type: '.$file_type);
       readfile($file);
     } else {
       http_response_code(404);
+      send_no_cache_header();
       $error = 'File not found.';
       include($include_dir.'error.php');
     }
@@ -120,5 +132,6 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
 }
 
 http_response_code(403);
+send_no_cache_header();
 $error = 'Access denied.';
 include($include_dir.'error.php');
