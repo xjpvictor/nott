@@ -18,6 +18,8 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
     } else {
       echo displayattachment($_GET['id'], parseattachmentname($attachment), 0, 1);
     }
+    if ($_GET['id'] == 0)
+      touch($clipboard_attachment_cache);
     exit;
   } elseif ($_GET['action'] == 'get') {
     $file_name = $_GET['id'].'-'.rawurldecode($_GET['name']);
@@ -62,6 +64,8 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
     }
     header('Content-type: application/javascript;');
     echo 'var elem = document.getElementById(\''.$_GET['elem'].'\');elem.parentNode.removeChild(elem);if(typeof autoDraft==\'function\')autoDraft(\'attachment-list\', document.getElementById(\'attachment-list\').innerHTML);';
+    if ($_GET['id'] == 0)
+      touch($clipboard_attachment_cache);
     exit;
   }
 } elseif (isset($_GET['cache']) && $_GET['cache'] && isset($_GET['id']) && $_GET['id']) {

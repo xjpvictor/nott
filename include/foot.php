@@ -69,28 +69,34 @@ var new_post = '';
 </script>
 <script src="include/edit.js"></script>
 <script>
-var tsElem = document.getElementById('clip-ts');
-tsElem.innerHTML = '<?php echo (file_exists($clipboard_file) ? filemtime($clipboard_file) : time()); ?>';
+var clipTsElem = document.getElementById('clip-ts');
+var attachmentTsElem = document.getElementById('attachment-ts');
+clipTsElem.innerHTML = '<?php echo (file_exists($clipboard_file) ? filemtime($clipboard_file) : time()); ?>';
+attachmentTsElem.innerHTML = '<?php echo (file_exists($clipboard_attachment_cache) ? filemtime($clipboard_attachment_cache) : time()); ?>';
 function updateClip() {
   if (typeof document.getElementById('post-d') == 'undefined' || document.getElementById('post-d') === null) {
     return false;
   }
-  var clipTs = tsElem.innerHTML;
+  var clipTs = clipTsElem.innerHTML;
+  var attachmentTs = attachmentTsElem.innerHTML;
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", 'clipboard.php?ts='+clipTs, true);
+  xhr.withCredentials = true;
+  xhr.open("GET", 'clipboard.php?clipts='+clipTs+'&attachmentts='+attachmentTs, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4) {
       if (xhr.status == 200) {
         var data = JSON.parse(xhr.responseText);
-        tsElem.innerHTML = data[0];
-        document.getElementById('post-d').value = data[1];
+        clipTsElem.innerHTML = data['clip-ts'];
+        attachmentTsElem.innerHTML = data['attachment-ts'];
+        document.getElementById('post-d').value = data['post-d'];
+        document.getElementById('attachment-list').innerHTML = data['attachment-list'];
       }
     }
   }
   xhr.send(null);
-  setTimeout(updateClip, 3000);
+  setTimeout(updateClip, 5000);
 }
-setTimeout(updateClip, 3000);
+setTimeout(updateClip, 5000);
 </script>
 <?php } elseif (!isset($paper_content) && !isset($papers)) { // In Paper mode ?>
 <script>
@@ -171,6 +177,7 @@ function lockDown() {
 }
 function lockUnlock(p) {
   var xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
   xhr.open("POST", 'passcode.php', true);
   xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   xhr.onreadystatechange = function() {

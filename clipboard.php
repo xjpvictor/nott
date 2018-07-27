@@ -11,12 +11,25 @@ if (!$auth) {
 $post = true;
 $clipboard = (file_exists($clipboard_file) ? file_get_contents($clipboard_file) : '');
 
-if (isset($_GET['ts']) && $_GET['ts']) {
-  if (!file_exists($clipboard_file) || filemtime($clipboard_file) <= $_GET['ts']) {
+if (isset($_GET['clipts']) && $_GET['clipts'] && isset($_GET['attachmentts']) && $_GET['attachmentts']) {
+  if ((!file_exists($clipboard_file) || filemtime($clipboard_file) <= $_GET['clipts']) && (!file_exists($clipboard_attachment_cache) || filemtime($clipboard_attachment_cache) <= $_GET['attachmentts'])) {
     http_response_code(304);
     exit;
   }
-  echo json_encode(array(filemtime($clipboard_file), $clipboard));
+  $attachments = '';
+  if (($list = getattachment(0))) {
+    foreach ($list as $attachment) {
+      $attachments .= displayattachment(0, parseattachmentname($attachment), 0, 1);
+    }
+  }
+  if ($attachments !== file_get_contents($clipboard_attachment_cache))
+    file_put_contents($clipboard_attachment_cache, $attachments, LOCK_EX);
+  echo json_encode(array(
+    'clip-ts' => filemtime($clipboard_file),
+    'attachment-ts' => filemtime($clipboard_attachment_cache),
+    'post-d' => $clipboard,
+    'attachment-list' => $attachments,
+  ));
   exit;
 } elseif (isset($_GET['c']) && $_GET['c']) {
   $clipboard .= "\n\n".urldecode($_GET['c']);
@@ -44,6 +57,7 @@ include($include_dir . 'head.php');
 </div>
 </div>
 <div id="clip-ts" style="display:none;"></div>
+<div id="attachment-ts" style="display:none;"></div>
 <!--end of main-->
 
 <?php
