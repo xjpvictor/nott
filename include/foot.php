@@ -69,6 +69,7 @@ var new_post = '';
 </script>
 <script src="include/edit.js"></script>
 <script>
+var clientId = '';
 var clipTsElem = document.getElementById('clip-ts');
 var attachmentTsElem = document.getElementById('attachment-ts');
 clipTsElem.innerHTML = '<?php echo (file_exists($clipboard_file) ? filemtime($clipboard_file) : time()); ?>';
@@ -86,10 +87,37 @@ function updateClip() {
     if (xhr.readyState == 4) {
       if (xhr.status == 200) {
         var data = JSON.parse(xhr.responseText);
-        clipTsElem.innerHTML = data['clip-ts'];
-        attachmentTsElem.innerHTML = data['attachment-ts'];
-        document.getElementById('post-d').value = data['post-d'];
-        document.getElementById('attachment-list').innerHTML = data['attachment-list'];
+        if (typeof data['clip-ts'] != 'undefined' && data['clip-ts'] !== null) {
+          clipTsElem.innerHTML = data['clip-ts'];
+          attachmentTsElem.innerHTML = data['attachment-ts'];
+          document.getElementById('post-d').value = data['post-d'];
+          document.getElementById('attachment-list').innerHTML = data['attachment-list'];
+        }
+        clientId = data['this-client'];
+        if (window.File && window.FileList && window.FileReader && window.XMLHttpRequest) {
+          if (data['clients-list'] == '')
+            document.getElementById('transfer').classList.add('hidden');
+          if (document.getElementById('clients-list').dataset.content != data['clients-list']) {
+            document.getElementById('clients-list').innerHTML = data['clients-list'];
+            document.getElementById('clients-list').dataset.content = data['clients-list'];
+          }
+          if (data['clients-list'] != '' && document.getElementById('transfer').classList.contains('hidden'))
+            document.getElementById('transfer').classList.remove('hidden');
+
+          if (data['files-list'] == '')
+            document.getElementById('transfer-file-list').classList.add('hidden');
+          if (document.getElementById('transfer-recv-list').dataset.content != data['files-list']) {
+            document.getElementById('transfer-recv-list').innerHTML = data['files-list'];
+            document.getElementById('transfer-recv-list').dataset.content = data['files-list'];
+            if (data['files-list'] != '')
+              document.getElementById('transfer-file-list').classList.add('popup');
+          }
+          if (data['files-list'] != '') {
+            document.getElementById('transfer-file-list').classList.remove('hidden');
+            if (document.getElementById('transfer-file-list').classList.contains('popup'))
+              document.getElementById('transfer-file-list').addEventListener('click', function(){document.getElementById('transfer-file-list').classList.remove('popup');});
+          }
+        }
       }
     }
   }

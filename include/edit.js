@@ -300,3 +300,29 @@ function autoDraft(key, value) {
       window.sessionStorage[key] = value;
   }
 }
+function fileTransfer(e, name) {
+  if (window.File && window.FileList && window.FileReader && window.XMLHttpRequest) {
+    var files = e.target.files || e.dataTransfer.files;
+    if ((n = files.length)) {
+      for (var i = 0; i < n; i++) {
+        var url = base_url + '&transfer=1&name='+encodeURIComponent(name+'-'+files[i].name+'.transfer');
+        var xhrTransfer = new XMLHttpRequest();
+        xhrTransfer.open("POST", url, true);
+        xhrTransfer.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhrTransfer.onreadystatechange = function() {
+          if (xhrTransfer.readyState == 4) {
+            if (xhrTransfer.status == 200) {
+              document.getElementById('transfer-notice').classList.remove('hidden');
+              setTimeout(function(){document.getElementById('transfer-notice').classList.add('hidden');},1000);
+            }
+          }
+        }
+        var reader = new FileReader();
+        reader.onload = function() {
+          xhrTransfer.send("file="+reader.result);
+        }
+        reader.readAsDataURL(files[i]);
+      }
+    }
+  }
+}

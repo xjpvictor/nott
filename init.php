@@ -44,6 +44,8 @@ $cookie_name = '_nott_'.str_replace(array('.', '/'), '_', substr($site_url, stri
 include(__DIR__ . '/functions.php');
 include(__DIR__ . '/include/Parsedown.php');
 
+$timestamp = time();
+
 $include_dir = __DIR__ . '/include/';
 $tmp_dir = __DIR__ . '/tmp/';
 $html_dir = __DIR__ . '/html/';

@@ -78,6 +78,7 @@ if ($tags = gettaglist()) {
 <span id="upload-button" class="file-button">Upload</span>
 <span id="upload-file-button-wrap" class="file-button-hide-wrap">
 <input type="file" multiple id="upload-file-button" class="file-button-hide" name="files[]"
+<?php if (!isset($clipboard)) { ?>
  onchange="
    if (!window.File || !window.FileList || !window.FileReader || !window.XMLHttpRequest) {
      var str = '';
@@ -89,6 +90,7 @@ if ($tags = gettaglist()) {
      document.getElementById('upload-list').innerHTML = str;
    }
  "
+<?php } ?>
 ></span>
 <div class="clear">&nbsp;</div>
 </div>
@@ -110,6 +112,23 @@ if ((isset($note) && $list = getattachment($note['id'])) || (isset($clipboard) &
 </div>
 <div class="clear">&nbsp;</div>
 </div>
+
+<?php if (isset($clipboard)) { ?>
+<div class="widget hidden" id="transfer">
+<h2>Transfer file to...</h2>
+<p id="transfer-notice" class="hidden">Done uploading</p>
+<div id="clients-list" data-content=""></div>
+<div class="clear">&nbsp;</div>
+</div>
+<div class="hidden popup" id="transfer-file-list">
+<div class="widget" id="transfer-file-list-wrap">
+<h2>Await downloading...</h2>
+<div id="transfer-recv-list" data-content=""></div>
+<div class="clear">&nbsp;</div>
+</div>
+</div>
+<?php } ?>
+
 <?php } else { ?>
 <?php if ($auth) { ?>
 <a class="widget compose" title="Add note" href="edit.php" onclick="if(typeof window.sessionStorage!='undefined')window.sessionStorage['new_id']='';">Add Note</a>

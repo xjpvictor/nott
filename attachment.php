@@ -3,7 +3,9 @@ include(__DIR__ . '/init.php');
 
 if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['name'] && isset($_GET['id'])) {
   if ($auth && $_GET['action'] == 'add' && is_string($_POST['file']) && $_POST['file']) {
-    if (isset($_GET['tmp']) && $_GET['tmp']) {
+    if ($_GET['id'] == 0 && isset($_GET['transfer']) && $_GET['transfer'] == 1) {
+      saveattachment($_GET['id'], $tmp_dir, (isset($_GET['name']) && $_GET['name'] ? rawurldecode($_GET['name']) : null));
+    } elseif (isset($_GET['tmp']) && $_GET['tmp']) {
       if (($attachment = saveattachment($_GET['id'], $tmp_dir)) === false) {
         http_response_code(400);
         send_no_cache_header();
@@ -20,11 +22,11 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
     } else {
       echo displayattachment($_GET['id'], parseattachmentname($attachment), 0, 1);
     }
-    if ($_GET['id'] == 0)
+    if ($_GET['id'] == 0 && (!isset($_GET['transfer']) || $_GET['transfer'] != 1))
       touch($clipboard_attachment_cache);
     exit;
   } elseif ($_GET['action'] == 'get') {
-    $file_name = $_GET['id'].'-'.rawurldecode($_GET['name']);
+    $file_name = (isset($_GET['transfer']) && $_GET['transfer'] == 1 ? '' : $_GET['id'].'-').rawurldecode($_GET['name']);
     if (isset($_GET['tmp']) && $_GET['tmp']) {
       if ($auth) {
         if (file_exists($file = $tmp_dir.$file_name)) {
@@ -33,6 +35,8 @@ if (isset($_GET['action']) && $_GET['action'] && isset($_GET['name']) && $_GET['
           send_cache_header();
           header('Content-type: '.$file_type);
           readfile($file);
+          if (isset($_GET['transfer']) && $_GET['transfer'] == 1)
+            unlink($file);
         } else {
           http_response_code(404);
           send_no_cache_header();

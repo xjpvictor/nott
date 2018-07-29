@@ -594,7 +594,7 @@ function displayattachment($id, $attachment, $tmp = 0, $post = 0) {
       <span class="insert" onclick="mdAddHR(\'!['.$attachment['display_name'].'](attachment.php?id='.$id.'&name='.$attachment['url_name'].'&action=get'.($tmp ? '&tmp=1' : '').' &quot;'.$attachment['display_name'].'&quot;)\')">Insert</span>' : '').'
     </span>'.($post ? '<span class="delete" onclick="deleteAttachment(\''.$id.'\', \''.$attachment['url_name'].'\', \'attachment-'.$id.'-'.$attachment['t'].'\')">&#9747;</span>' : '').'</div>';
 }
-function saveattachment($id = null, $dir = null) {
+function saveattachment($id = null, $dir = null, $filename = null) {
   global $upload_dir, $tmp_dir;
 
   if (!isset($id))
@@ -611,10 +611,10 @@ function saveattachment($id = null, $dir = null) {
     foreach ($_POST['file'] as $i => $data) {
       if (strpos(($name = rawurldecode($_GET['name'][$i])), 'email-') === 0) {
         $email = true;
-        $tmp_file = $dir.$id.'-0-'.($name = substr($name, 6));
+        $tmp_file = $dir.(isset($filename) && $filename ? $filename : $id.'-0-'.($name = substr($name, 6)));
       } else {
         $email = false;
-        $tmp_file = $dir.$id.'-tmp-'.$name;
+        $tmp_file = $dir.(isset($filename) && $filename ? $filename : $id.'-tmp-'.$name);
       }
       if (strpos($data, ',') !== false) {
         if (strpos(substr($data, 0, strpos($data, ',')+1), ';base64,') !== false)
@@ -627,8 +627,9 @@ function saveattachment($id = null, $dir = null) {
         if (!filesize($tmp_file)) {
           unlink($tmp_file);
         } else {
-          $file = $dir.$id.'-'.($email ? '0' : ($type = getfiletype($tmp_file))).'-'.$name;
-          rename($tmp_file, $file);
+          $file = $dir.(isset($filename) && $filename ? $filename : $id.'-'.($email ? '0' : ($type = getfiletype($tmp_file))).'-'.$name);
+          if ($tmp_file != $file)
+            rename($tmp_file, $file);
           chmod($file, 0600);
         }
       } else {
@@ -645,7 +646,7 @@ function saveattachment($id = null, $dir = null) {
     foreach ($files['name'] as $file_id => $file) {
       $name = $files['name'][$file_id];
       $tmp_file = $files['tmp_name'][$file_id];
-      $file_name = $id.'-'.getfiletype($tmp_file).'-'.time().$i.'-'.$name;
+      $file_name = (isset($filename) && $filename ? $filename : $id.'-'.getfiletype($tmp_file).'-'.time().$i.'-'.$name);
       if (!file_exists($dir.$file_name)) {
         if (!move_uploaded_file($tmp_file, $dir.$file_name))
           rename($tmp_file, $dir.$file_name);

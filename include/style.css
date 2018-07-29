@@ -17,6 +17,7 @@ input[type="submit"]:hover{cursor:pointer;background:#d42;border-color:#d42;}
 [draggable]{cursor:move;}
 label:hover{cursor:pointer;}
 .clear {clear:both;display:block;overflow:hidden;visibility:hidden;width:0;height:0;}
+.hidden{display:none !important;}
 #header{width:100%;font-size:14px;line-height:1.8em;box-shadow:0 3px 3px #666;background:#fff;border-top:5px solid #000;}
 #header-content{padding:10px 30px;max-width:1500px;margin:0 auto;}
 #logo{width:100%;text-align:center;}
@@ -160,6 +161,16 @@ p#otp{padding:1em 0 2em;text-align:center;}
 #upload-drop-text.show{display:block;}
 #upload-drop{border:3px dashed #fff;margin:10px;padding-left:30px;padding-right:30px;}
 #upload-drop.upload-drag{min-height:300px;border-color:#666;}
+#transfer-notice{color:#4caf50;padding-bottom:20px;}
+.transfer-clients.file-button-wrap{box-shadow:none;background:transparent;margin-bottom:10px;}
+.transfer-clients .file-button{text-align:left;}
+.transfer-clients.file-button-wrap:last-child{margin-bottom:0;}
+#transfer-file-list.popup{position:fixed;z-index:998;top:0;left:0;bottom:0;right:0;background:rgba(0,0,0,.5);}
+#transfer-file-list.popup #transfer-file-list-wrap{position:fixed;z-index:999;top:50%;left:50%;width:320px;height:500px;margin-left:-180px;margin-top:-250px;}
+.transfer-files{margin-bottom:10px;}
+.transfer-files:last-child{margin-bottom:0;}
+.transfer-files span{display:block;font-size:14px;color:#999;}
+.transfer-files span a{font-size:16px;text-decoration:underline;}
 #edit-button,#edit-title{background:#fff;padding:5px;box-shadow:0 0 1px #333;display:block;}
 #edit-button.hide,#edit-title.hide{display:none;}
 #edit-title{color:#999;font-size:0.8em;padding:5px 10px;}
