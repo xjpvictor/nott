@@ -18,6 +18,8 @@ input[type="submit"]:hover{cursor:pointer;background:#d42;border-color:#d42;}
 label:hover{cursor:pointer;}
 .clear {clear:both;display:block;overflow:hidden;visibility:hidden;width:0;height:0;}
 .hidden{display:none !important;}
+.red{color:#d42;}
+.small{font-size:.8em;}
 #header{width:100%;font-size:14px;line-height:1.8em;box-shadow:0 3px 3px #666;background:#fff;border-top:5px solid #000;}
 #header-content{padding:10px 30px;max-width:1500px;margin:0 auto;}
 #logo{width:100%;text-align:center;}
