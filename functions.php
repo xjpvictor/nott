@@ -4,7 +4,7 @@ function toutf8($str) {
     return $str;
   if (mb_detect_encoding($str, 'ascii, utf-8'))
     return $str;
-  elseif ($encode = mb_detect_encoding($str, 'gbk, gb2312, gb18030, big5, big5-hkscs, iso-8859-1, iso-8859-2, iso-8859-3, iso-8859-4, iso-8859-5, iso-8859-6, iso-8859-7, iso-8859-8, iso-8859-9, iso-8859-10, iso-8859-11, iso-8859-13, iso-8859-14, iso-8859-15, iso-8859-16, utf-16, utf-32, windows-1250, windows-1251, windows-1252, windows-1253, windows-1254, windows-1255, windows-1256, windows-1257, windows-1258, euc-jp, euc-kr, euc-tw, hz-gb-2312, ibm866, iso-2022-cn, iso-2022-jp, iso-2022-jp-1, iso-2022-kr, koi8-r, koi8-u, shift-jis, us-ascii, viscii'))
+  elseif ($encode = mb_detect_encoding($str, 'gb18030, big-5, iso-8859-1, iso-8859-2, iso-8859-3, iso-8859-4, iso-8859-5, iso-8859-6, iso-8859-7, iso-8859-8, iso-8859-9, iso-8859-10, iso-8859-13, iso-8859-14, iso-8859-15, iso-8859-16, utf-16, utf-32, windows-1251, windows-1252, euc-jp, euc-kr, euc-cn, euc-tw, cp866, iso-2022-jp, iso-2022-kr, koi8-r, koi8-u'))
     return mb_convert_encoding($str, 'UTF-8', $encode);
   else
     return '';
@@ -67,6 +67,7 @@ function escpost($str, $id, $source, $edit = 0) {
     '/<\s*a ((?!href).*\s)?href\s*=\s*("|\')#([^"\']*)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url anchor point
     '/<\s*(a|img|iframe) ((?!src|href).*\s)?(src|href)\s*=\s*("|\')\/\/([^"\']+)("|\')(\s+[^>]*)?(\/)?>/i', //handle url starting with double slash
     '/<\s*(a|img|iframe) ((?!src|href).*\s)?(src|href)\s*=\s*("|\')\/([^"\'\/][^"\']+)("|\')(\s+[^>]*)?(\/)?>/i', //handle relative url
+    '/<([^>]+\s+)style\s*=\s*("|\')[^"\']*("|\')(\s+[^>]*)?(\/)?>/i', //remove style
     '/<\s*blockquote(\s+[^>]*)?>[\r\n]+/i',
     '/\r\n/',
     '/\r/',
@@ -84,6 +85,7 @@ function escpost($str, $id, $source, $edit = 0) {
     '<a $1href=$2'.$source.'#$3$4$5$6>',
     '<$1 $2$3=$4'.(strpos($source_d, 'https://') === 0 ? 'https://' : 'http://').'$5$6$7$8>',
     '<$1 $2$3=$4'.$source_d.'$5$6$7$8>',
+    '<$1$4$5>',
     '<blockquote$1>',
     "\n",
     "\n",
@@ -428,15 +430,19 @@ function geturlcontent($url = '', $content = false) {
     else
       $content = $tidy;
 
-    require $include_dir . 'readability/config.inc.php';
-    require $include_dir . 'readability/common.inc.php';
-    require $include_dir . 'readability/Readability.inc.php';
-    $content = preg_replace(array('/<body(\s+[^>]*)?>/si', '/<\/body\s*>/si'), array('<body><div class="article-body"><p></p>', '</div></body>'), $content);
-    $Readability = new Readability($content, 'utf8');
-    $ReadabilityData = $Readability->getContent();
-    $content = ($ReadabilityData['title'] ? '<h1>'.$ReadabilityData['title'].'</h1>' : '').$ReadabilityData['content'];
+    if (!$url)
+      $content = preg_replace('/<!doctype [^>]*>/si', '', $content);
+    else {
+      require $include_dir . 'readability/config.inc.php';
+      require $include_dir . 'readability/common.inc.php';
+      require $include_dir . 'readability/Readability.inc.php';
+      $content = preg_replace(array('/<body(\s+[^>]*)?>/si', '/<\/body\s*>/si'), array('<body><div class="article-body"><p></p>', '</div></body>'), $content);
+      $Readability = new Readability($content, 'utf8');
+      $ReadabilityData = $Readability->getContent();
+      $content = ($ReadabilityData['title'] ? '<h1>'.$ReadabilityData['title'].'</h1>' : '').$ReadabilityData['content'];
 
-    //$content = preg_replace('/<([^>]* +)(src) *= *("|\')\//si','<$1$2=$3'.substr($url, 0, strpos($url, '/', 8) + 1).'/', $content); //modify img src
+      //$content = preg_replace('/<([^>]* +)(src) *= *("|\')\//si','<$1$2=$3'.substr($url, 0, strpos($url, '/', 8) + 1).'/', $content); //modify img src
+    }
 
     return $content;
   }
