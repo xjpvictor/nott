@@ -459,8 +459,8 @@ function cut($str, $highlight = '', $len = 140) {
     return ($highlight ? preg_replace('/'.preg_quote($highlight, '/').'/i', '<span class="highlight">$0</span>', $str) : $str);
   }
 }
-function generaterandomstring($length = 16) {
-  $characters = '234567ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function generaterandomstring($length = 16, $allow_symbol = false) {
+  $characters = '0123456789abcdefghijklmnopqrstuvwxyz'.($allow_symbol ? '!@#$%^&*()-_=+|?~,.<>\'";:{}[]' : '');
   $randomString = '';
   for ($i = 0; $i < $length; $i++) {
       $randomString .= $characters[rand(0, strlen($characters) - 1)];
