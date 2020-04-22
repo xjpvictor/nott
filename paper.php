@@ -165,7 +165,7 @@ include($include_dir . 'head.php');
 <form id="post" method="POST" action="post.php?r=view" enctype="multipart/form-data">
 <div id="main">
 <div class="content paper">
-<textarea id="post-d" class="paper" name="d" tabindex=1 onkeydown="this.scrollTop=this.scrollHeight;document.getElementById('paper-list-editing').classList.remove('hide');" onkeyup="document.getElementById('paper-list-editing').dataset.content=this.value;focusVersion(document.getElementById('paper-list-editing'),false);"><?php echo (isset($paper_content) && $paper_content ? htmlentities($paper_content) : ''); ?></textarea>
+<textarea id="post-d" class="paper<?php echo (isset($paper_reviews) && $paper_reviews ? ' review' : ''); ?>" name="d" tabindex=1 onkeydown="this.scrollTop=this.scrollHeight;<?php echo (isset($paper_reviews) && $paper_reviews ? 'document.getElementById(\'paper-list-editing\').classList.remove(\'hide\');" onkeyup="document.getElementById(\'paper-list-editing\').dataset.content=this.value;focusVersion(document.getElementById(\'paper-list-editing\'),false);' : ''); ?>" onfocus="window.scrollTo(0,0);"><?php echo (isset($paper_content) && $paper_content ? htmlentities($paper_content) : ''); ?></textarea>
 <textarea id="post-area" name="comment"></textarea>
 <?php
 if (isset($paper_reviews) && $paper_reviews) {

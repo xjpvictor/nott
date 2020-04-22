@@ -1,4 +1,4 @@
-<div id="sidebar">
+<div id="sidebar" class="animate">
 <?php if (isset($paper)) { ?>
 <?php if (!isset($paper_content) && !isset($papers)) { ?>
 <a class="widget compose paper" onclick="clearContent();document.getElementById('post-d').focus();" href="javascript:;">Erase</a>
@@ -40,13 +40,17 @@ if (isset($paper_content)) {
 ?>
 <?php } ?>
 <?php } elseif (isset($post) && $post) { ?>
+<?php if (isset($clipboard)) { ?>
+<div class="widget header">
+<h2><a href="<?php echo $site_url; ?>clipboard.php">Clipboard</a></h2>
+<p class="description"><?php echo 'By '.htmlspecialchars($site_name); ?></p>
+</div>
+<?php } ?>
 <input class="widget compose" type="submit" id="btnSubmit" value="<?php echo (isset($note) || isset($clipboard) ? 'Update' : 'Add Note'); ?>" />
 
 <?php if (!isset($clipboard)) { ?>
 <span class="widget compose view" onclick="if(!document.getElementById('edit-button').className){document.getElementById('readability').innerHTML=converter.makeHtml(document.getElementById('post-d').value);noteSH();this.innerHTML='Edit';uploadAddClass('post-d','hide');uploadAddClass('edit-button','hide');uploadAddClass('edit-title','hide');uploadAddClass('preview','show');}else{this.innerHTML='Preview';uploadRemoveClass('post-d','hide');uploadRemoveClass('edit-button','hide');uploadRemoveClass('edit-title','hide');uploadRemoveClass('preview','show');}">Preview</span>
-<?php } ?>
 <?php echo (isset($note) ? '<a class="widget compose view" id="view" href="index.php?id='.$note['id'].'">View</a><a class="widget compose" onclick="return confirm(\'Permanently delete this note?\');" id="delete" href="delete.php?id='.$note['id'].'">Delete Note</a>' : ''); ?>
-<?php if (!isset($clipboard)) { ?>
 <div class="widget">
 <h2>Tags</h2>
 <input name="t" type="text" id="post-t" class="autoDraft" value="<?php if (isset($note) && $note['tags']) {foreach ($note['tags'] as $tag) {echo ($tag !== 'inbox' ? $tag.',' : '');}} ?>"<?php echo (!isset($note) ? ' onkeyup="autoDraft(this.name, this.value);"' : ''); ?>>

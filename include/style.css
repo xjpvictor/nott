@@ -20,6 +20,7 @@ label:hover{cursor:pointer;}
 .hidden{display:none !important;}
 .red{color:#d42;}
 .small{font-size:.8em;}
+.animate{-webkit-transition:all ease-in-out .3s;}
 #header{width:100%;font-size:14px;line-height:1.8em;box-shadow:0 3px 3px #666;background:#fff;border-top:5px solid #000;}
 #header-content{padding:10px 30px;max-width:1500px;margin:0 auto;}
 #logo{width:100%;text-align:center;}
@@ -27,7 +28,8 @@ label:hover{cursor:pointer;}
 #logo h1 a{color:#000;font-size:26px;font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Noto Serif","Times New Roman",serif !important;}
 #logo h1 a:hover{color:#ca2017;}
 #logo p{font-size:18px;font-style:italic;padding-bottom:5px;}
-#wrap{max-width:1500px;margin:0px auto 0;padding: 20px 10px 0px;overflow:hidden;}
+#wrap{max-width:1500px;margin:0px auto 0;padding:20px 10px 0px;overflow:hidden;}
+#wrap.clipboard,#wrap.paper{box-sizing:border-box;padding-bottom:20px;}
 #main{width:100%;float:left;margin-right:-360px;}
 #title{padding-bottom:1em;margin-right:360px;word-wrap:break-word;padding-left:3px;}
 #title span{border-bottom:3px solid #000;font-size:1em;font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Noto Serif","Times New Roman",serif !important;}
@@ -59,8 +61,12 @@ a.nav{display:inline-block;line-height:1.0em;width:1.2em;height:1.2em;font-size:
 a.nav:hover{color:#fff !important;background:#e63f2a;border-color:#e63f2a;text-decoration:none;}
 #next{float:right;}
 #sidebar{width:340px;float:left;padding-left:20px;}
+#sidebar-toggle{display:none;width:38px;height:38px;position:fixed;left:20px;bottom:30px;z-index:999;cursor:pointer;}
+.clipboard #sidebar,.paper #sidebar{overflow:auto;overflow-x:hidden;margin-right:-1px;padding-right:1px;}
+.clipboard #sidebar::-webkit-scrollbar,.paper #sidebar::-webkit-scrollbar{width:0;}
 .widget{background:#fff;padding:20px;margin:0 0 15px 0px;border:none;box-shadow:0 0 1px #333;word-wrap:break-word;display:block;}
 .widget h2,.widget h2 a{font-family:Baskerville,"Baskerville Old Face",Palatino,"Palatino Linotype","Noto Serif","Times New Roman",serif !important;padding-bottom:20px;color:#000;}
+.paper #sidebar .header{position:relative;}
 #sidebar .header:before{border-top:5px solid #000;content:'';position:absolute;margin-left:-21px;width:342px;margin-top:-21px;padding:0;}
 .header h2{font-size:1.7em;}
 .header .description{font-style:italic;}
@@ -103,7 +109,7 @@ a.compose.paper{background:#ca2017;}
 #post .content{border:none;box-shadow:none;padding:0;background:transparent;}
 #post-d{width:100%;height:700px;margin-bottom:0px;font-size:18px;box-shadow:0 0 1px #333;border:none;padding:10px;display:block;}
 #post-d.hide{display:none;}
-#post-d.paper{padding-bottom:175px;}
+#post-d.review{padding-bottom:175px;}
 #post-area{display:none;}
 #preview{background:#fff;padding:20px;border:none;box-shadow:0 0 1px #333;display:none;}
 #preview.show{display:block;}
@@ -224,8 +230,12 @@ div.papers:nth-child(4n){margin-right:0;}
 .link a{margin-left:0;margin-right:15px;}
 .content:hover>.meta .link{display:block;}
 #sidebar{float:none;width:100%;padding-left:0;}
-#sidebar .header:before{margin-left:0;width:auto;left:9px;right:9px;}
+#sidebar .header:before{margin-left:0;width:auto;left:0;right:0;}
+#sidebar-toggle{display:block;}
 #pager{margin-right:0;}
+.clipboard #sidebar,.paper #sidebar{position:absolute;z-index:9;top:0;width:300px;right:0;background:#fff;bottom:0;height:auto !important;border-left:1px solid #cecece;box-shadow:0 0 5px 1px #cecece;padding-left:10px;padding-right:10px;opacity:0.95;}
+.clipboard #sidebar.hide,.paper #sidebar.hide{opacity:0;pointer-events:none;}
+.paper #sidebar{padding-top:20px;}
 }
 
 @media screen and (max-width:650px){
@@ -238,4 +248,6 @@ div.papers:nth-child(2n){margin-right:0;}
 div.papers{width:100%;margin-right:0;height:150px;}
 div.papers:nth-child(3n){margin-right:0;}
 #paper-list div.papers div{height:140px;}
+.clipboard #sidebar.hide,.paper #sidebar.hide{width:auto;left:0;opacity:1;pointer-events:all;}
+.clipboard #sidebar:not(.hide),.paper #sidebar:not(.hide){width:auto;left:0;opacity:0;pointer-events:none;}
 }

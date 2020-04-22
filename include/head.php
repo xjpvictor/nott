@@ -7,7 +7,7 @@
 <title><?php echo (isset($clipboard) ? 'Clipboard by ' : (isset($paper) ? 'Paper by ' : '')).htmlspecialchars($site_name); ?></title>
 <?php echo ($site_description ? '<meta name="description" content="'.htmlspecialchars($site_description).'" />' : ''); ?>
 <link rel="stylesheet" href="include/style.css" type="text/css" media="all" />
-<?php if (((isset($post) && $post) || (isset($single) && $single)) && !isset($paper)) { ?>
+<?php if (((isset($post) && $post) || (isset($single) && $single)) && !isset($paper) && !isset($clipboard)) { ?>
 <link rel="stylesheet" href="include/readability.css" type="text/css" media="all" />
 <link rel="stylesheet" href="include/highlight/styles/xcode.css">
 <?php } ?>
@@ -24,7 +24,7 @@
 
 <div id="lock-hide"<?php echo (isset($passcode) && $passcode && (isset($clipboard) || (isset($single) && $single) || (isset($post) && $post)) && !isset($paper) ? ' style="display:none;"' : ''); ?>>
 
-<?php if (!isset($paper)) { ?>
+<?php if (!isset($paper) && !isset($clipboard)) { ?>
 <div id="header">
 <div id="header-content">
 <div id="logo">
@@ -44,4 +44,4 @@ if (!isset($post) || !$post) {
 }
 ?>
 
-<div id="wrap">
+<div id="wrap" class="<?php echo (isset($paper) ? 'paper' : (isset($clipboard) ? 'clipboard' : 'notes')); ?>">

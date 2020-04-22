@@ -1,17 +1,19 @@
 <div class="clear">&nbsp;</div>
 
 <?php
-if (!isset($post) || !$post) {
+if ((!isset($post) || !$post) && !isset($paper) && !isset($clipboard)) {
   if (file_exists($user_dir.'my_foot.php'))
     include($user_dir.'my_foot.php');
 }
 ?>
 
+<?php if (!isset($paper) && !isset($clipboard)) { ?>
 <div id="footer">
 <p id="copy">&copy; <?php echo date("Y"); ?> <a href="index.php"><?php echo htmlspecialchars($site_name); ?></a>. All Rights Reserved.</p>
 <p>Powered by <a href="https://github.com/xjpvictor/nott/" target="_blank">nott</a></p>
 <img src="parsemail.php" width="20px" height="20px" alt="get mail" style="padding:5px;" />
 </div>
+<?php } ?>
 <!--end of footer-->
 
 </div>
@@ -135,7 +137,7 @@ clearContent();
 document.getElementById('post-d').focus();
 window.onbeforeunload = function(){clearContent();};
 </script>
-<?php } elseif (!isset($papers)) { // Show single Paper ?>
+<?php } elseif (!isset($papers) && isset($paper_reviews) && $paper_reviews) { // Show single Paper ?>
 <script>
 function focusVersion(element, scroll = true, version = false) {
   document.getElementById('post-d').value = element.dataset.content;
@@ -156,6 +158,20 @@ function focusVersion(element, scroll = true, version = false) {
   } else
     elemDelVer.classList.add('hide');
 }
+</script>
+<?php } ?>
+
+<?php if (isset($clipboard) || isset($paper)) { ?>
+<div id="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('hide');" style="background:url('include/more.png') no-repeat center center #000;"></div>
+<script>
+function setHeight() {
+  var h = window.innerHeight;
+  document.getElementById('wrap').style.height = h + 'px';
+  document.getElementById('post-d').style.height = (h - 40) + 'px';
+  document.getElementById('sidebar').style.height = (h - 25) + 'px';
+}
+setHeight();
+window.addEventListener("resize", setHeight);
 </script>
 <?php } ?>
 
