@@ -100,6 +100,10 @@ $str_hash_algo = 'sha1';
 $paper_hash_algo = 'sha1';
 $paper_id_length = 4;
 
+$sec_hash_algo = 'sha256';
+
+$auth_code_expiry = '300';
+
 $avatar_hash_algo = 'md5';
 
 $notify_paper_revision = (isset($notify_paper_revision) ? $notify_paper_revision : 1);
